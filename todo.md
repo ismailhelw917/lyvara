@@ -59,6 +59,16 @@
 - [x] Integration tests for tRPC routers (21 tests, all passing)
 - [x] Amazon credentials configuration test
 
+## Bug Fixes
+- [x] Fix product card images not fitting/appearing in their containers
+- [x] Fix hero section product image display
+- [x] Fix blog post hero images
+- [x] Fix admin dashboard product image thumbnails
+- [x] Ensure all image containers have proper aspect ratios and object-fit
+- [x] Remove broken Unsplash URLs from fallback array and database (4 broken URLs replaced)
+- [x] Add silent image failure detection (complete=true, naturalWidth=0) via useEffect+useRef
+- [x] Fix priceDropPercent "0" rendering bug in ProductCard (JSX falsy number issue)
+
 ## Demo Data
 - [x] 12 luxury jewelry products seeded (necklaces, bracelets, rings, earrings)
 - [x] Site settings seeded (automation flags, thresholds, tags)

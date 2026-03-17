@@ -1,4 +1,5 @@
 import { Star, ExternalLink, TrendingUp } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import { trpc } from "@/lib/trpc";
 import type { Product } from "../../../drizzle/schema";
 
@@ -8,9 +9,46 @@ interface ProductCardProps {
   showBadge?: boolean;
 }
 
+// Curated fallback jewelry images from Unsplash (all verified working)
+const FALLBACK_IMAGES = [
+  "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=80",  // gold necklace
+  "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80",  // silver bracelet
+  "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&q=80",  // diamond ring
+  "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80",  // earrings
+  "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80",  // jewelry set
+  "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=600&q=80",  // gold ring
+  "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=600&q=80",  // pearl necklace
+  "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=600&q=80",  // rose gold
+  "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&q=80",  // silver ring
+  "https://images.unsplash.com/photo-1589128777073-263566ae5e4d?w=600&q=80",  // gold bracelet
+];
+
 export default function ProductCard({ product, size, showBadge = true }: ProductCardProps) {
   const effectiveSize = size || product.imageSize || "medium";
   const trackClick = trpc.analytics.trackEvent.useMutation();
+  const [imgError, setImgError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // Pick a deterministic fallback based on product id
+  const fallbackSrc = FALLBACK_IMAGES[product.id % FALLBACK_IMAGES.length];
+  const imageSrc = (!product.imageUrl || imgError) ? fallbackSrc : product.imageUrl;
+
+  // Detect silent failures: image complete but naturalWidth is 0
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
+    const checkLoaded = () => {
+      if (img.complete && img.naturalWidth === 0) {
+        setImgError(true);
+      }
+    };
+    if (img.complete) {
+      checkLoaded();
+    } else {
+      img.addEventListener('load', checkLoaded);
+      return () => img.removeEventListener('load', checkLoaded);
+    }
+  }, [imageSrc]);
 
   const handleAffiliateClick = () => {
     trackClick.mutate({
@@ -50,22 +88,21 @@ export default function ProductCard({ product, size, showBadge = true }: Product
       onClick={handleCardClick}
     >
       {/* Image Container */}
-      <div className={`relative overflow-hidden bg-secondary ${imageHeight}`}>
-        {product.imageUrl ? (
-          <img
-            src={product.imageUrl}
-            alt={product.title}
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center gradient-luxury">
-            <span className="font-serif text-4xl" style={{ color: "var(--gold-light)" }}>✦</span>
-          </div>
-        )}
+      <div className={`relative overflow-hidden ${imageHeight}`} style={{ background: "var(--champagne)" }}>
+        <img
+          ref={imgRef}
+          src={imageSrc}
+          alt={product.title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          onError={() => setImgError(true)}
+        />
 
-        {/* Overlay on hover */}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
+        {/* Subtle gradient overlay for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300" />
 
         {/* Badges */}
         {showBadge && (
@@ -79,7 +116,7 @@ export default function ProductCard({ product, size, showBadge = true }: Product
             {product.isHero && (
               <span className="badge-new">Editor's Pick</span>
             )}
-            {product.priceDropPercent && product.priceDropPercent > 5 && (
+            {!!product.priceDropPercent && product.priceDropPercent > 5 && (
               <span
                 className="font-sans text-xs font-medium px-2 py-0.5 rounded-sm"
                 style={{ background: "var(--rose-gold)", color: "white", fontSize: "0.6rem", letterSpacing: "0.08em" }}
@@ -95,7 +132,7 @@ export default function ProductCard({ product, size, showBadge = true }: Product
           <span
             className="font-sans text-xs px-2 py-0.5 rounded-sm backdrop-blur-sm"
             style={{
-              background: "rgba(255,255,255,0.85)",
+              background: "rgba(255,255,255,0.88)",
               color: product.metalType === "gold" || product.metalType === "rose_gold" || product.metalType === "white_gold"
                 ? "var(--gold-dark)"
                 : "var(--silver)",
@@ -104,7 +141,7 @@ export default function ProductCard({ product, size, showBadge = true }: Product
               textTransform: "uppercase",
             }}
           >
-            {product.metalType.replace("_", " ")}
+            {product.metalType.replace(/_/g, " ")}
           </span>
         </div>
 
