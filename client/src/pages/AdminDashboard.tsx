@@ -328,7 +328,7 @@ export default function AdminDashboard() {
             <div className="flex items-center gap-3">
               <Gem className="w-5 h-5" style={{ color: "var(--gold)" }} />
               <span className="font-serif text-lg tracking-widest" style={{ color: "var(--gold-light)" }}>
-                AURUM ADMIN
+                LYVARA ADMIN
               </span>
             </div>
             <Link href="/" className="flex items-center gap-2 font-sans text-xs" style={{ color: "oklch(0.65 0.01 60)" }}>

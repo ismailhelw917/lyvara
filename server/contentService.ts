@@ -54,7 +54,7 @@ export async function generateBlogPost(
 
   const prompt = BLOG_PROMPTS[category] || BLOG_PROMPTS.style_guide;
 
-  const systemPrompt = `You are a luxury jewelry editorial writer for AURUM JEWELS, an exclusive curated jewelry platform for discerning women. 
+  const systemPrompt = `You are a luxury jewelry editorial writer for LYVARA JEWELS, an exclusive curated jewelry platform for discerning women. 
 Your writing style is elegant, authoritative, and aspirational — like a blend of Vogue and Harper's Bazaar. 
 Write with quiet confidence, not loud salesmanship. Use sensory language, evoke emotion, and celebrate femininity.
 Always write in a way that makes the reader feel she deserves the finest things.`;
@@ -155,7 +155,7 @@ export async function generateProductDescription(product: Product): Promise<stri
         {
           role: "system",
           content:
-            "You are a luxury jewelry copywriter for AURUM JEWELS. Write product descriptions that are evocative, elegant, and conversion-focused. Appeal to women who appreciate fine craftsmanship.",
+            "You are a luxury jewelry copywriter for LYVARA JEWELS. Write product descriptions that are evocative, elegant, and conversion-focused. Appeal to women who appreciate fine craftsmanship.",
         },
         {
           role: "user",

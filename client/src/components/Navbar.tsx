@@ -44,7 +44,7 @@ export default function Navbar() {
               className="font-serif text-xl tracking-widest"
               style={{ color: "var(--gold-dark)", letterSpacing: "0.2em" }}
             >
-              AURUM
+              LYVARA
             </span>
             <span
               className="font-sans text-xs tracking-widest font-light hidden sm:block"
@@ -115,7 +115,7 @@ export default function Navbar() {
           <div className="flex flex-col h-full">
             <div className="flex items-center justify-between p-6 border-b" style={{ borderColor: "var(--border)" }}>
               <span className="font-serif text-lg tracking-widest" style={{ color: "var(--gold-dark)" }}>
-                AURUM JEWELS
+                LYVARA JEWELS
               </span>
               <button onClick={() => setMobileOpen(false)}>
                 <X className="w-5 h-5" style={{ color: "var(--muted-foreground)" }} />

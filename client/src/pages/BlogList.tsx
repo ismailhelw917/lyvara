@@ -52,7 +52,7 @@ export default function BlogList() {
             </span>
           </div>
           <h1 className="font-serif text-4xl md:text-5xl font-light mb-2" style={{ color: "var(--foreground)" }}>
-            The Aurum Journal
+            The Lyvara Journal
           </h1>
           <p className="font-sans font-light text-sm" style={{ color: "var(--muted-foreground)" }}>
             Style guides, trend reports, and jewelry wisdom — curated daily by AI

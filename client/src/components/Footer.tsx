@@ -12,7 +12,7 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-4">
               <Gem className="w-5 h-5" style={{ color: "var(--gold)" }} />
               <span className="font-serif text-2xl tracking-widest" style={{ color: "var(--gold-light)", letterSpacing: "0.2em" }}>
-                AURUM JEWELS
+                LYVARA JEWELS
               </span>
             </div>
             <p className="font-sans font-light text-sm leading-relaxed mb-6" style={{ color: "oklch(0.75 0.01 60)", maxWidth: "320px" }}>
@@ -93,7 +93,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="container py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
         <p className="font-sans font-light text-xs" style={{ color: "oklch(0.45 0.01 60)" }}>
-          © {new Date().getFullYear()} Aurum Jewels. As an Amazon Associate, we earn from qualifying purchases.
+          © {new Date().getFullYear()} Lyvara Jewels. As an Amazon Associate, we earn from qualifying purchases.
         </p>
         <p className="font-sans font-light text-xs flex items-center gap-1" style={{ color: "oklch(0.45 0.01 60)" }}>
           Crafted with <Heart className="w-3 h-3 inline" style={{ color: "var(--rose-gold)" }} /> for the modern woman

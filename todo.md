@@ -69,6 +69,11 @@
 - [x] Add silent image failure detection (complete=true, naturalWidth=0) via useEffect+useRef
 - [x] Fix priceDropPercent "0" rendering bug in ProductCard (JSX falsy number issue)
 
+## Rebrand
+- [x] Choose unique unregistered brand name: LYVARA JEWELS (coined word, no trademark, no active website)
+- [x] Update all brand name references in codebase (Navbar, Footer, Home, App.tsx, index.html, routers, DB settings)
+- [x] Update Manus site title and free subdomain to match new brand (user to set in Settings → General & Domains)
+
 ## Demo Data
 - [x] 12 luxury jewelry products seeded (necklaces, bracelets, rings, earrings)
 - [x] Site settings seeded (automation flags, thresholds, tags)
