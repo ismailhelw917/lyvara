@@ -7,10 +7,11 @@ import ProductCard from "@/components/ProductCard";
 import { trpc } from "@/lib/trpc";
 import { Streamdown } from "streamdown";
 import { useSEO } from "@/hooks/useSEO";
+import { useTracking } from "@/hooks/useTracking";
 
 export default function BlogPost() {
   const params = useParams<{ slug: string }>();
-  const trackView = trpc.analytics.trackEvent.useMutation();
+  const { trackBlogView } = useTracking();
 
   const { data: post, isLoading } = trpc.blog.bySlug.useQuery(
     { slug: params.slug || "" },
@@ -39,9 +40,9 @@ export default function BlogPost() {
 
   useEffect(() => {
     if (post) {
-      trackView.mutate({ eventType: "blog_view", blogPostId: post.id, page: `/journal/${params.slug}` });
+      trackBlogView(post.id, `/journal/${params.slug}`);
     }
-  }, [post?.id]);
+  }, [post?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (isLoading) {
     return (

@@ -16,6 +16,12 @@ import {
   Activity,
   Calendar,
   ChevronDown,
+  Zap,
+  Eye,
+  MousePointer,
+  BookOpen,
+  Star,
+  Cpu,
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -431,13 +437,98 @@ function AutomationSection() {
   );
 }
 
+
+// ─── CounterAPI Live Stats Section ───────────────────────────────────────────
+function CounterStatsSection() {
+  const { data: counters, isLoading, refetch } = trpc.automation.counters.useQuery();
+
+  const stats = [
+    { key: "page-views" as const, label: "Page Views", icon: Eye, color: "var(--gold)" },
+    { key: "product-clicks" as const, label: "Product & Affiliate Clicks", icon: MousePointer, color: "var(--rose-gold)" },
+    { key: "content-events" as const, label: "Blog Reads & Searches", icon: BookOpen, color: "oklch(0.55 0.12 250)" },
+    { key: "review-events" as const, label: "Review Interactions", icon: Star, color: "oklch(0.55 0.14 160)" },
+    { key: "automation-runs" as const, label: "Automation Job Runs", icon: Cpu, color: "oklch(0.50 0.10 300)" },
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="font-serif text-xl font-light" style={{ color: "var(--foreground)" }}>Live Event Counters</h2>
+          <p className="font-sans text-xs mt-1" style={{ color: "var(--muted-foreground)" }}>Powered by CounterAPI — cumulative counts since launch</p>
+        </div>
+        <button onClick={() => refetch()} className="flex items-center gap-2 btn-luxury text-xs px-4 py-2">
+          <RefreshCw className="w-3 h-3" />
+          Refresh
+        </button>
+      </div>
+      {isLoading ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {stats.map((s) => (
+            <div key={s.key} className="p-5 rounded animate-pulse" style={{ background: "white", boxShadow: "var(--shadow-card)" }}>
+              <div className="skeleton h-8 w-16 rounded mb-2" />
+              <div className="skeleton h-4 w-24 rounded" />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {stats.map((s) => {
+            const count = (counters as any)?.[s.key] ?? 0;
+            const Icon = s.icon;
+            return (
+              <div key={s.key} className="p-5 rounded" style={{ background: "white", boxShadow: "var(--shadow-card)" }}>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: `${s.color}20` }}>
+                    <Icon className="w-4 h-4" style={{ color: s.color }} />
+                  </div>
+                </div>
+                <div className="font-serif text-3xl font-light mb-1" style={{ color: "var(--foreground)" }}>
+                  {count.toLocaleString()}
+                </div>
+                <div className="font-sans text-xs" style={{ color: "var(--muted-foreground)", fontSize: "0.65rem", letterSpacing: "0.05em" }}>
+                  {s.label.toUpperCase()}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      <div className="p-5 rounded" style={{ background: "white", boxShadow: "var(--shadow-card)" }}>
+        <h3 className="font-serif text-base font-light mb-4" style={{ color: "var(--foreground)" }}>Counter Breakdown</h3>
+        <div className="space-y-3">
+          {stats.map((s) => {
+            const count = (counters as any)?.[s.key] ?? 0;
+            const maxCount = Math.max(...stats.map((st) => (counters as any)?.[st.key] ?? 0), 1);
+            const pct = Math.round((count / maxCount) * 100);
+            const Icon = s.icon;
+            return (
+              <div key={s.key} className="flex items-center gap-4">
+                <Icon className="w-3.5 h-3.5 flex-shrink-0" style={{ color: s.color }} />
+                <span className="font-sans text-xs w-44 flex-shrink-0" style={{ color: "var(--muted-foreground)" }}>{s.label}</span>
+                <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: "var(--champagne)" }}>
+                  <div className="h-full rounded-full transition-all duration-500" style={{ width: `${pct}%`, background: s.color }} />
+                </div>
+                <span className="font-sans text-xs font-medium w-12 text-right" style={{ color: "var(--foreground)" }}>
+                  {count.toLocaleString()}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Admin Dashboard ─────────────────────────────────────────────────────
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<"analytics" | "automation">("analytics");
+  const [activeTab, setActiveTab] = useState<"analytics" | "automation" | "counters">("analytics");
 
   const tabs = [
     { id: "analytics" as const, label: "Analytics", icon: BarChart2 },
     { id: "automation" as const, label: "Automation", icon: Settings },
+    { id: "counters" as const, label: "Live Counters", icon: Zap },
   ];
 
   return (
@@ -488,6 +579,7 @@ export default function AdminDashboard() {
 
           {activeTab === "analytics" && <AnalyticsSection />}
           {activeTab === "automation" && <AutomationSection />}
+          {activeTab === "counters" && <CounterStatsSection />}
         </div>
       </div>
     </AdminGuard>

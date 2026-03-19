@@ -110,3 +110,21 @@
 ## Demo Data
 - [x] 12 luxury jewelry products seeded (necklaces, bracelets, rings, earrings)
 - [x] Site settings seeded (automation flags, thresholds, tags)
+
+## CounterAPI Integration
+- [x] Research CounterAPI endpoints and usage
+- [x] Build server-side counterService.ts helper (hit, get, getMultiple)
+- [x] Build client-side useTracking hook for frontend events
+- [x] Server: count product fetches per run, total products fetched all-time
+- [x] Server: count blog posts generated (total, per content type)
+- [x] Server: count automation job runs (product refresh, optimization, scoring)
+- [x] Server: count affiliate link clicks per product
+- [x] Server: count review submissions per product
+- [x] Client: count page views (home, shop, blog, product detail)
+- [x] Client: count product card clicks per product
+- [x] Client: count search/filter usage events
+- [x] Client: count blog post reads (per post)
+- [x] Client: count helpful/not-helpful review votes
+- [x] Admin dashboard: Live Counters tab with CounterAPI stats counts alongside internal analytics
+- [x] Product detail page: show live view count from CounterAPI
+- [x] Write vitest tests for CounterAPI service

@@ -130,6 +130,9 @@ importers:
       cookie:
         specifier: ^1.0.2
         version: 1.0.2
+      counterapi:
+        specifier: ^2.1.2
+        version: 2.1.2
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -2548,6 +2551,10 @@ packages:
 
   cose-base@2.2.0:
     resolution: {integrity: sha512-AzlgcsCbUMymkADOJtQm3wO9S3ltPfYOFD5033keQn9NJzIbtnZj+UdBJe7DYml/8TdbtHJW3j58SOnKhWY/5g==}
+
+  counterapi@2.1.2:
+    resolution: {integrity: sha512-KPxii+pFTnKh1QnggMFzBa3hzRqjGZZ9JJQF32bOvM5N+l9Z2nTqvd7R9ZXKFtIRa6sefzhVJXXkweBb5FDQtg==}
+    engines: {node: '>=14'}
 
   cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -6911,6 +6918,12 @@ snapshots:
   cose-base@2.2.0:
     dependencies:
       layout-base: 2.0.1
+
+  counterapi@2.1.2:
+    dependencies:
+      axios: 1.12.2
+    transitivePeerDependencies:
+      - debug
 
   cssesc@3.0.0: {}
 

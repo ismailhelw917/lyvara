@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { trpc } from "@/lib/trpc";
 import { useSEO } from "@/hooks/useSEO";
+import { usePageView } from "@/hooks/useTracking";
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 function HeroSection() {
@@ -438,10 +439,7 @@ export default function Home() {
     keywords: "luxury gold jewelry, silver jewelry women, gold necklaces, diamond bracelets, fine jewelry, jewelry gifts for women",
     url: "/",
   });
-  const trackView = trpc.analytics.trackEvent.useMutation();
-  useEffect(() => {
-    trackView.mutate({ eventType: "page_view", page: "/" });
-  }, []);;
+  usePageView("/");
 
   return (
     <div className="min-h-screen" style={{ background: "var(--background)" }}>

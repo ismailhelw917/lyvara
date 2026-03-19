@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
 import { useSEO } from "@/hooks/useSEO";
+import { usePageView } from "@/hooks/useTracking";
 
 const BLOG_CATEGORIES = [
   { value: "", label: "All" },
@@ -25,11 +26,7 @@ export default function BlogList() {
     keywords: "jewelry style guide, gold jewelry trends, how to style jewelry, jewelry gift ideas, jewelry care tips",
     url: "/journal",
   });
-  const trackView = trpc.analytics.trackEvent.useMutation();
-
-  useEffect(() => {
-    trackView.mutate({ eventType: "page_view", page: location });
-  }, []);
+  usePageView("/journal");
 
   const queryInput = useMemo(() => ({
     category: category || undefined,

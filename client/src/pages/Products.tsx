@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { trpc } from "@/lib/trpc";
 import { useSEO } from "@/hooks/useSEO";
+import { useTracking } from "@/hooks/useTracking";
 
 const CATEGORIES = [
   { value: "", label: "All Jewelry" },
@@ -47,8 +48,7 @@ const PRICE_RANGES = [
 export default function Products() {
   const params = useParams<{ category?: string }>();
   const [location] = useLocation();
-  const trackFilter = trpc.analytics.trackEvent.useMutation();
-  const trackView = trpc.analytics.trackEvent.useMutation();
+  const { trackPageView, trackFilter: trackFilterEvent } = useTracking();
 
   const [category, setCategory] = useState(params.category || "");
   const [metalType, setMetalType] = useState("");
@@ -75,8 +75,8 @@ export default function Products() {
   }, [params.category]);
 
   useEffect(() => {
-    trackView.mutate({ eventType: "page_view", page: location });
-  }, [location]);
+    trackPageView(location);
+  }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const selectedPriceRange = PRICE_RANGES[priceRange];
 
@@ -96,13 +96,13 @@ export default function Products() {
   const handleCategoryChange = (val: string) => {
     setCategory(val);
     setPage(0);
-    trackFilter.mutate({ eventType: "filter", page: location });
+    trackFilterEvent("category", val);
   };
 
   const handleMetalChange = (val: string) => {
     setMetalType(val);
     setPage(0);
-    trackFilter.mutate({ eventType: "filter", page: location });
+    trackFilterEvent("metalType", val);
   };
 
   const pageTitle = category

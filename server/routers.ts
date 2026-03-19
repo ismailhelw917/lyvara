@@ -33,6 +33,7 @@ import {
   voteOnReview,
 } from "./db";
 import { runProductFetch, runBlogGeneration, runLayoutOptimization, runPerformanceScoring } from "./automationEngine";
+import { trackPageView, trackProductClick, trackContentEvent, trackReviewEvent, counterGetAll } from "./counterService";
 
 // ─── Admin Procedure ──────────────────────────────────────────────────────────
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -93,6 +94,7 @@ const blogRouter = router({
       const post = await getBlogPostBySlug(input.slug);
       if (!post) throw new TRPCError({ code: "NOT_FOUND", message: "Blog post not found" });
       await incrementBlogViews(post.id);
+      await trackContentEvent(); // CounterAPI: content-events (blog read)
       return post;
     }),
 
@@ -117,6 +119,12 @@ const analyticsRouter = router({
         userAgent: ctx.req.headers["user-agent"] || undefined,
         referrer: ctx.req.headers.referer || undefined,
       });
+      // CounterAPI: fire the right counter for each event type
+      if (input.eventType === "page_view") await trackPageView();
+      else if (input.eventType === "product_click") await trackProductClick();
+      else if (input.eventType === "affiliate_click") await trackProductClick();
+      else if (input.eventType === "blog_view") await trackContentEvent();
+      else if (input.eventType === "search" || input.eventType === "filter") await trackContentEvent();
       return { success: true };
     }),
 
@@ -179,6 +187,8 @@ const automationRouter = router({
     }
   }),
 
+  counters: adminProcedure.query(async () => counterGetAll()),
+
   settings: adminProcedure.query(() => getAllSettings()),
 
   updateSetting: adminProcedure
@@ -236,6 +246,7 @@ const reviewsRouter = router({
         isVerified: false,
         status: "approved",
       });
+      await trackReviewEvent(); // CounterAPI: review-events (new review)
       return { success: true };
     }),
 
@@ -248,7 +259,9 @@ const reviewsRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      return voteOnReview(input.reviewId, input.sessionId, input.voteType);
+      const result = await voteOnReview(input.reviewId, input.sessionId, input.voteType);
+      await trackReviewEvent(); // CounterAPI: review-events (vote)
+      return result;
     }),
 });
 

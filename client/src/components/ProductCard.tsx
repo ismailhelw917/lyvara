@@ -1,7 +1,7 @@
 import { Star, ExternalLink, TrendingUp } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
-import { trpc } from "@/lib/trpc";
+import { useTracking } from "@/hooks/useTracking";
 import type { Product } from "../../../drizzle/schema";
 
 interface ProductCardProps {
@@ -26,7 +26,7 @@ const FALLBACK_IMAGES = [
 
 export default function ProductCard({ product, size, showBadge = true }: ProductCardProps) {
   const effectiveSize = size || product.imageSize || "medium";
-  const trackClick = trpc.analytics.trackEvent.useMutation();
+  const { trackProductClick, trackAffiliateClick } = useTracking();
   const [imgError, setImgError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
@@ -52,20 +52,12 @@ export default function ProductCard({ product, size, showBadge = true }: Product
   }, [imageSrc]);
 
   const handleAffiliateClick = () => {
-    trackClick.mutate({
-      productId: product.id,
-      eventType: "affiliate_click",
-      page: window.location.pathname,
-    });
+    trackAffiliateClick(product.id, product.title);
     window.open(product.affiliateUrl, "_blank", "noopener,noreferrer");
   };
 
   const handleCardClick = () => {
-    trackClick.mutate({
-      productId: product.id,
-      eventType: "product_click",
-      page: window.location.pathname,
-    });
+    trackProductClick(product.id, product.title);
   };
 
   const imageHeight =

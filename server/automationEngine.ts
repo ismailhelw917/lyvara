@@ -26,6 +26,7 @@ import {
 import { fetchAllCategories } from "./amazonService";
 import { calculatePerformanceScore, classifyProducts, generateBlogPost, generateHeroImage } from "./contentService";
 import { notifyOwner } from "./_core/notification";
+import { trackAutomationRun, trackContentEvent } from "./counterService";
 import { eq, sql } from "drizzle-orm";
 import { products } from "../drizzle/schema";
 
@@ -82,6 +83,7 @@ export async function runProductFetch(): Promise<{ success: boolean; productsUpd
     }
 
     console.log(`[AutomationEngine] Product fetch complete: ${updatedCount} products`);
+    await trackAutomationRun(); // CounterAPI: automation-runs
     return { success: true, productsUpdated: updatedCount, message };
   } catch (error: any) {
     const duration = Date.now() - startTime;
@@ -181,6 +183,7 @@ export async function runBlogGeneration(forcedCategory?: BlogCategory): Promise<
     }).catch(() => {});
 
     console.log(`[AutomationEngine] Blog generation complete: "${generatedPost.title}"`);
+    await trackContentEvent(); // CounterAPI: content-events (blog post generated)
     return { success: true, postsGenerated: 1, message };
   } catch (error: any) {
     const duration = Date.now() - startTime;
@@ -355,6 +358,7 @@ export async function runLayoutOptimization(): Promise<{ success: boolean; messa
     }
 
     console.log(`[AutomationEngine] Layout optimization complete: ${changes} changes`);
+    await trackAutomationRun(); // CounterAPI: automation-runs
     return { success: true, message, changes };
   } catch (error: any) {
     const duration = Date.now() - startTime;
