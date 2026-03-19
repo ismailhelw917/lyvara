@@ -66,8 +66,8 @@ export default function ProductCard({ product, size, showBadge = true }: Product
       : effectiveSize === "large"
       ? "h-72 md:h-80"
       : effectiveSize === "small"
-      ? "h-48"
-      : "h-60 md:h-64";
+      ? "h-56"
+      : "h-64 md:h-72";
 
   const titleSize =
     effectiveSize === "hero" || effectiveSize === "large"
@@ -81,13 +81,13 @@ export default function ProductCard({ product, size, showBadge = true }: Product
       className="product-card bg-white rounded overflow-hidden cursor-pointer group block"
       style={{ boxShadow: "var(--shadow-card)" }}
     >
-      {/* Image Container */}
-      <div className={`relative overflow-hidden ${imageHeight}`} style={{ background: "var(--champagne)" }}>
+      {/* Image Container — enforces consistent aspect ratio */}
+      <div className={`relative overflow-hidden ${imageHeight} w-full`} style={{ background: "var(--champagne)" }}>
         <img
           ref={imgRef}
           src={imageSrc}
           alt={product.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
           onError={() => setImgError(true)}
         />

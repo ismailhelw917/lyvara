@@ -159,3 +159,6 @@
 - [x] Add Pinterest auto-poster to automation engine (fires on each blog generation)
 - [x] Add Pinterest stats to Admin Dashboard (Meta & Pinterest tab)
 - [ ] Request PINTEREST_ACCESS_TOKEN, PINTEREST_BOARD_ID secrets (user action required)
+
+## UI/UX Fixes
+- [x] Fix product card image sizing — enforce consistent height (h-64/h-72 medium, h-56 small) with object-cover centering
