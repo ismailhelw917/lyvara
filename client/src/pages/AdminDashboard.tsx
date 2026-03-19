@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
 import {
   BarChart2,
@@ -13,8 +13,9 @@ import {
   Settings,
   Gem,
   ArrowLeft,
-  Star,
   Activity,
+  Calendar,
+  ChevronDown,
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -27,8 +28,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  BarChart,
-  Bar,
   Legend,
 } from "recharts";
 
@@ -50,9 +49,7 @@ function AdminGuard({ children }: { children: React.ReactNode }) {
         <div className="text-center">
           <Gem className="w-12 h-12 mx-auto mb-4" style={{ color: "var(--gold)" }} />
           <h2 className="font-serif text-2xl mb-4" style={{ color: "var(--foreground)" }}>Admin Access Required</h2>
-          <a href={getLoginUrl()} className="btn-luxury-filled">
-            Sign In
-          </a>
+          <a href={getLoginUrl()} className="btn-luxury-filled">Sign In</a>
         </div>
       </div>
     );
@@ -64,7 +61,7 @@ function AdminGuard({ children }: { children: React.ReactNode }) {
         <div className="text-center">
           <XCircle className="w-12 h-12 mx-auto mb-4" style={{ color: "var(--destructive)" }} />
           <h2 className="font-serif text-2xl mb-2" style={{ color: "var(--foreground)" }}>Access Denied</h2>
-          <p className="font-sans text-sm mb-4" style={{ color: "var(--muted-foreground)" }}>You need admin privileges to access this page.</p>
+          <p className="font-sans text-sm mb-4" style={{ color: "var(--muted-foreground)" }}>Admin privileges required.</p>
           <Link href="/" className="btn-luxury">Go Home</Link>
         </div>
       </div>
@@ -99,7 +96,6 @@ function AnalyticsSection() {
   const { data: daily } = trpc.analytics.daily.useQuery({ days: 14 });
   const { data: topProducts } = trpc.analytics.topProducts.useQuery({ limit: 5 });
 
-  // Process daily data for chart
   const chartData = (() => {
     if (!daily) return [];
     const byDate: Record<string, Record<string, number>> = {};
@@ -117,7 +113,6 @@ function AnalyticsSection() {
 
   return (
     <div className="space-y-6">
-      {/* Summary Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard label="Total Clicks" value={summary?.totalClicks || 0} icon={Activity} color="var(--gold)" />
         <StatCard label="Affiliate Clicks" value={summary?.affiliateClicks || 0} icon={TrendingUp} color="var(--rose-gold)" />
@@ -125,10 +120,9 @@ function AnalyticsSection() {
         <StatCard label="Blog Views" value={summary?.blogViews || 0} icon={FileText} color="oklch(0.65 0.12 250)" />
       </div>
 
-      {/* Daily Chart */}
       {chartData.length > 0 && (
         <div className="p-6 rounded" style={{ background: "white", boxShadow: "var(--shadow-card)" }}>
-          <h3 className="font-serif text-lg mb-4" style={{ color: "var(--foreground)" }}>Traffic (Last 14 Days)</h3>
+          <h3 className="font-serif text-lg mb-4" style={{ color: "var(--foreground)" }}>Traffic — Last 14 Days</h3>
           <ResponsiveContainer width="100%" height={220}>
             <AreaChart data={chartData}>
               <defs>
@@ -144,9 +138,7 @@ function AnalyticsSection() {
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
               <XAxis dataKey="date" tick={{ fontSize: 10, fill: "var(--muted-foreground)" }} />
               <YAxis tick={{ fontSize: 10, fill: "var(--muted-foreground)" }} />
-              <Tooltip
-                contentStyle={{ fontFamily: "var(--font-sans)", fontSize: "12px", border: "1px solid var(--border)" }}
-              />
+              <Tooltip contentStyle={{ fontFamily: "var(--font-sans)", fontSize: "12px", border: "1px solid var(--border)" }} />
               <Legend wrapperStyle={{ fontSize: "11px", fontFamily: "var(--font-sans)" }} />
               <Area type="monotone" dataKey="clicks" stroke="var(--gold)" fill="url(#colorClicks)" strokeWidth={2} name="Clicks" />
               <Area type="monotone" dataKey="views" stroke="var(--rose-gold)" fill="url(#colorViews)" strokeWidth={2} name="Page Views" />
@@ -155,7 +147,6 @@ function AnalyticsSection() {
         </div>
       )}
 
-      {/* Top Products */}
       {topProducts && topProducts.length > 0 && (
         <div className="p-6 rounded" style={{ background: "white", boxShadow: "var(--shadow-card)" }}>
           <h3 className="font-serif text-lg mb-4" style={{ color: "var(--foreground)" }}>Top Performing Products</h3>
@@ -185,99 +176,229 @@ function AnalyticsSection() {
   );
 }
 
+// ─── Blog Content Type Labels ─────────────────────────────────────────────────
+const CONTENT_TYPES = [
+  { value: "style_guide",     label: "Style Guide",      desc: "How to layer & style jewelry" },
+  { value: "trend_report",    label: "Trend Report",     desc: "Seasonal & runway trends" },
+  { value: "gift_ideas",      label: "Gift Guide",       desc: "Curated gift recommendations" },
+  { value: "care_tips",       label: "Care Tips",        desc: "Jewelry care & maintenance" },
+  { value: "brand_spotlight", label: "Brand Spotlight",  desc: "Featured brand deep-dive" },
+  { value: "seasonal",        label: "Seasonal Edit",    desc: "Season-specific curation" },
+  { value: "promotional",     label: "Promotional",      desc: "Deals & featured collections" },
+] as const;
+
+type ContentTypeValue = typeof CONTENT_TYPES[number]["value"];
+
+// ─── Automation Schedule Card ─────────────────────────────────────────────────
+function ScheduleCard({ time, label, desc, color }: { time: string; label: string; desc: string; color: string }) {
+  return (
+    <div className="flex items-start gap-3 p-4 rounded" style={{ background: "var(--champagne)" }}>
+      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: `${color}25` }}>
+        <Calendar className="w-4 h-4" style={{ color }} />
+      </div>
+      <div>
+        <div className="flex items-center gap-2 mb-0.5">
+          <span className="font-sans text-xs font-semibold" style={{ color: "var(--foreground)" }}>{label}</span>
+          <span className="font-sans text-xs px-2 py-0.5 rounded-full" style={{ background: `${color}20`, color }}>{time}</span>
+        </div>
+        <p className="font-sans text-xs font-light" style={{ color: "var(--muted-foreground)" }}>{desc}</p>
+      </div>
+    </div>
+  );
+}
+
 // ─── Automation Controls ──────────────────────────────────────────────────────
 function AutomationSection() {
-  const { data: logs, refetch: refetchLogs } = trpc.automation.logs.useQuery({ limit: 10 });
+  const { data: logs, refetch: refetchLogs } = trpc.automation.logs.useQuery({ limit: 15 });
+  const [selectedContentType, setSelectedContentType] = useState<ContentTypeValue | "auto">("auto");
+  const [showTypeDropdown, setShowTypeDropdown] = useState(false);
 
-  const fetchProducts = trpc.automation.triggerProductFetch.useMutation({
-    onSuccess: () => refetchLogs(),
-  });
-  const generateBlog = trpc.automation.triggerBlogGeneration.useMutation({
-    onSuccess: () => refetchLogs(),
-  });
-  const optimizeLayout = trpc.automation.triggerLayoutOptimization.useMutation({
-    onSuccess: () => refetchLogs(),
-  });
-  const scorePerformance = trpc.automation.triggerPerformanceScoring.useMutation({
-    onSuccess: () => refetchLogs(),
-  });
+  const fetchProducts = trpc.automation.triggerProductFetch.useMutation({ onSuccess: () => refetchLogs() });
+  const generateBlog = trpc.automation.triggerBlogGeneration.useMutation({ onSuccess: () => refetchLogs() });
+  const optimizeLayout = trpc.automation.triggerLayoutOptimization.useMutation({ onSuccess: () => refetchLogs() });
+  const scorePerformance = trpc.automation.triggerPerformanceScoring.useMutation({ onSuccess: () => refetchLogs() });
 
   const isAnyRunning = fetchProducts.isPending || generateBlog.isPending || optimizeLayout.isPending || scorePerformance.isPending;
 
-  const controls = [
-    {
-      label: "Fetch Products",
-      desc: "Refresh jewelry catalog from Amazon",
-      icon: RefreshCw,
-      action: () => fetchProducts.mutate(),
-      loading: fetchProducts.isPending,
-      color: "var(--gold)",
-    },
-    {
-      label: "Generate Blog Post",
-      desc: "Create AI-powered editorial content",
-      icon: FileText,
-      action: () => generateBlog.mutate(),
-      loading: generateBlog.isPending,
-      color: "var(--rose-gold)",
-    },
-    {
-      label: "Optimize Layout",
-      desc: "Promote top sellers, replace underperformers",
-      icon: Layout,
-      action: () => optimizeLayout.mutate(),
-      loading: optimizeLayout.isPending,
-      color: "var(--silver)",
-    },
-    {
-      label: "Score Performance",
-      desc: "Recalculate all product performance scores",
-      icon: TrendingUp,
-      action: () => scorePerformance.mutate(),
-      loading: scorePerformance.isPending,
-      color: "oklch(0.65 0.12 250)",
-    },
-  ];
+  const handleGenerateBlog = () => {
+    generateBlog.mutate(
+      selectedContentType === "auto"
+        ? undefined
+        : { contentType: selectedContentType }
+    );
+  };
+
+  const selectedLabel = selectedContentType === "auto"
+    ? "Auto-rotate"
+    : CONTENT_TYPES.find(t => t.value === selectedContentType)?.label ?? "Auto-rotate";
 
   return (
     <div className="space-y-6">
-      {/* Control Buttons */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {controls.map((ctrl) => (
-          <div key={ctrl.label} className="p-5 rounded" style={{ background: "white", boxShadow: "var(--shadow-card)" }}>
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: `${ctrl.color}20` }}>
-                <ctrl.icon className="w-5 h-5" style={{ color: ctrl.color }} />
-              </div>
-              <div className="flex-1">
-                <h4 className="font-sans text-sm font-medium mb-1" style={{ color: "var(--foreground)" }}>{ctrl.label}</h4>
-                <p className="font-sans text-xs font-light mb-3" style={{ color: "var(--muted-foreground)" }}>{ctrl.desc}</p>
-                <button
-                  onClick={ctrl.action}
-                  disabled={isAnyRunning}
-                  className="btn-luxury text-xs px-4 py-2 flex items-center gap-2 disabled:opacity-50"
-                  style={{ borderColor: ctrl.color, color: ctrl.color }}
-                >
-                  {ctrl.loading ? (
-                    <><Loader2 className="w-3 h-3 animate-spin" /> Running...</>
-                  ) : (
-                    "Run Now"
-                  )}
-                </button>
-              </div>
+
+      {/* Automation Schedule */}
+      <div className="p-6 rounded" style={{ background: "white", boxShadow: "var(--shadow-card)" }}>
+        <h3 className="font-serif text-lg mb-1" style={{ color: "var(--foreground)" }}>Automation Schedule</h3>
+        <p className="font-sans text-xs font-light mb-4" style={{ color: "var(--muted-foreground)" }}>
+          All jobs run automatically — no action required
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <ScheduleCard
+            time="Every 24 hrs"
+            label="Product Refresh"
+            desc="Fetches new gold & silver jewelry from Amazon, updates prices and availability"
+            color="var(--gold)"
+          />
+          <ScheduleCard
+            time="Every 24 hrs"
+            label="AI Blog Post"
+            desc="Generates a new editorial post (style guide, trend report, gift guide, etc.) with a hero image"
+            color="var(--rose-gold)"
+          />
+          <ScheduleCard
+            time="Every 6 hrs"
+            label="Performance Scoring"
+            desc="Recalculates CTR, conversion rate, and revenue score for every product"
+            color="oklch(0.65 0.12 250)"
+          />
+          <ScheduleCard
+            time="Every 7 days"
+            label="Layout Optimization"
+            desc="Promotes top 20% performers to hero/featured slots, hides underperformers"
+            color="var(--silver)"
+          />
+        </div>
+      </div>
+
+      {/* Manual Triggers */}
+      <div className="p-6 rounded" style={{ background: "white", boxShadow: "var(--shadow-card)" }}>
+        <h3 className="font-serif text-lg mb-1" style={{ color: "var(--foreground)" }}>Manual Triggers</h3>
+        <p className="font-sans text-xs font-light mb-4" style={{ color: "var(--muted-foreground)" }}>
+          Run any job immediately without waiting for the schedule
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Fetch Products */}
+          <div className="p-4 rounded border" style={{ borderColor: "var(--border)" }}>
+            <div className="flex items-center gap-3 mb-2">
+              <RefreshCw className="w-4 h-4 flex-shrink-0" style={{ color: "var(--gold)" }} />
+              <span className="font-sans text-sm font-medium" style={{ color: "var(--foreground)" }}>Fetch Products</span>
             </div>
+            <p className="font-sans text-xs font-light mb-3" style={{ color: "var(--muted-foreground)" }}>
+              Pull latest jewelry listings from Amazon across all categories
+            </p>
+            <button
+              onClick={() => fetchProducts.mutate()}
+              disabled={isAnyRunning}
+              className="btn-luxury text-xs px-4 py-2 flex items-center gap-2 disabled:opacity-50"
+              style={{ borderColor: "var(--gold)", color: "var(--gold)" }}
+            >
+              {fetchProducts.isPending ? <><Loader2 className="w-3 h-3 animate-spin" /> Running...</> : "Run Now"}
+            </button>
           </div>
-        ))}
+
+          {/* Generate Blog Post with content type selector */}
+          <div className="p-4 rounded border" style={{ borderColor: "var(--border)" }}>
+            <div className="flex items-center gap-3 mb-2">
+              <FileText className="w-4 h-4 flex-shrink-0" style={{ color: "var(--rose-gold)" }} />
+              <span className="font-sans text-sm font-medium" style={{ color: "var(--foreground)" }}>Generate Blog Post</span>
+            </div>
+            <p className="font-sans text-xs font-light mb-3" style={{ color: "var(--muted-foreground)" }}>
+              AI writes a full editorial post with hero image and product links
+            </p>
+            {/* Content type picker */}
+            <div className="relative mb-3">
+              <button
+                onClick={() => setShowTypeDropdown(!showTypeDropdown)}
+                className="w-full flex items-center justify-between px-3 py-2 rounded border text-xs font-sans"
+                style={{ borderColor: "var(--border)", color: "var(--foreground)", background: "var(--champagne)" }}
+              >
+                <span>{selectedLabel}</span>
+                <ChevronDown className="w-3 h-3" style={{ color: "var(--muted-foreground)" }} />
+              </button>
+              {showTypeDropdown && (
+                <div
+                  className="absolute top-full left-0 right-0 z-10 mt-1 rounded border shadow-hover overflow-hidden"
+                  style={{ background: "white", borderColor: "var(--border)" }}
+                >
+                  <button
+                    className="w-full text-left px-3 py-2 text-xs font-sans hover:bg-champagne transition-colors"
+                    style={{ color: selectedContentType === "auto" ? "var(--gold)" : "var(--foreground)" }}
+                    onClick={() => { setSelectedContentType("auto"); setShowTypeDropdown(false); }}
+                  >
+                    Auto-rotate (recommended)
+                  </button>
+                  {CONTENT_TYPES.map(t => (
+                    <button
+                      key={t.value}
+                      className="w-full text-left px-3 py-2 text-xs font-sans hover:bg-champagne transition-colors"
+                      style={{ color: selectedContentType === t.value ? "var(--gold)" : "var(--foreground)" }}
+                      onClick={() => { setSelectedContentType(t.value); setShowTypeDropdown(false); }}
+                    >
+                      <span className="font-medium">{t.label}</span>
+                      <span className="ml-2" style={{ color: "var(--muted-foreground)" }}>— {t.desc}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <button
+              onClick={handleGenerateBlog}
+              disabled={isAnyRunning}
+              className="btn-luxury text-xs px-4 py-2 flex items-center gap-2 disabled:opacity-50"
+              style={{ borderColor: "var(--rose-gold)", color: "var(--rose-gold)" }}
+            >
+              {generateBlog.isPending ? <><Loader2 className="w-3 h-3 animate-spin" /> Generating...</> : "Generate Now"}
+            </button>
+          </div>
+
+          {/* Optimize Layout */}
+          <div className="p-4 rounded border" style={{ borderColor: "var(--border)" }}>
+            <div className="flex items-center gap-3 mb-2">
+              <Layout className="w-4 h-4 flex-shrink-0" style={{ color: "var(--silver)" }} />
+              <span className="font-sans text-sm font-medium" style={{ color: "var(--foreground)" }}>Optimize Layout</span>
+            </div>
+            <p className="font-sans text-xs font-light mb-3" style={{ color: "var(--muted-foreground)" }}>
+              Promote top sellers to hero positions, deactivate underperformers
+            </p>
+            <button
+              onClick={() => optimizeLayout.mutate()}
+              disabled={isAnyRunning}
+              className="btn-luxury text-xs px-4 py-2 flex items-center gap-2 disabled:opacity-50"
+              style={{ borderColor: "var(--silver)", color: "var(--silver)" }}
+            >
+              {optimizeLayout.isPending ? <><Loader2 className="w-3 h-3 animate-spin" /> Running...</> : "Run Now"}
+            </button>
+          </div>
+
+          {/* Score Performance */}
+          <div className="p-4 rounded border" style={{ borderColor: "var(--border)" }}>
+            <div className="flex items-center gap-3 mb-2">
+              <TrendingUp className="w-4 h-4 flex-shrink-0" style={{ color: "oklch(0.65 0.12 250)" }} />
+              <span className="font-sans text-sm font-medium" style={{ color: "var(--foreground)" }}>Score Performance</span>
+            </div>
+            <p className="font-sans text-xs font-light mb-3" style={{ color: "var(--muted-foreground)" }}>
+              Recalculate CTR, conversion rate, and revenue scores for all products
+            </p>
+            <button
+              onClick={() => scorePerformance.mutate()}
+              disabled={isAnyRunning}
+              className="btn-luxury text-xs px-4 py-2 flex items-center gap-2 disabled:opacity-50"
+              style={{ borderColor: "oklch(0.65 0.12 250)", color: "oklch(0.65 0.12 250)" }}
+            >
+              {scorePerformance.isPending ? <><Loader2 className="w-3 h-3 animate-spin" /> Running...</> : "Run Now"}
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Automation Logs */}
       {logs && logs.length > 0 && (
         <div className="p-6 rounded" style={{ background: "white", boxShadow: "var(--shadow-card)" }}>
-          <h3 className="font-serif text-lg mb-4" style={{ color: "var(--foreground)" }}>Automation Logs</h3>
+          <h3 className="font-serif text-lg mb-4" style={{ color: "var(--foreground)" }}>Recent Automation Logs</h3>
           <div className="space-y-2">
             {logs.map((log) => (
               <div key={log.id} className="flex items-start gap-3 p-3 rounded text-xs" style={{ background: "var(--champagne)" }}>
-                <div className="mt-0.5">
+                <div className="mt-0.5 flex-shrink-0">
                   {log.status === "success" ? (
                     <CheckCircle className="w-4 h-4" style={{ color: "oklch(0.55 0.15 145)" }} />
                   ) : log.status === "failed" ? (
@@ -287,16 +408,16 @@ function AutomationSection() {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
                     <span className="font-sans font-medium capitalize" style={{ color: "var(--foreground)" }}>
-                      {log.jobType.replace("_", " ")}
+                      {log.jobType.replace(/_/g, " ")}
                     </span>
                     <span className="font-sans" style={{ color: "var(--muted-foreground)", fontSize: "0.6rem" }}>
                       {new Date(log.createdAt).toLocaleString()}
                     </span>
                   </div>
                   {log.message && (
-                    <p className="font-sans font-light mt-0.5 truncate" style={{ color: "var(--muted-foreground)" }}>
+                    <p className="font-sans font-light mt-0.5" style={{ color: "var(--muted-foreground)", wordBreak: "break-word" }}>
                       {log.message}
                     </p>
                   )}
@@ -326,7 +447,7 @@ export default function AdminDashboard() {
         <div style={{ background: "oklch(0.14 0.015 30)" }} className="px-6 py-4">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Gem className="w-5 h-5" style={{ color: "var(--gold)" }} />
+              <Gem className="w-5 h-5 flex-shrink-0" style={{ color: "var(--gold)" }} />
               <span className="font-serif text-lg tracking-widest" style={{ color: "var(--gold-light)" }}>
                 LYVARA ADMIN
               </span>
@@ -338,12 +459,9 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-6 py-8">
-          {/* Page Title */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
           <div className="mb-8">
-            <h1 className="font-serif text-3xl font-light mb-1" style={{ color: "var(--foreground)" }}>
-              Dashboard
-            </h1>
+            <h1 className="font-serif text-3xl font-light mb-1" style={{ color: "var(--foreground)" }}>Dashboard</h1>
             <p className="font-sans text-sm font-light" style={{ color: "var(--muted-foreground)" }}>
               Monitor performance and control automation
             </p>
@@ -368,7 +486,6 @@ export default function AdminDashboard() {
             ))}
           </div>
 
-          {/* Tab Content */}
           {activeTab === "analytics" && <AnalyticsSection />}
           {activeTab === "automation" && <AutomationSection />}
         </div>

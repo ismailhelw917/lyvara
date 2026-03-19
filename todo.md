@@ -74,6 +74,24 @@
 - [x] Update all brand name references in codebase (Navbar, Footer, Home, App.tsx, index.html, routers, DB settings)
 - [x] Update Manus site title and free subdomain to match new brand (user to set in Settings → General & Domains)
 
+## Mobile & UX Fixes
+- [x] Fix mobile navbar logo text overlap — added dark gradient behind transparent navbar, whitespace-nowrap on logo text, white nav links over dark hero
+
+## Posts Automation Enhancement
+- [x] Add daily posts automation with varied content types (trend reports, gift guides, styling tips, care guides)
+- [x] Add post scheduling queue visible in admin dashboard
+- [x] Add manual "Generate Now" trigger with content type selector in admin dashboard
+
+## SEO Configuration
+- [x] Add meta title, description, keywords to all pages
+- [x] Add Open Graph tags (og:title, og:description, og:image, og:url)
+- [x] Add Twitter Card meta tags
+- [x] Add JSON-LD structured data (WebSite, ItemList, BlogPosting schemas)
+- [x] Add sitemap.xml endpoint (/sitemap.xml)
+- [x] Add robots.txt (/robots.txt)
+- [x] Add canonical URL tags
+- [x] Add per-page dynamic SEO via useSEO hook (Home, Shop, Journal, BlogPost)
+
 ## Demo Data
 - [x] 12 luxury jewelry products seeded (necklaces, bracelets, rings, earrings)
 - [x] Site settings seeded (automation flags, thresholds, tags)

@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { trpc } from "@/lib/trpc";
+import { useSEO } from "@/hooks/useSEO";
 
 const CATEGORIES = [
   { value: "", label: "All Jewelry" },
@@ -52,6 +53,16 @@ export default function Products() {
   const [category, setCategory] = useState(params.category || "");
   const [metalType, setMetalType] = useState("");
   const [priceRange, setPriceRange] = useState(0);
+
+  const categoryLabel = category
+    ? CATEGORIES.find((c) => c.value === category)?.label || "Jewelry"
+    : "All Jewelry";
+  useSEO({
+    title: `Shop ${categoryLabel} — Gold & Silver Jewelry`,
+    description: `Browse our curated collection of luxury ${categoryLabel.toLowerCase()} in gold, silver, and rose gold. New arrivals added daily.`,
+    keywords: `${categoryLabel.toLowerCase()} jewelry, gold ${categoryLabel.toLowerCase()}, silver ${categoryLabel.toLowerCase()}, luxury jewelry women`,
+    url: location,
+  });
   const [sortBy, setSortBy] = useState<"rank" | "price_asc" | "price_desc" | "rating" | "newest" | "performance">("rank");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [page, setPage] = useState(0);

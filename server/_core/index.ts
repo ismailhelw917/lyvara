@@ -8,6 +8,9 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { startScheduler } from "../automationEngine";
+import { getDb } from "../db";
+import { blogPosts, products } from "../../drizzle/schema";
+import { eq, and, gt } from "drizzle-orm";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -36,6 +39,63 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+
+  // ─── SEO: sitemap.xml ──────────────────────────────────────────────────────
+  app.get("/sitemap.xml", async (_req, res) => {
+    try {
+      const db = await getDb();
+      const BASE = "https://lyvara-jewels.manus.space";
+      const now = new Date().toISOString().split("T")[0];
+
+      const staticUrls: { loc: string; priority: string; changefreq: string; lastmod?: string }[] = [
+        { loc: BASE, priority: "1.0", changefreq: "daily" },
+        { loc: `${BASE}/shop`, priority: "0.9", changefreq: "daily" },
+        { loc: `${BASE}/shop/necklaces`, priority: "0.8", changefreq: "weekly" },
+        { loc: `${BASE}/shop/bracelets`, priority: "0.8", changefreq: "weekly" },
+        { loc: `${BASE}/shop/rings`, priority: "0.8", changefreq: "weekly" },
+        { loc: `${BASE}/shop/earrings`, priority: "0.8", changefreq: "weekly" },
+        { loc: `${BASE}/journal`, priority: "0.7", changefreq: "daily" },
+      ];
+
+      let blogUrls: { loc: string; priority: string; changefreq: string; lastmod?: string }[] = [];
+      if (db) {
+        const posts = await db
+          .select({ slug: blogPosts.slug, updatedAt: blogPosts.updatedAt })
+          .from(blogPosts)
+          .where(eq(blogPosts.status, "published"))
+          .limit(200);
+        blogUrls = posts.map(p => ({
+          loc: `${BASE}/journal/${p.slug}`,
+          priority: "0.6",
+          changefreq: "monthly",
+          lastmod: p.updatedAt ? new Date(p.updatedAt).toISOString().split("T")[0] : now,
+        }));
+      }
+
+      const allUrls = [...staticUrls, ...blogUrls];
+      const xml = [
+        `<?xml version="1.0" encoding="UTF-8"?>`,
+        `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
+        ...allUrls.map(u => [
+          `  <url>`,
+          `    <loc>${u.loc}</loc>`,
+          `    <lastmod>${u.lastmod || now}</lastmod>`,
+          `    <changefreq>${u.changefreq}</changefreq>`,
+          `    <priority>${u.priority}</priority>`,
+          `  </url>`,
+        ].join("\n")),
+        `</urlset>`,
+      ].join("\n");
+
+      res.setHeader("Content-Type", "application/xml");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      res.send(xml);
+    } catch (err) {
+      console.error("[Sitemap] Error:", err);
+      res.status(500).send("Error generating sitemap");
+    }
+  });
+
   // tRPC API
   app.use(
     "/api/trpc",

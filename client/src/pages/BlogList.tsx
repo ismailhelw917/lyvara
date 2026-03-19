@@ -4,6 +4,7 @@ import { ArrowRight, Gem } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
+import { useSEO } from "@/hooks/useSEO";
 
 const BLOG_CATEGORIES = [
   { value: "", label: "All" },
@@ -18,6 +19,12 @@ const BLOG_CATEGORIES = [
 export default function BlogList() {
   const [location] = useLocation();
   const [category, setCategory] = useState("");
+  useSEO({
+    title: "Style Journal — Jewelry Trends & Styling Tips",
+    description: "Explore our daily-updated style journal for jewelry trends, gift guides, styling tips, and care guides. New articles published every day.",
+    keywords: "jewelry style guide, gold jewelry trends, how to style jewelry, jewelry gift ideas, jewelry care tips",
+    url: "/journal",
+  });
   const trackView = trpc.analytics.trackEvent.useMutation();
 
   useEffect(() => {

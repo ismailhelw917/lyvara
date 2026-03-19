@@ -147,13 +147,17 @@ const automationRouter = router({
     }
   }),
 
-  triggerBlogGeneration: adminProcedure.mutation(async () => {
-    try {
-      return await runBlogGeneration();
-    } catch (error: any) {
-      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message });
-    }
-  }),
+  triggerBlogGeneration: adminProcedure
+    .input(z.object({
+      contentType: z.enum(["style_guide", "trend_report", "gift_ideas", "care_tips", "brand_spotlight", "seasonal", "promotional"]).optional(),
+    }).optional())
+    .mutation(async ({ input }) => {
+      try {
+        return await runBlogGeneration(input?.contentType);
+      } catch (error: any) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message });
+      }
+    }),
 
   triggerLayoutOptimization: adminProcedure.mutation(async () => {
     try {

@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { trpc } from "@/lib/trpc";
+import { useSEO } from "@/hooks/useSEO";
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 function HeroSection() {
@@ -431,11 +432,16 @@ function NewsletterSection() {
 
 // ─── Main Home Page ───────────────────────────────────────────────────────────
 export default function Home() {
+  useSEO({
+    title: "Luxury Gold & Silver Jewelry for Women",
+    description: "Discover exquisite gold and silver jewelry curated daily for the discerning woman. Shop necklaces, bracelets, rings, and earrings from top luxury brands.",
+    keywords: "luxury gold jewelry, silver jewelry women, gold necklaces, diamond bracelets, fine jewelry, jewelry gifts for women",
+    url: "/",
+  });
   const trackView = trpc.analytics.trackEvent.useMutation();
-
   useEffect(() => {
     trackView.mutate({ eventType: "page_view", page: "/" });
-  }, []);
+  }, []);;
 
   return (
     <div className="min-h-screen" style={{ background: "var(--background)" }}>

@@ -102,7 +102,9 @@ export async function runProductFetch(): Promise<{ success: boolean; productsUpd
 }
 
 // ─── Blog Generation Job ──────────────────────────────────────────────────────
-export async function runBlogGeneration(): Promise<{ success: boolean; postsGenerated: number; message: string }> {
+type BlogCategory = "style_guide" | "trend_report" | "gift_ideas" | "care_tips" | "brand_spotlight" | "seasonal" | "promotional";
+
+export async function runBlogGeneration(forcedCategory?: BlogCategory): Promise<{ success: boolean; postsGenerated: number; message: string }> {
   const startTime = Date.now();
 
   const logResult = await createAutomationLog({
@@ -118,11 +120,18 @@ export async function runBlogGeneration(): Promise<{ success: boolean; postsGene
     // Get featured products to reference in blog
     const featuredProducts = await getFeaturedProducts(5);
 
-    // Rotate through blog categories
-    const categories = ["style_guide", "trend_report", "gift_ideas", "care_tips", "seasonal", "promotional"] as const;
-    const lastCategoryIndex = parseInt((await getSetting("last_blog_category_index")) || "0");
-    const categoryIndex = (lastCategoryIndex + 1) % categories.length;
-    const category = categories[categoryIndex];
+    // Rotate through blog categories (or use forced category from admin)
+    const categories: BlogCategory[] = ["style_guide", "trend_report", "gift_ideas", "care_tips", "brand_spotlight", "seasonal", "promotional"];
+    let category: BlogCategory;
+    let categoryIndex: number;
+    if (forcedCategory) {
+      category = forcedCategory;
+      categoryIndex = categories.indexOf(forcedCategory);
+    } else {
+      const lastCategoryIndex = parseInt((await getSetting("last_blog_category_index")) || "0");
+      categoryIndex = (lastCategoryIndex + 1) % categories.length;
+      category = categories[categoryIndex];
+    }
 
     // Generate blog post content
     const generatedPost = await generateBlogPost(category, featuredProducts as any);

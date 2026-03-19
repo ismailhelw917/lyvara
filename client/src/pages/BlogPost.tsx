@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { trpc } from "@/lib/trpc";
 import { Streamdown } from "streamdown";
+import { useSEO } from "@/hooks/useSEO";
 
 export default function BlogPost() {
   const params = useParams<{ slug: string }>();
@@ -17,6 +18,24 @@ export default function BlogPost() {
   );
 
   const { data: relatedProducts } = trpc.products.featured.useQuery({ limit: 4 });
+
+  useSEO({
+    title: post?.title,
+    description: post?.excerpt || undefined,
+    image: post?.heroImageUrl || undefined,
+    url: `/journal/${params.slug}`,
+    type: "article",
+    jsonLd: post ? {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: post.title,
+      description: post.excerpt,
+      image: post.heroImageUrl,
+      datePublished: post.publishedAt ? new Date(post.publishedAt).toISOString() : undefined,
+      author: { "@type": "Organization", name: "LYVARA JEWELS" },
+      publisher: { "@type": "Organization", name: "LYVARA JEWELS" },
+    } : undefined,
+  });
 
   useEffect(() => {
     if (post) {
