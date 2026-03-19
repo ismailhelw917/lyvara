@@ -163,3 +163,6 @@
 ## UI/UX Fixes
 - [x] Fix product card image sizing — enforce consistent height (h-64/h-72 medium, h-56 small) with object-cover
 - [x] Fix product card image cropping — use object-top instead of object-center so jewelry stays visible at top
+
+## Analytics & Tracking
+- [x] Add Google Analytics 4 (GA4 ID: G-9VY85MRVTW) to index.html for traffic and conversion tracking
