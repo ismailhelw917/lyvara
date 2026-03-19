@@ -32,6 +32,7 @@ import { products } from "../drizzle/schema";
 import { pinBlogPost, pinProduct } from "./pinterestService";
 import { runLinkAudit } from "./linkAuditService";
 import { replaceBrokenLinks } from "./linkReplacementService";
+import { validateAndDeduplicateProducts, cleanupDuplicates, getDataQualityReport } from "./productValidationService";
 
 // ─── Product Fetch Job ────────────────────────────────────────────────────────
 export async function runProductFetch(): Promise<{ success: boolean; productsUpdated: number; message: string }> {
@@ -52,9 +53,14 @@ export async function runProductFetch(): Promise<{ success: boolean; productsUpd
 
     // Fetch all product categories
     const newProducts = await fetchAllCategories();
+    
+    // Validate and deduplicate products
+    const { valid, invalid, duplicates } = await validateAndDeduplicateProducts(newProducts);
+    
+    console.log(`[AutomationEngine] Product validation: ${valid.length} valid, ${invalid.length} invalid, ${duplicates.length} duplicates`);
+    
     let updatedCount = 0;
-
-    for (const product of newProducts) {
+    for (const product of valid) {
       try {
         await upsertProduct(product);
         updatedCount++;
@@ -62,9 +68,18 @@ export async function runProductFetch(): Promise<{ success: boolean; productsUpd
         console.warn(`[AutomationEngine] Failed to upsert product ${product.asin}:`, err);
       }
     }
+    
+    // Clean up any existing duplicates
+    const cleanupResult = await cleanupDuplicates();
+    if (cleanupResult.duplicatesRemoved > 0) {
+      console.log(`[AutomationEngine] Cleaned up ${cleanupResult.duplicatesRemoved} duplicate products`);
+    }
 
+    // Get data quality report
+    const qualityReport = await getDataQualityReport();
+    
     const duration = Date.now() - startTime;
-    const message = `Successfully fetched and updated ${updatedCount} products in ${duration}ms`;
+    const message = `Successfully fetched and updated ${updatedCount} products (${invalid.length} invalid, ${duplicates.length} duplicates filtered). Data quality: ${qualityReport.dataQualityScore}%`;
 
     if (logId) {
       await updateAutomationLog(logId, {

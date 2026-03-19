@@ -207,3 +207,13 @@
 - [x] Create linkReplacementService.ts for auto-replacing broken Amazon links
 - [x] Add twice-daily link replacement job to automation engine (runs every 12 hours)
 - [x] Auto-find working alternative products from same category when links break
+
+## Product Data Quality & Validation
+- [x] Audit amazonService.ts for duplicate/quality issues
+- [x] Build productValidationService.ts with deduplication logic (Levenshtein similarity, price matching)
+- [x] Implement image validation (check if image URLs are valid format)
+- [x] Implement description validation (check for minimum length >= 20 chars)
+- [x] Add duplicate detection (by ASIN, title similarity >80%, price range <$5)
+- [x] Integrate validation into product fetch automation (runs on every fetch)
+- [x] Clean up existing duplicates and bad products from database (34 unique products, 0 duplicates)
+- [ ] Add data quality metrics to admin dashboard (data quality score display)

@@ -1,0 +1,25 @@
+{
+  "query": "SELECT id, title, affiliateUrl FROM products LIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, title, affiliateUrl FROM products LIMIT 3;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "14K Gold Diamond Solitaire Necklace",
+      "affiliateUrl": "https://www.amazon.com/dp/B08DEMO001?tag=91791709-20"
+    },
+    {
+      "id": "2",
+      "title": "Sterling Silver Tennis Bracelet",
+      "affiliateUrl": "https://www.amazon.com/dp/B08DEMO002?tag=91791709-20"
+    },
+    {
+      "id": "3",
+      "title": "Rose Gold Stackable Ring Set",
+      "affiliateUrl": "https://www.amazon.com/dp/B08DEMO003?tag=91791709-20"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\taffiliateUrl\n1\t14K Gold Diamond Solitaire Necklace\thttps://www.amazon.com/dp/B08DEMO001?tag=91791709-20\n2\tSterling Silver Tennis Bracelet\thttps://www.amazon.com/dp/B08DEMO002?tag=91791709-20\n3\tRose Gold Stackable Ring Set\thttps://www.amazon.com/dp/B08DEMO003?tag=91791709-20\n",
+  "stderr": "",
+  "execution_time_ms": 1565
+}
