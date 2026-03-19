@@ -87,7 +87,7 @@ export default function ProductCard({ product, size, showBadge = true }: Product
           ref={imgRef}
           src={imageSrc}
           alt={product.title}
-          className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
           onError={() => setImgError(true)}
         />

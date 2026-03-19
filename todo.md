@@ -161,4 +161,5 @@
 - [ ] Request PINTEREST_ACCESS_TOKEN, PINTEREST_BOARD_ID secrets (user action required)
 
 ## UI/UX Fixes
-- [x] Fix product card image sizing — enforce consistent height (h-64/h-72 medium, h-56 small) with object-cover centering
+- [x] Fix product card image sizing — enforce consistent height (h-64/h-72 medium, h-56 small) with object-cover
+- [x] Fix product card image cropping — use object-top instead of object-center so jewelry stays visible at top
