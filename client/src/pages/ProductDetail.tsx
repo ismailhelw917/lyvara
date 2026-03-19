@@ -11,6 +11,7 @@ import { Star, ThumbsUp, ThumbsDown, ChevronLeft, ShoppingBag, Shield, Truck, Aw
 import { useSEO } from "@/hooks/useSEO";
 import { nanoid } from "nanoid";
 import { SkimlinksHorizontalBanner } from "@/components/SkimlinksBanner";
+import { useMetaPixel } from "@/hooks/useMetaPixel";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 const FALLBACK_IMAGES = [
@@ -297,6 +298,21 @@ export default function ProductDetail() {
   );
 
   const trackClick = trpc.analytics.trackEvent.useMutation();
+  const { trackViewContent, trackAddToCart } = useMetaPixel();
+
+  // Fire Meta Pixel ViewContent when product loads
+  useEffect(() => {
+    if (product) {
+      trackViewContent({
+        id: product.id,
+        title: product.title,
+        price: Number(product.price) || 0,
+        category: product.category ?? undefined,
+        brand: product.brand ?? undefined,
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product?.id]);
 
   useSEO({
     title: product ? `${product.title} | LYVARA JEWELS` : "Product | LYVARA JEWELS",
@@ -312,6 +328,13 @@ export default function ProductDetail() {
   const handleAffiliateClick = () => {
     if (product) {
       trackClick.mutate({ eventType: "affiliate_click", productId: product.id, page: `/product/${product.id}` });
+      // Fire Meta Pixel AddToCart (purchase intent signal)
+      trackAddToCart({
+        id: product.id,
+        title: product.title,
+        price: Number(product.price) || 0,
+        category: product.category ?? undefined,
+      });
       window.open(product.affiliateUrl, "_blank", "noopener,noreferrer");
     }
   };

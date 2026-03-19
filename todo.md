@@ -134,3 +134,28 @@
 - [x] Add AMP Skimlinks script to index.html
 - [x] Add Skimlinks promotional banner components (homepage, product pages, blog)
 - [x] Track Skimlinks click events via CounterAPI (via trackFilter)
+
+## Blog Post Generation (5 Posts)
+- [x] Generate blog post 1: style_guide — "The Art of Adornment: Mastering the Elegant Layer and Stack"
+- [x] Generate blog post 2: trend_report — "The Luminous Allure: Gold and Silver's Reign in This Season's Collections"
+- [x] Generate blog post 3: gift_ideas — "The Luminous Language of Gold and Silver: A Curated Gift Guide"
+- [x] Generate blog post 4: care_tips — "The Enduring Radiance: A Connoisseur's Guide to Fine Jewelry Care"
+- [x] Generate blog post 5: seasonal — "The Art of Adornment: Harmonizing Gold and Silver for the Season"
+
+## Meta (Facebook/Instagram) Ads Integration
+- [x] Add Meta Pixel script to index.html (ViewContent, PageView events)
+- [x] Add client-side Pixel event tracking hook (ViewContent on product pages, PageView on all pages)
+- [x] Build server-side Meta Conversions API service (server/metaService.ts)
+- [x] Add product catalog feed endpoint (/api/meta/catalog.xml and /api/meta/catalog.json)
+- [x] Build Meta Marketing API automation (campaign creation, ad sets, dynamic product ads)
+- [x] Add automated budget rules (pause underperformers, scale high-ROAS)
+- [x] Add Meta Ads tab to Admin Dashboard (Meta & Pinterest tab)
+- [ ] Request META_PIXEL_ID, META_ACCESS_TOKEN, META_AD_ACCOUNT_ID secrets (user action required)
+
+## Pinterest Auto-Poster
+- [x] Build Pinterest API service (server/pinterestService.ts)
+- [x] Auto-post new products to Pinterest board on product fetch
+- [x] Auto-post new blog posts to Pinterest on generation
+- [x] Add Pinterest auto-poster to automation engine (fires on each blog generation)
+- [x] Add Pinterest stats to Admin Dashboard (Meta & Pinterest tab)
+- [ ] Request PINTEREST_ACCESS_TOKEN, PINTEREST_BOARD_ID secrets (user action required)

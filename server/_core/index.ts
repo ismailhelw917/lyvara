@@ -11,6 +11,8 @@ import { startScheduler } from "../automationEngine";
 import { getDb } from "../db";
 import { blogPosts, products } from "../../drizzle/schema";
 import { eq, and, gt } from "drizzle-orm";
+import { generateCatalogXML, generateCatalogJSON, getCampaignInsights, runBudgetOptimization, isMetaConfigured } from "../metaService";
+import { getBoardAnalytics, getBoardPins, isPinterestConfigured } from "../pinterestService";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -94,6 +96,93 @@ async function startServer() {
       console.error("[Sitemap] Error:", err);
       res.status(500).send("Error generating sitemap");
     }
+  });
+
+  // ─── Meta Pixel: product catalog feed for Dynamic Product Ads ────────────────
+  app.get("/api/meta/catalog.xml", async (_req, res) => {
+    try {
+      const db = await getDb();
+      const BASE = process.env.SITE_URL || "https://lyvara-jewels.manus.space";
+      const rows = db
+        ? await db.select().from(products).where(eq(products.isActive, 1 as any)).limit(500)
+        : [];
+
+      const catalogProducts = rows.map((p: any) => ({
+        id: String(p.id),
+        title: p.title || "",
+        description: p.description || p.title || "",
+        availability: "in stock",
+        condition: "new",
+        price: `${(p.price || 0).toFixed(2)} USD`,
+        link: p.affiliateUrl || `${BASE}/product/${p.id}`,
+        image_link: p.imageUrl || "",
+        brand: p.brand || "LYVARA JEWELS",
+        google_product_category: "188", // Google category: Jewelry
+        product_type: p.category || "jewelry",
+      }));
+
+      const xml = generateCatalogXML(catalogProducts);
+      res.setHeader("Content-Type", "application/xml");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      res.send(xml);
+    } catch (err) {
+      console.error("[Meta Catalog] XML error:", err);
+      res.status(500).send("Error generating catalog");
+    }
+  });
+
+  app.get("/api/meta/catalog.json", async (_req, res) => {
+    try {
+      const db = await getDb();
+      const rows = db
+        ? await db.select().from(products).where(eq(products.isActive, 1 as any)).limit(500)
+        : [];
+      const BASE = process.env.SITE_URL || "https://lyvara-jewels.manus.space";
+
+      const catalogProducts = rows.map((p: any) => ({
+        id: String(p.id),
+        title: p.title || "",
+        description: p.description || p.title || "",
+        availability: "in stock",
+        condition: "new",
+        price: `${(p.price || 0).toFixed(2)} USD`,
+        link: p.affiliateUrl || `${BASE}/product/${p.id}`,
+        image_link: p.imageUrl || "",
+        brand: p.brand || "LYVARA JEWELS",
+        google_product_category: "188",
+        product_type: p.category || "jewelry",
+      }));
+
+      res.json(generateCatalogJSON(catalogProducts));
+    } catch (err) {
+      console.error("[Meta Catalog] JSON error:", err);
+      res.status(500).json({ error: "Error generating catalog" });
+    }
+  });
+
+  // ─── Meta Marketing API: insights + budget optimization ───────────────────
+  app.get("/api/meta/status", async (_req, res) => {
+    const configured = isMetaConfigured();
+    if (!configured) {
+      return res.json({ configured: false, message: "Meta credentials not configured" });
+    }
+    const insights = await getCampaignInsights();
+    res.json({ configured: true, campaigns: insights });
+  });
+
+  app.post("/api/meta/optimize", async (_req, res) => {
+    const result = await runBudgetOptimization();
+    res.json(result);
+  });
+
+  // ─── Pinterest: board analytics ───────────────────────────────────────────
+  app.get("/api/pinterest/status", async (_req, res) => {
+    const configured = isPinterestConfigured();
+    if (!configured) {
+      return res.json({ configured: false, message: "Pinterest credentials not configured" });
+    }
+    const [analytics, pins] = await Promise.all([getBoardAnalytics(), getBoardPins()]);
+    res.json({ configured: true, analytics, recentPins: pins.slice(0, 10) });
   });
 
   // tRPC API

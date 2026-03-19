@@ -29,6 +29,7 @@ import { notifyOwner } from "./_core/notification";
 import { trackAutomationRun, trackContentEvent } from "./counterService";
 import { eq, sql } from "drizzle-orm";
 import { products } from "../drizzle/schema";
+import { pinBlogPost, pinProduct } from "./pinterestService";
 
 // ─── Product Fetch Job ────────────────────────────────────────────────────────
 export async function runProductFetch(): Promise<{ success: boolean; productsUpdated: number; message: string }> {
@@ -184,6 +185,24 @@ export async function runBlogGeneration(forcedCategory?: BlogCategory): Promise<
 
     console.log(`[AutomationEngine] Blog generation complete: "${generatedPost.title}"`);
     await trackContentEvent(); // CounterAPI: content-events (blog post generated)
+
+    // Auto-post to Pinterest
+    const db2 = await getDb();
+    const savedPosts = db2
+      ? await db2.select().from(require("../drizzle/schema").blogPosts).where(eq(require("../drizzle/schema").blogPosts.slug, generatedPost.slug)).limit(1)
+      : [];
+    const savedPost = (savedPosts as any[])[0];
+    if (savedPost) {
+      pinBlogPost({
+        id: savedPost.id,
+        title: savedPost.title,
+        excerpt: savedPost.excerpt,
+        heroImageUrl: savedPost.heroImageUrl,
+        slug: savedPost.slug,
+        category: savedPost.category,
+      }).catch((err: any) => console.warn("[Pinterest] Blog pin failed:", err.message));
+    }
+
     return { success: true, postsGenerated: 1, message };
   } catch (error: any) {
     const duration = Date.now() - startTime;

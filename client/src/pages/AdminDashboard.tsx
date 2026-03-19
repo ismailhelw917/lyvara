@@ -22,6 +22,13 @@ import {
   BookOpen,
   Star,
   Cpu,
+  Facebook,
+  Instagram,
+  Share2,
+  ExternalLink,
+  AlertCircle,
+  DollarSign,
+  Target,
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -521,14 +528,209 @@ function CounterStatsSection() {
   );
 }
 
+// ─── Meta Ads Section ────────────────────────────────────────────────────────
+function MetaAdsSection() {
+  const [metaStatus, setMetaStatus] = useState<any>(null);
+  const [pinterestStatus, setPinterestStatus] = useState<any>(null);
+  const [loadingMeta, setLoadingMeta] = useState(false);
+  const [loadingPinterest, setLoadingPinterest] = useState(false);
+  const [optimizing, setOptimizing] = useState(false);
+  const [optimizeResult, setOptimizeResult] = useState<any>(null);
+
+  const checkMeta = async () => {
+    setLoadingMeta(true);
+    try {
+      const res = await fetch("/api/meta/status");
+      setMetaStatus(await res.json());
+    } catch { setMetaStatus({ error: "Failed to connect" }); }
+    setLoadingMeta(false);
+  };
+
+  const checkPinterest = async () => {
+    setLoadingPinterest(true);
+    try {
+      const res = await fetch("/api/pinterest/status");
+      setPinterestStatus(await res.json());
+    } catch { setPinterestStatus({ error: "Failed to connect" }); }
+    setLoadingPinterest(false);
+  };
+
+  const runOptimize = async () => {
+    setOptimizing(true);
+    try {
+      const res = await fetch("/api/meta/optimize", { method: "POST" });
+      setOptimizeResult(await res.json());
+    } catch { setOptimizeResult({ error: "Optimization failed" }); }
+    setOptimizing(false);
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Meta Pixel + Facebook/Instagram Ads */}
+      <div className="p-6 rounded" style={{ background: "white", boxShadow: "var(--shadow-card)" }}>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "oklch(0.55 0.18 260)" }}>
+            <Facebook className="w-4 h-4 text-white" />
+          </div>
+          <div>
+            <h3 className="font-serif text-lg" style={{ color: "var(--foreground)" }}>Meta Ads (Facebook + Instagram)</h3>
+            <p className="font-sans text-xs font-light" style={{ color: "var(--muted-foreground)" }}>Dynamic Product Ads, retargeting, and budget automation</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+          <div className="p-4 rounded" style={{ background: "var(--champagne)" }}>
+            <div className="flex items-center gap-2 mb-1">
+              <Eye className="w-3.5 h-3.5" style={{ color: "var(--gold)" }} />
+              <span className="font-sans text-xs font-medium" style={{ color: "var(--foreground)" }}>Meta Pixel</span>
+            </div>
+            <p className="font-sans text-xs font-light" style={{ color: "var(--muted-foreground)" }}>Tracks ViewContent on all product pages, PageView site-wide, AddToCart on affiliate clicks. Add your Pixel ID to activate.</p>
+          </div>
+          <div className="p-4 rounded" style={{ background: "var(--champagne)" }}>
+            <div className="flex items-center gap-2 mb-1">
+              <Target className="w-3.5 h-3.5" style={{ color: "var(--rose-gold)" }} />
+              <span className="font-sans text-xs font-medium" style={{ color: "var(--foreground)" }}>Dynamic Product Ads</span>
+            </div>
+            <p className="font-sans text-xs font-light" style={{ color: "var(--muted-foreground)" }}>Product catalog feed auto-syncs at /api/meta/catalog.xml — connect this URL in Meta Commerce Manager.</p>
+          </div>
+          <div className="p-4 rounded" style={{ background: "var(--champagne)" }}>
+            <div className="flex items-center gap-2 mb-1">
+              <DollarSign className="w-3.5 h-3.5" style={{ color: "oklch(0.55 0.15 145)" }} />
+              <span className="font-sans text-xs font-medium" style={{ color: "var(--foreground)" }}>Budget Automation</span>
+            </div>
+            <p className="font-sans text-xs font-light" style={{ color: "var(--muted-foreground)" }}>Auto-pauses ad sets with CTR &lt; 0.5% and scales winners +20% when CTR &gt; 3%.</p>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-3 mb-4">
+          <button
+            onClick={checkMeta}
+            disabled={loadingMeta}
+            className="btn-luxury text-xs px-4 py-2 flex items-center gap-2 disabled:opacity-50"
+            style={{ borderColor: "oklch(0.55 0.18 260)", color: "oklch(0.55 0.18 260)" }}
+          >
+            {loadingMeta ? <Loader2 className="w-3 h-3 animate-spin" /> : <Activity className="w-3 h-3" />}
+            Check Status
+          </button>
+          <button
+            onClick={runOptimize}
+            disabled={optimizing}
+            className="btn-luxury text-xs px-4 py-2 flex items-center gap-2 disabled:opacity-50"
+            style={{ borderColor: "var(--gold)", color: "var(--gold)" }}
+          >
+            {optimizing ? <Loader2 className="w-3 h-3 animate-spin" /> : <TrendingUp className="w-3 h-3" />}
+            Run Budget Optimization
+          </button>
+          <a
+            href="/api/meta/catalog.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-luxury text-xs px-4 py-2 flex items-center gap-2"
+            style={{ borderColor: "var(--muted-foreground)", color: "var(--muted-foreground)" }}
+          >
+            <ExternalLink className="w-3 h-3" />
+            View Catalog Feed
+          </a>
+        </div>
+
+        {metaStatus && (
+          <div className="p-3 rounded text-xs font-sans" style={{ background: metaStatus.configured ? "oklch(0.95 0.05 145)" : "oklch(0.97 0.02 30)", color: metaStatus.configured ? "oklch(0.35 0.1 145)" : "oklch(0.45 0.08 30)" }}>
+            {metaStatus.configured
+              ? `✓ Connected — ${metaStatus.campaigns?.length ?? 0} active campaigns`
+              : `⚠ Not configured — add META_PIXEL_ID, META_ACCESS_TOKEN, and META_AD_ACCOUNT_ID in Settings → Secrets`}
+          </div>
+        )}
+        {optimizeResult && (
+          <div className="p-3 rounded text-xs font-sans mt-2" style={{ background: "oklch(0.95 0.05 145)", color: "oklch(0.35 0.1 145)" }}>
+            ✓ Optimization complete — {optimizeResult.paused ?? 0} paused, {optimizeResult.scaled ?? 0} scaled
+          </div>
+        )}
+
+        <div className="mt-4 p-3 rounded border" style={{ borderColor: "var(--border)" }}>
+          <p className="font-sans text-xs font-medium mb-2" style={{ color: "var(--foreground)" }}>Setup Instructions</p>
+          <ol className="font-sans text-xs font-light space-y-1" style={{ color: "var(--muted-foreground)" }}>
+            <li>1. Go to <strong>Settings → Secrets</strong> and add: <code>META_PIXEL_ID</code>, <code>META_ACCESS_TOKEN</code>, <code>META_AD_ACCOUNT_ID</code></li>
+            <li>2. Also add <code>VITE_META_PIXEL_ID</code> (same value as META_PIXEL_ID) to enable browser-side Pixel</li>
+            <li>3. In Meta Business Manager → Commerce Manager → Add Catalog → connect <code>/api/meta/catalog.xml</code></li>
+            <li>4. Create a Dynamic Product Ad campaign in Ads Manager pointing to your catalog</li>
+            <li>5. Use "Run Budget Optimization" daily to auto-scale winners and pause losers</li>
+          </ol>
+        </div>
+      </div>
+
+      {/* Pinterest Auto-Poster */}
+      <div className="p-6 rounded" style={{ background: "white", boxShadow: "var(--shadow-card)" }}>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "oklch(0.45 0.2 15)" }}>
+            <Share2 className="w-4 h-4 text-white" />
+          </div>
+          <div>
+            <h3 className="font-serif text-lg" style={{ color: "var(--foreground)" }}>Pinterest Auto-Poster</h3>
+            <p className="font-sans text-xs font-light" style={{ color: "var(--muted-foreground)" }}>Auto-pins new products and blog posts — jewelry is Pinterest's #1 category</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+          <div className="p-4 rounded" style={{ background: "var(--champagne)" }}>
+            <div className="flex items-center gap-2 mb-1">
+              <FileText className="w-3.5 h-3.5" style={{ color: "var(--rose-gold)" }} />
+              <span className="font-sans text-xs font-medium" style={{ color: "var(--foreground)" }}>Blog Post Pins</span>
+            </div>
+            <p className="font-sans text-xs font-light" style={{ color: "var(--muted-foreground)" }}>Every new AI blog post is automatically pinned with its hero image, editorial description, and relevant hashtags.</p>
+          </div>
+          <div className="p-4 rounded" style={{ background: "var(--champagne)" }}>
+            <div className="flex items-center gap-2 mb-1">
+              <Gem className="w-3.5 h-3.5" style={{ color: "var(--gold)" }} />
+              <span className="font-sans text-xs font-medium" style={{ color: "var(--foreground)" }}>Product Pins</span>
+            </div>
+            <p className="font-sans text-xs font-light" style={{ color: "var(--muted-foreground)" }}>New products from the daily Amazon fetch are auto-pinned with price, brand, and affiliate link.</p>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-3 mb-4">
+          <button
+            onClick={checkPinterest}
+            disabled={loadingPinterest}
+            className="btn-luxury text-xs px-4 py-2 flex items-center gap-2 disabled:opacity-50"
+            style={{ borderColor: "oklch(0.45 0.2 15)", color: "oklch(0.45 0.2 15)" }}
+          >
+            {loadingPinterest ? <Loader2 className="w-3 h-3 animate-spin" /> : <Activity className="w-3 h-3" />}
+            Check Pinterest Status
+          </button>
+        </div>
+
+        {pinterestStatus && (
+          <div className="p-3 rounded text-xs font-sans" style={{ background: pinterestStatus.configured ? "oklch(0.95 0.05 145)" : "oklch(0.97 0.02 30)", color: pinterestStatus.configured ? "oklch(0.35 0.1 145)" : "oklch(0.45 0.08 30)" }}>
+            {pinterestStatus.configured
+              ? `✓ Connected — ${pinterestStatus.recentPins?.length ?? 0} recent pins on board`
+              : `⚠ Not configured — add PINTEREST_ACCESS_TOKEN and PINTEREST_BOARD_ID in Settings → Secrets`}
+          </div>
+        )}
+
+        <div className="mt-4 p-3 rounded border" style={{ borderColor: "var(--border)" }}>
+          <p className="font-sans text-xs font-medium mb-2" style={{ color: "var(--foreground)" }}>Setup Instructions</p>
+          <ol className="font-sans text-xs font-light space-y-1" style={{ color: "var(--muted-foreground)" }}>
+            <li>1. Create a Pinterest Business account at <strong>business.pinterest.com</strong></li>
+            <li>2. Go to <strong>developers.pinterest.com</strong> → My Apps → Create App</li>
+            <li>3. Generate an access token with <code>boards:read</code>, <code>boards:write</code>, <code>pins:read</code>, <code>pins:write</code> scopes</li>
+            <li>4. Get your board ID from the board URL or Pinterest API</li>
+            <li>5. Add <code>PINTEREST_ACCESS_TOKEN</code> and <code>PINTEREST_BOARD_ID</code> in <strong>Settings → Secrets</strong></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Admin Dashboard ─────────────────────────────────────────────────────
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<"analytics" | "automation" | "counters">("analytics");
+  const [activeTab, setActiveTab] = useState<"analytics" | "automation" | "counters" | "marketing">("analytics");
 
   const tabs = [
     { id: "analytics" as const, label: "Analytics", icon: BarChart2 },
     { id: "automation" as const, label: "Automation", icon: Settings },
     { id: "counters" as const, label: "Live Counters", icon: Zap },
+    { id: "marketing" as const, label: "Meta & Pinterest", icon: Target },
   ];
 
   return (
@@ -580,6 +782,7 @@ export default function AdminDashboard() {
           {activeTab === "analytics" && <AnalyticsSection />}
           {activeTab === "automation" && <AutomationSection />}
           {activeTab === "counters" && <CounterStatsSection />}
+          {activeTab === "marketing" && <MetaAdsSection />}
         </div>
       </div>
     </AdminGuard>
