@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
 import { useSEO } from "@/hooks/useSEO";
 import { usePageView } from "@/hooks/useTracking";
+import { SkimlinksHorizontalBanner } from "@/components/SkimlinksBanner";
 
 const BLOG_CATEGORIES = [
   { value: "", label: "All" },
@@ -206,6 +207,10 @@ export default function BlogList() {
             </p>
           </div>
         )}
+      </div>
+
+      <div className="container pb-8">
+        <SkimlinksHorizontalBanner seed={4} />
       </div>
 
       <Footer />

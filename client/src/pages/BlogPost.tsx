@@ -8,6 +8,7 @@ import { trpc } from "@/lib/trpc";
 import { Streamdown } from "streamdown";
 import { useSEO } from "@/hooks/useSEO";
 import { useTracking } from "@/hooks/useTracking";
+import { SkimlinksInlineBanner } from "@/components/SkimlinksBanner";
 
 export default function BlogPost() {
   const params = useParams<{ slug: string }>();
@@ -163,6 +164,9 @@ export default function BlogPost() {
             </div>
           )}
         </div>
+
+        {/* Skimlinks Inline Banner — between article and related products */}
+        <SkimlinksInlineBanner seed={3} />
 
         {/* Related Products */}
         {relatedProducts && relatedProducts.length > 0 && (

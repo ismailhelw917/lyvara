@@ -128,3 +128,9 @@
 - [x] Admin dashboard: Live Counters tab with CounterAPI stats counts alongside internal analytics
 - [x] Product detail page: show live view count from CounterAPI
 - [x] Write vitest tests for CounterAPI service
+
+## Skimlinks Affiliate Integration
+- [x] Add Skimlinks standard JS script to index.html (Publisher ID: 300231X1788063)
+- [x] Add AMP Skimlinks script to index.html
+- [x] Add Skimlinks promotional banner components (homepage, product pages, blog)
+- [x] Track Skimlinks click events via CounterAPI (via trackFilter)
