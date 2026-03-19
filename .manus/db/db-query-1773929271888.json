@@ -1,0 +1,15 @@
+{
+  "query": "SELECT COUNT(*) as total_products, COUNT(CASE WHEN \"isAiGenerated\" = false THEN 1 END) as amazon_products, COUNT(CASE WHEN \"isAiGenerated\" = true THEN 1 END) as mock_products FROM products LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT COUNT(*) as total_products, COUNT(CASE WHEN \"isAiGenerated\" = false THEN 1 END) as amazon_products, COUNT(CASE WHEN \"isAiGenerated\" = true THEN 1 END) as mock_products FROM products LIMIT 1;",
+  "rows": [
+    {
+      "total_products": "34",
+      "amazon_products": "34",
+      "mock_products": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_products\tamazon_products\tmock_products\n34\t34\t0\n",
+  "stderr": "",
+  "execution_time_ms": 1675
+}
