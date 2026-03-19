@@ -31,6 +31,7 @@ import { eq, sql } from "drizzle-orm";
 import { products } from "../drizzle/schema";
 import { pinBlogPost, pinProduct } from "./pinterestService";
 import { runLinkAudit } from "./linkAuditService";
+import { replaceBrokenLinks } from "./linkReplacementService";
 
 // ─── Product Fetch Job ────────────────────────────────────────────────────────
 export async function runProductFetch(): Promise<{ success: boolean; productsUpdated: number; message: string }> {
@@ -469,6 +470,22 @@ export function startScheduler() {
     runAudit();
     setInterval(runAudit, 24 * 60 * 60 * 1000);
   }, 3 * 60 * 60 * 1000); // Start 3 hours after server start
+
+  // Twice-daily link replacement: every 12 hours
+  setTimeout(() => {
+    const runReplacement = async () => {
+      try {
+        console.log("[AutomationEngine] Running link replacement job...");
+        const results = await replaceBrokenLinks();
+        const replaced = results.filter((r) => r.replaced).length;
+        console.log(`[AutomationEngine] Link replacement complete: ${replaced}/${results.length} links replaced`);
+      } catch (err) {
+        console.error("[AutomationEngine] Link replacement failed:", err);
+      }
+    };
+    runReplacement();
+    setInterval(runReplacement, 12 * 60 * 60 * 1000); // Run every 12 hours
+  }, 1 * 60 * 60 * 1000); // Start 1 hour after server start
 
   console.log("[AutomationEngine] Scheduler started successfully");
 }

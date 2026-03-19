@@ -201,3 +201,9 @@
 - [x] Add daily link audit job to automation engine (runs every 24 hours)
 - [x] Add Link Audit tab to Admin Dashboard with status display
 - [x] Automatic alerts on broken links via owner notifications
+
+## Link Replacement & Headline Updates
+- [x] Update headline from "Luxury Jewelry" to "Exquisite Jewelry" across all pages
+- [x] Create linkReplacementService.ts for auto-replacing broken Amazon links
+- [x] Add twice-daily link replacement job to automation engine (runs every 12 hours)
+- [x] Auto-find working alternative products from same category when links break

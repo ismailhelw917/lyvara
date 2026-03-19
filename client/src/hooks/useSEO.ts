@@ -51,7 +51,7 @@ export function useSEO({
   jsonLd,
 }: SEOProps) {
   useEffect(() => {
-    const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Luxury Gold & Silver Jewelry for Women`;
+    const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Exquisite Gold & Silver Jewelry for Women`;
     const fullDescription = description || "Discover exquisite gold and silver jewelry curated daily for the discerning woman.";
     const fullImage = image || DEFAULT_IMAGE;
     const fullUrl = url ? `${BASE_URL}${url}` : BASE_URL;
@@ -94,7 +94,7 @@ export function useSEO({
 
     return () => {
       // Reset to defaults on unmount
-      document.title = `${SITE_NAME} — Luxury Gold & Silver Jewelry for Women`;
+      document.title = `${SITE_NAME} — Exquisite Gold & Silver Jewelry for Women`;
       removeJsonLd();
     };
   }, [title, description, keywords, image, url, type, noIndex, jsonLd]);
