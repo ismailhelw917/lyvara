@@ -30,6 +30,7 @@ import { trackAutomationRun, trackContentEvent } from "./counterService";
 import { eq, sql } from "drizzle-orm";
 import { products } from "../drizzle/schema";
 import { pinBlogPost, pinProduct } from "./pinterestService";
+import { runLinkAudit } from "./linkAuditService";
 
 // ─── Product Fetch Job ────────────────────────────────────────────────────────
 export async function runProductFetch(): Promise<{ success: boolean; productsUpdated: number; message: string }> {
@@ -454,6 +455,20 @@ export function startScheduler() {
       console.error("[AutomationEngine] Performance scoring failed:", err);
     }
   }, 6 * 60 * 60 * 1000);
+
+  // Daily link audit: every 24 hours
+  setTimeout(() => {
+    const runAudit = async () => {
+      try {
+        console.log("[AutomationEngine] Running daily link audit...");
+        await runLinkAudit();
+      } catch (err) {
+        console.error("[AutomationEngine] Link audit failed:", err);
+      }
+    };
+    runAudit();
+    setInterval(runAudit, 24 * 60 * 60 * 1000);
+  }, 3 * 60 * 60 * 1000); // Start 3 hours after server start
 
   console.log("[AutomationEngine] Scheduler started successfully");
 }

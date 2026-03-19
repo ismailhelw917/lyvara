@@ -1,0 +1,50 @@
+{
+  "query": "SELECT id, title, brand, asin, price, description FROM products LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, title, brand, asin, price, description FROM products LIMIT 5;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "14K Gold Diamond Solitaire Necklace",
+      "brand": "Zoe Lev",
+      "asin": "B08DEMO001",
+      "price": "189.99",
+      "description": "Elegant 14K yellow gold necklace featuring a 0.25 carat round brilliant diamond solitaire pendant. Perfect for everyday luxury."
+    },
+    {
+      "id": "2",
+      "title": "Sterling Silver Tennis Bracelet",
+      "brand": "PAVOI",
+      "asin": "B08DEMO002",
+      "price": "79.99",
+      "description": "Classic sterling silver tennis bracelet with 3.00 carats total weight of sparkling cubic zirconia stones. Timeless elegance."
+    },
+    {
+      "id": "3",
+      "title": "Rose Gold Stackable Ring Set",
+      "brand": "Caitlyn Minimalist",
+      "asin": "B08DEMO003",
+      "price": "45.99",
+      "description": "Set of 3 delicate 14K rose gold filled stackable rings. Mix and match for a personalized look that transitions from day to night."
+    },
+    {
+      "id": "4",
+      "title": "Gold Hoop Earrings 14K",
+      "brand": "Mevecco",
+      "asin": "B08DEMO004",
+      "price": "129.99",
+      "description": "Classic 14K gold hoop earrings, 30mm diameter. Lightweight and comfortable for all-day wear. A wardrobe essential."
+    },
+    {
+      "id": "5",
+      "title": "White Gold Diamond Eternity Band",
+      "brand": "KATARINA",
+      "asin": "B08DEMO005",
+      "price": "399.99",
+      "description": "14K white gold eternity band with 1.00 carat total weight of channel-set round diamonds. Stackable and stunning."
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tbrand\tasin\tprice\tdescription\n1\t14K Gold Diamond Solitaire Necklace\tZoe Lev\tB08DEMO001\t189.99\tElegant 14K yellow gold necklace featuring a 0.25 carat round brilliant diamond solitaire pendant. Perfect for everyday luxury.\n2\tSterling Silver Tennis Bracelet\tPAVOI\tB08DEMO002\t79.99\tClassic sterling silver tennis bracelet with 3.00 carats total weight of sparkling cubic zirconia stones. Timeless elegance.\n3\tRose Gold Stackable Ring Set\tCaitlyn Minimalist\tB08DEMO003\t45.99\tSet of 3 delicate 14K rose gold filled stackable rings. Mix and match for a personalized look that transitions from day to night.\n4\tGold Hoop Earrings 14K\tMevecco\tB08DEMO004\t129.99\tClassic 14K gold hoop earrings, 30mm diameter. Lightweight and comfortable for all-day wear. A wardrobe essential.\n5\tWhite Gold Diamond Eternity Band\tKATARINA\tB08DEMO005\t399.99\t14K white gold eternity band with 1.00 carat total weight of channel-set round diamonds. Stackable and stunning.\n",
+  "stderr": "",
+  "execution_time_ms": 2083
+}

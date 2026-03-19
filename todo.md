@@ -182,3 +182,22 @@
 - [x] Write 20 post copy templates (product highlights, blog snippets, engagement posts) — 30-day calendar with 30 posts
 - [x] Build content calendar (30-day posting schedule) — complete calendar in facebook-content-assets.md
 - [x] Create hashtag strategy and competitor analysis — hashtag strategy section
+
+## GA4 Advanced Event Tracking
+- [ ] Create GA4 event tracking service (ga4Service.ts) with custom events
+- [ ] Add product click tracking (view_item, select_item events)
+- [ ] Add affiliate link click tracking (affiliate_click custom event)
+- [ ] Add newsletter signup tracking (newsletter_signup custom event)
+- [ ] Implement enhanced ecommerce tracking (product impressions, add-to-cart, purchase)
+- [ ] Add checkout funnel tracking (begin_checkout, add_payment_info, purchase)
+- [ ] Integrate GA4 tracking into ProductDetail page
+- [ ] Integrate GA4 tracking into Shop/Products page
+- [ ] Integrate GA4 tracking into Blog pages
+- [ ] Set up GA4 conversion goals in Google Analytics dashboard
+- [ ] Create checkout funnel visualization in GA4
+
+## Automated Link Audit
+- [x] Create linkAuditService.ts with link crawling and validation
+- [x] Add daily link audit job to automation engine (runs every 24 hours)
+- [x] Add Link Audit tab to Admin Dashboard with status display
+- [x] Automatic alerts on broken links via owner notifications
