@@ -133,3 +133,35 @@ export const siteSettings = mysqlTable("site_settings", {
 });
 
 export type SiteSetting = typeof siteSettings.$inferSelect;
+
+// ─── Product Reviews ──────────────────────────────────────────────────────────
+export const reviews = mysqlTable("reviews", {
+  id: int("id").autoincrement().primaryKey(),
+  productId: int("productId").notNull(),
+  authorName: varchar("authorName", { length: 255 }).notNull(),
+  authorEmail: varchar("authorEmail", { length: 320 }),
+  rating: int("rating").notNull(), // 1-5
+  title: varchar("title", { length: 500 }),
+  body: text("body").notNull(),
+  isVerified: boolean("isVerified").default(false).notNull(),
+  helpfulCount: int("helpfulCount").default(0).notNull(),
+  unhelpfulCount: int("unhelpfulCount").default(0).notNull(),
+  status: mysqlEnum("status", ["pending", "approved", "rejected"]).default("approved").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Review = typeof reviews.$inferSelect;
+export type InsertReview = typeof reviews.$inferInsert;
+
+// ─── Review Votes ─────────────────────────────────────────────────────────────
+export const reviewVotes = mysqlTable("review_votes", {
+  id: int("id").autoincrement().primaryKey(),
+  reviewId: int("reviewId").notNull(),
+  sessionId: varchar("sessionId", { length: 128 }).notNull(),
+  voteType: mysqlEnum("voteType", ["helpful", "unhelpful"]).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ReviewVote = typeof reviewVotes.$inferSelect;
+export type InsertReviewVote = typeof reviewVotes.$inferInsert;

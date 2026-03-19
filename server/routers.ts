@@ -9,6 +9,7 @@ import {
   countProducts,
   createAutomationLog,
   createBlogPost,
+  createReview,
   getAnalyticsSummary,
   getAutomationLogs,
   getAllSettings,
@@ -19,6 +20,8 @@ import {
   getHeroProducts,
   getProductAnalytics,
   getProducts,
+  getReviewAggregate,
+  getReviewsByProduct,
   getTopProducts,
   incrementBlogViews,
   recordAnalyticsEvent,
@@ -27,6 +30,7 @@ import {
   updateProductDisplay,
   updateProductMetrics,
   upsertProduct,
+  voteOnReview,
 } from "./db";
 import { runProductFetch, runBlogGeneration, runLayoutOptimization, runPerformanceScoring } from "./automationEngine";
 
@@ -185,7 +189,70 @@ const automationRouter = router({
     }),
 });
 
-// ─── App Router ───────────────────────────────────────────────────────────────
+// ─── Reviews Router ─────────────────────────────────────────────────────────────────
+const reviewsRouter = router({
+  list: publicProcedure
+    .input(
+      z.object({
+        productId: z.number(),
+        sortBy: z.enum(["recent", "helpful", "highest", "lowest"]).optional().default("recent"),
+        limit: z.number().min(1).max(50).optional().default(20),
+        offset: z.number().optional().default(0),
+      })
+    )
+    .query(async ({ input }) => {
+      return getReviewsByProduct(input.productId, {
+        sortBy: input.sortBy,
+        limit: input.limit,
+        offset: input.offset,
+      });
+    }),
+
+  aggregate: publicProcedure
+    .input(z.object({ productId: z.number() }))
+    .query(async ({ input }) => {
+      return getReviewAggregate(input.productId);
+    }),
+
+  create: publicProcedure
+    .input(
+      z.object({
+        productId: z.number(),
+        authorName: z.string().min(2).max(100),
+        authorEmail: z.string().email().optional(),
+        rating: z.number().int().min(1).max(5),
+        title: z.string().max(200).optional(),
+        body: z.string().min(10).max(2000),
+      })
+    )
+    .mutation(async ({ input }) => {
+      await createReview({
+        productId: input.productId,
+        authorName: input.authorName,
+        authorEmail: input.authorEmail ?? null,
+        rating: input.rating,
+        title: input.title ?? null,
+        body: input.body,
+        isVerified: false,
+        status: "approved",
+      });
+      return { success: true };
+    }),
+
+  vote: publicProcedure
+    .input(
+      z.object({
+        reviewId: z.number(),
+        sessionId: z.string().min(1).max(128),
+        voteType: z.enum(["helpful", "unhelpful"]),
+      })
+    )
+    .mutation(async ({ input }) => {
+      return voteOnReview(input.reviewId, input.sessionId, input.voteType);
+    }),
+});
+
+// ─── App Router ──────────────────────────────────────────────────────────────────
 export const appRouter = router({
   system: systemRouter,
   auth: router({
@@ -200,6 +267,6 @@ export const appRouter = router({
   blog: blogRouter,
   analytics: analyticsRouter,
   automation: automationRouter,
+  reviews: reviewsRouter,
 });
-
 export type AppRouter = typeof appRouter;

@@ -7,7 +7,10 @@ import {
   InsertAutomationLog,
   InsertBlogPost,
   InsertProduct,
+  InsertReview,
   products,
+  reviews,
+  reviewVotes,
   siteSettings,
   users,
   type InsertUser,
@@ -379,4 +382,114 @@ export async function getAllSettings() {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(siteSettings);
+}
+
+// ─── Reviews ─────────────────────────────────────────────────────────────────
+
+export async function getReviewsByProduct(
+  productId: number,
+  opts: { sortBy?: "recent" | "helpful" | "highest" | "lowest"; limit?: number; offset?: number } = {}
+) {
+  const db = await getDb();
+  if (!db) return [];
+  const { sortBy = "recent", limit = 20, offset = 0 } = opts;
+
+  const rows = await db
+    .select()
+    .from(reviews)
+    .where(and(eq(reviews.productId, productId), eq(reviews.status, "approved")))
+    .limit(limit)
+    .offset(offset);
+
+  // Sort in JS since Drizzle dynamic ordering is verbose
+  if (sortBy === "helpful") rows.sort((a, b) => b.helpfulCount - a.helpfulCount);
+  else if (sortBy === "highest") rows.sort((a, b) => b.rating - a.rating);
+  else if (sortBy === "lowest") rows.sort((a, b) => a.rating - b.rating);
+  else rows.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  return rows;
+}
+
+export async function getReviewAggregate(productId: number) {
+  const db = await getDb();
+  if (!db) return { averageRating: 0, totalCount: 0, distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } };
+
+  const rows = await db
+    .select({ rating: reviews.rating })
+    .from(reviews)
+    .where(and(eq(reviews.productId, productId), eq(reviews.status, "approved")));
+
+  const distribution: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  let total = 0;
+  let sum = 0;
+  for (const r of rows) {
+    distribution[r.rating] = (distribution[r.rating] || 0) + 1;
+    sum += r.rating;
+    total++;
+  }
+  return {
+    averageRating: total > 0 ? Math.round((sum / total) * 10) / 10 : 0,
+    totalCount: total,
+    distribution,
+  };
+}
+
+export async function createReview(data: InsertReview) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(reviews).values(data);
+  return result;
+}
+
+export async function getExistingVote(reviewId: number, sessionId: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db
+    .select()
+    .from(reviewVotes)
+    .where(and(eq(reviewVotes.reviewId, reviewId), eq(reviewVotes.sessionId, sessionId)))
+    .limit(1);
+  return result[0] ?? null;
+}
+
+export async function voteOnReview(reviewId: number, sessionId: string, voteType: "helpful" | "unhelpful") {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const existing = await getExistingVote(reviewId, sessionId);
+  if (existing) {
+    // Remove the old vote counts
+    if (existing.voteType === "helpful") {
+      await db.update(reviews).set({ helpfulCount: sql`helpfulCount - 1` }).where(eq(reviews.id, reviewId));
+    } else {
+      await db.update(reviews).set({ unhelpfulCount: sql`unhelpfulCount - 1` }).where(eq(reviews.id, reviewId));
+    }
+    if (existing.voteType === voteType) {
+      // Toggle off — delete the vote
+      await db.delete(reviewVotes).where(eq(reviewVotes.id, existing.id));
+      return { action: "removed" };
+    }
+    // Switch vote type
+    await db.update(reviewVotes).set({ voteType }).where(eq(reviewVotes.id, existing.id));
+  } else {
+    await db.insert(reviewVotes).values({ reviewId, sessionId, voteType });
+  }
+
+  // Apply new vote count
+  if (voteType === "helpful") {
+    await db.update(reviews).set({ helpfulCount: sql`helpfulCount + 1` }).where(eq(reviews.id, reviewId));
+  } else {
+    await db.update(reviews).set({ unhelpfulCount: sql`unhelpfulCount + 1` }).where(eq(reviews.id, reviewId));
+  }
+  return { action: existing ? "switched" : "added" };
+}
+
+export async function getReviewCountByProduct(productId: number) {
+  const db = await getDb();
+  if (!db) return 0;
+  const rows = await db
+    .select({ id: reviews.id })
+    .from(reviews)
+    .where(and(eq(reviews.productId, productId), eq(reviews.status, "approved")));
+  return rows.length;
 }

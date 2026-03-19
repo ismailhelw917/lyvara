@@ -1,5 +1,6 @@
 import { Star, ExternalLink, TrendingUp } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
+import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import type { Product } from "../../../drizzle/schema";
 
@@ -82,10 +83,11 @@ export default function ProductCard({ product, size, showBadge = true }: Product
       : "text-sm";
 
   return (
-    <div
-      className="product-card bg-white rounded overflow-hidden cursor-pointer group"
-      style={{ boxShadow: "var(--shadow-card)" }}
+    <Link
+      href={`/product/${product.id}`}
       onClick={handleCardClick}
+      className="product-card bg-white rounded overflow-hidden cursor-pointer group block"
+      style={{ boxShadow: "var(--shadow-card)" }}
     >
       {/* Image Container */}
       <div className={`relative overflow-hidden ${imageHeight}`} style={{ background: "var(--champagne)" }}>
@@ -221,6 +223,6 @@ export default function ProductCard({ product, size, showBadge = true }: Product
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

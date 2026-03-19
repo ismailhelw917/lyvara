@@ -92,6 +92,21 @@
 - [x] Add canonical URL tags
 - [x] Add per-page dynamic SEO via useSEO hook (Home, Shop, Journal, BlogPost)
 
+## Customer Reviews & Ratings
+- [ ] Add reviews table to database schema (id, productId, authorName, authorEmail, rating, title, body, isVerified, helpfulCount, unhelpfulCount, status, createdAt)
+- [ ] Add review_votes table (id, reviewId, sessionId, voteType)
+- [ ] Backend tRPC procedures: reviews.list, reviews.create, reviews.vote, reviews.aggregate
+- [ ] Product detail page (/product/:id) with full review section
+- [ ] Star rating widget (interactive 1-5 stars for submission)
+- [ ] Aggregate rating breakdown bar chart (5★ to 1★ distribution)
+- [ ] Review submission form with name, email, title, body, rating
+- [ ] Helpful / Not Helpful vote buttons on each review
+- [ ] Review sorting (most recent, most helpful, highest rated, lowest rated)
+- [ ] Update ProductCard to link to /product/:id instead of direct Amazon link
+- [ ] Add "View Details" button alongside "View on Amazon" on product cards
+- [ ] Seed sample reviews for demo products
+- [ ] Write vitest tests for review procedures
+
 ## Demo Data
 - [x] 12 luxury jewelry products seeded (necklaces, bracelets, rings, earrings)
 - [x] Site settings seeded (automation flags, thresholds, tags)

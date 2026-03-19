@@ -9,6 +9,7 @@ import Products from "./pages/Products";
 import BlogList from "./pages/BlogList";
 import BlogPost from "./pages/BlogPost";
 import AdminDashboard from "./pages/AdminDashboard";
+import ProductDetail from "./pages/ProductDetail";
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/shop/:category" component={Products} />
       <Route path="/journal" component={BlogList} />
       <Route path="/journal/:slug" component={BlogPost} />
+      <Route path="/product/:id" component={ProductDetail} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
