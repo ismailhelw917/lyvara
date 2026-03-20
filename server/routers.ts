@@ -199,6 +199,22 @@ const automationRouter = router({
     }),
 });
 
+// ─── Newsletter Router ──────────────────────────────────────────────────────────────
+const newsletterRouter = router({
+  subscribe: publicProcedure
+    .input(z.object({ email: z.string().email() }))
+    .mutation(async ({ input }) => {
+      // Store email in a simple way - could be extended to use a database table
+      // For now, send a notification to the owner
+      const { notifyOwner } = await import("./_core/notification");
+      await notifyOwner({
+        title: "New Newsletter Subscriber",
+        content: `New email signup: ${input.email}`,
+      });
+      return { success: true, message: "Thank you for subscribing!" };
+    }),
+});
+
 // ─── Reviews Router ─────────────────────────────────────────────────────────────────
 const reviewsRouter = router({
   list: publicProcedure
@@ -281,5 +297,6 @@ export const appRouter = router({
   analytics: analyticsRouter,
   automation: automationRouter,
   reviews: reviewsRouter,
+  newsletter: newsletterRouter,
 });
 export type AppRouter = typeof appRouter;

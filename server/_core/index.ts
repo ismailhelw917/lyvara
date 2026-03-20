@@ -13,6 +13,7 @@ import { blogPosts, products } from "../../drizzle/schema";
 import { eq, and, gt } from "drizzle-orm";
 import { generateCatalogXML, generateCatalogJSON, getCampaignInsights, runBudgetOptimization, isMetaConfigured } from "../metaService";
 import { getBoardAnalytics, getBoardPins, isPinterestConfigured } from "../pinterestService";
+import { generateGoogleShoppingXML, generateGoogleShoppingJSON } from "../googleShoppingService";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -183,6 +184,31 @@ async function startServer() {
     }
     const [analytics, pins] = await Promise.all([getBoardAnalytics(), getBoardPins()]);
     res.json({ configured: true, analytics, recentPins: pins.slice(0, 10) });
+  });
+
+  // ─── Google Shopping: product feed for Google Ads ──────────────────────────
+  app.get("/api/google/shopping.xml", async (_req, res) => {
+    try {
+      const xml = await generateGoogleShoppingXML();
+      res.setHeader("Content-Type", "application/xml");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      res.send(xml);
+    } catch (err) {
+      console.error("[Google Shopping XML] Error:", err);
+      res.status(500).send("Error generating Google Shopping feed");
+    }
+  });
+
+  app.get("/api/google/shopping.json", async (_req, res) => {
+    try {
+      const json = await generateGoogleShoppingJSON();
+      res.setHeader("Content-Type", "application/json");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      res.send(json);
+    } catch (err) {
+      console.error("[Google Shopping JSON] Error:", err);
+      res.status(500).json({ error: "Error generating Google Shopping feed" });
+    }
   });
 
   // tRPC API
