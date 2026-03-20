@@ -4,7 +4,7 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { EmailCapturePopup } from "./components/EmailCapturePopup";
+
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import BlogList from "./pages/BlogList";
@@ -35,7 +35,6 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
-          <EmailCapturePopup />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
