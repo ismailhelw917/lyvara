@@ -36,6 +36,7 @@ import { validateAndDeduplicateProducts, cleanupDuplicates, getDataQualityReport
 import { fetchAndCacheProductImages } from "./imageService";
 import { fetchAndUpdateJewelryProducts } from "./productFetcher";
 import { runFullVerification } from "./verificationEngine";
+import { updateMissingProductImages } from "./automaticImageUpdater";
 
 // ─── Product Fetch Job ────────────────────────────────────────────────────────
 export async function runProductFetch(): Promise<{ success: boolean; productsUpdated: number; message: string }> {
@@ -80,6 +81,15 @@ export async function runProductFetch(): Promise<{ success: boolean; productsUpd
 
     // Get data quality report
     const qualityReport = await getDataQualityReport();
+    
+    // Automatically fetch and update product images
+    console.log("[AutomationEngine] Fetching product images for new products...");
+    try {
+      const imageResult = await updateMissingProductImages();
+      console.log(`[AutomationEngine] Product images updated: ${imageResult.updated} images fetched from Amazon`);
+    } catch (imageErr) {
+      console.error("[AutomationEngine] Image fetching failed:", imageErr);
+    }
     
     const duration = Date.now() - startTime;
     const message = `Successfully fetched and updated ${updatedCount} products (${invalid.length} invalid, ${duplicates.length} duplicates filtered). Data quality: ${qualityReport.dataQualityScore}%`;
@@ -573,8 +583,23 @@ export function startScheduler() {
       }
     };
     runVerify();
-    setInterval(runVerify, 24 * 60 * 60 * 1000); // Run every 24 hours
-  }, 5 * 60 * 60 * 1000); // Start 5 hours after server start
+    setInterval(runVerify, 24 * 60 * 60 * 1000);
+  }, 5 * 60 * 60 * 1000);
+
+  // Daily image update: every 24 hours
+  setTimeout(() => {
+    const runImageUpdate = async () => {
+      try {
+        console.log("[AutomationEngine] Running daily image update...");
+        const result = await updateMissingProductImages();
+        console.log(`[AutomationEngine] Image update complete: ${result.updated} updated`);
+      } catch (err) {
+        console.error("[AutomationEngine] Image update failed:", err);
+      }
+    };
+    runImageUpdate();
+    setInterval(runImageUpdate, 24 * 60 * 60 * 1000);
+  }, 6 * 60 * 60 * 1000);
 
   console.log("[AutomationEngine] Scheduler started successfully");
 }

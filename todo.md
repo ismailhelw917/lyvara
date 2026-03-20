@@ -246,3 +246,11 @@
 - [x] Integrate verification into automation engine for daily checks
 - [x] Create verification reports/dashboard
 - [x] Test all verification systems
+
+## AUTOMATIC IMAGE FETCHING - CRITICAL CORE MECHANISM
+- [x] Create Amazon image scraper to fetch real product images by ASIN
+- [x] Create S3 image storage and upload service
+- [x] Create automated image update job that runs on schedule
+- [x] Integrate image fetching into product fetch workflow
+- [x] Test and verify all products display correct Amazon images
+- [x] Ensure images update automatically when products are refreshed
