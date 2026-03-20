@@ -1,0 +1,194 @@
+{
+  "query": "SELECT id, asin, title, isFeatured, isHero, isActive FROM products LIMIT 25;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, asin, title, isFeatured, isHero, isActive FROM products LIMIT 25;",
+  "rows": [
+    {
+      "id": "1",
+      "asin": "B08GOLD001",
+      "title": "PAVOI 14K Gold Plated Cubic Zirconia Solitaire Necklace",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "2",
+      "asin": "B08GOLD002",
+      "title": "Mejuri Gold Vermeil Necklace",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "3",
+      "asin": "B08GOLD003",
+      "title": "Gold Infinity Necklace — 14K Gold Filled Infinity Symbol Pendant",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "4",
+      "asin": "B08SILV001",
+      "title": "Sterling Silver Heart Necklace — 925 Silver Open Heart Pendant",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "5",
+      "asin": "B08SILV002",
+      "title": "Silver Moon and Star Necklace — Celestial Crescent Moon Pendant",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "6",
+      "asin": "B08BRAC001",
+      "title": "14K Gold Tennis Bracelet — Classic Diamond Line Bracelet",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "7",
+      "asin": "B08BRAC002",
+      "title": "Gold Bangle Bracelet Set — 18K Gold Plated Stackable Bangles",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "8",
+      "asin": "B08BRAC003",
+      "title": "Rose Gold Chain Bracelet — Delicate 14K Rose Gold Filled",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "9",
+      "asin": "B08RING001",
+      "title": "14K Gold Solitaire Diamond Ring — Classic Prong Setting",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "10",
+      "asin": "B08RING002",
+      "title": "Gold Stacking Rings Set — 14K Gold Filled Thin Band Rings",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "11",
+      "asin": "B08RING003",
+      "title": "Rose Gold Eternity Band — 14K Rose Gold Diamond Eternity Ring",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "12",
+      "asin": "B08RING004",
+      "title": "Sterling Silver Moonstone Ring — 925 Silver Oval Moonstone",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "13",
+      "asin": "B08EARR001",
+      "title": "14K Gold Huggie Hoop Earrings — Small Diamond Pave Huggies",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "14",
+      "asin": "B08EARR002",
+      "title": "Gold Drop Earrings — 18K Gold Plated Teardrop Crystal Dangle",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "15",
+      "asin": "B08EARR003",
+      "title": "Gold Stud Earrings — 14K Solid Gold Ball Stud Earrings",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "16",
+      "asin": "B08EARR004",
+      "title": "Sterling Silver Hoop Earrings — 925 Silver Classic Thin Hoops",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "17",
+      "asin": "B08PEND001",
+      "title": "Gold Butterfly Pendant — 14K Gold Filled Butterfly Charm",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "18",
+      "asin": "B08PEND002",
+      "title": "Rose Gold Infinity Pendant — Rose Gold Filled Infinity Symbol",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "19",
+      "asin": "B08PEND003",
+      "title": "Silver Moonstone Pendant — 925 Silver Oval Moonstone Pendant",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "20",
+      "asin": "B08WGOL001",
+      "title": "White Gold Solitaire Diamond Ring — 14K White Gold Diamond Ring",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "21",
+      "asin": "B08WGOL002",
+      "title": "White Gold Sapphire Ring — 14K White Gold Sapphire Cocktail Ring",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "22",
+      "asin": "B08SETS001",
+      "title": "Gold Jewelry Set — 14K Gold Plated Necklace, Bracelet & Earrings Set for Women, Gift Box",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    },
+    {
+      "id": "23",
+      "asin": "B08SETS002",
+      "title": "Rose Gold Jewelry Gift Set — Rose Gold Filled Layered Necklace and Stacking Ring Set",
+      "isFeatured": "0",
+      "isHero": "0",
+      "isActive": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tasin\ttitle\tisFeatured\tisHero\tisActive\n1\tB08GOLD001\tPAVOI 14K Gold Plated Cubic Zirconia Solitaire Necklace\t0\t0\t1\n2\tB08GOLD002\tMejuri Gold Vermeil Necklace\t0\t0\t1\n3\tB08GOLD003\tGold Infinity Necklace — 14K Gold Filled Infinity Symbol Pendant\t0\t0\t1\n4\tB08SILV001\tSterling Silver Heart Necklace — 925 Silver Open Heart Pendant\t0\t0\t1\n5\tB08SILV002\tSilver Moon and Star Necklace — Celestial Crescent Moon Pendant\t0\t0\t1\n6\tB08BRAC001\t14K Gold Tennis Bracelet — Classic Diamond Line Bracelet\t0\t0\t1\n7\tB08BRAC002\tGold Bangle Bracelet Set — 18K Gold Plated Stackable Bangles\t0\t0\t1\n8\tB08BRAC003\tRose Gold Chain Bracelet — Delicate 14K Rose Gold Filled\t0\t0\t1\n9\tB08RING001\t14K Gold Solitaire Diamond Ring — Classic Prong Setting\t0\t0\t1\n10\tB08RING002\tGold Stacking Rings Set — 14K Gold Filled Thin Band Rings\t0\t0\t1\n11\tB08RING003\tRose Gold Eternity Band — 14K Rose Gold Diamond Eternity Ring\t0\t0\t1\n12\tB08RING004\tSterling Silver Moonstone Ring — 925 Silver Oval Moonstone\t0\t0\t1\n13\tB08EARR001\t14K Gold Huggie Hoop Earrings — Small Diamond Pave Huggies\t0\t0\t1\n14\tB08EARR002\tGold Drop Earrings — 18K Gold Plated Teardrop Crystal Dangle\t0\t0\t1\n15\tB08EARR003\tGold Stud Earrings — 14K Solid Gold Ball Stud Earrings\t0\t0\t1\n16\tB08EARR004\tSterling Silver Hoop Earrings — 925 Silver Classic Thin Hoops\t0\t0\t1\n17\tB08PEND001\tGold Butterfly Pendant — 14K Gold Filled Butterfly Charm\t0\t0\t1\n18\tB08PEND002\tRose Gold Infinity Pendant — Rose Gold Filled Infinity Symbol\t0\t0\t1\n19\tB08PEND003\tSilver Moonstone Pendant — 925 Silver Oval Moonstone Pendant\t0\t0\t1\n20\tB08WGOL001\tWhite Gold Solitaire Diamond Ring — 14K White Gold Diamond Ring\t0\t0\t1\n21\tB08WGOL002\tWhite Gold Sapphire Ring — 14K White Gold Sapphire Cocktail Ring\t0\t0\t1\n22\tB08SETS001\tGold Jewelry Set — 14K Gold Plated Necklace, Bracelet & Earrings Set for Women, Gift Box\t0\t0\t1\n23\tB08SETS002\tRose Gold Jewelry Gift Set — Rose Gold Filled Layered Necklace and Stacking Ring Set\t0\t0\t1\n",
+  "stderr": "",
+  "execution_time_ms": 1683
+}

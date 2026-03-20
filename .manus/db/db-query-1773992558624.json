@@ -1,0 +1,14 @@
+{
+  "query": "SELECT COUNT(*) as total, GROUP_CONCAT(asin) as asins FROM products;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT COUNT(*) as total, GROUP_CONCAT(asin) as asins FROM products;",
+  "rows": [
+    {
+      "total": "18",
+      "asins": "B08BRAC001,B08BRAC002,B08EARR001,B08EARR003,B08EARR004,B08GOLD002,B08GOLD003,B08PEND001,B08PEND002,B08RING001,B08RING003,B08RING004,B08SETS001,B08SETS002,B08SILV001,B08SILV002,B08WGOL001,B0BLK7NRLM"
+    }
+  ],
+  "messages": [],
+  "stdout": "total\tasins\n18\tB08BRAC001,B08BRAC002,B08EARR001,B08EARR003,B08EARR004,B08GOLD002,B08GOLD003,B08PEND001,B08PEND002,B08RING001,B08RING003,B08RING004,B08SETS001,B08SETS002,B08SILV001,B08SILV002,B08WGOL001,B0BLK7NRLM\n",
+  "stderr": "",
+  "execution_time_ms": 1643
+}

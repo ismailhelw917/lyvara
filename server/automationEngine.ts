@@ -33,6 +33,7 @@ import { pinBlogPost, pinProduct } from "./pinterestService";
 import { runLinkAudit } from "./linkAuditService";
 import { replaceBrokenLinks } from "./linkReplacementService";
 import { validateAndDeduplicateProducts, cleanupDuplicates, getDataQualityReport } from "./productValidationService";
+import { fetchAndCacheProductImages } from "./imageService";
 
 // ─── Product Fetch Job ────────────────────────────────────────────────────────
 export async function runProductFetch(): Promise<{ success: boolean; productsUpdated: number; message: string }> {
@@ -101,6 +102,12 @@ export async function runProductFetch(): Promise<{ success: boolean; productsUpd
     }
 
     console.log(`[AutomationEngine] Product fetch complete: ${updatedCount} products`);
+    
+    // Fetch and cache product images
+    console.log("[AutomationEngine] Starting image fetch and cache job...");
+    const imageResult = await fetchAndCacheProductImages();
+    console.log(`[AutomationEngine] Image cache complete: ${imageResult.imagesUpdated} images updated`);
+    
     await trackAutomationRun(); // CounterAPI: automation-runs
     return { success: true, productsUpdated: updatedCount, message };
   } catch (error: any) {

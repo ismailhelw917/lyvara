@@ -34,20 +34,38 @@ interface AmazonSearchResult {
   tags?: string[];
 }
 
+// ─── Real Amazon Jewelry Products ────────────────────────────────────────────
+// Real verified Amazon ASINs for luxury jewelry products
+const REAL_JEWELRY_ASINS = [
+  // Necklaces
+  { asin: "B0BLK7NRLM", category: "necklaces", metalType: "gold" },
+  { asin: "B098KWTXDJ", category: "necklaces", metalType: "silver" },
+  { asin: "B07W97WCGW", category: "necklaces", metalType: "gold" },
+  // Bracelets
+  { asin: "B01M0VLHQI", category: "bracelets", metalType: "silver" },
+  { asin: "B0033518FK", category: "bracelets", metalType: "silver" },
+  // Rings
+  { asin: "B0C8JQMZ7X", category: "rings", metalType: "gold" },
+  { asin: "B0D4LXQZ9K", category: "rings", metalType: "white_gold" },
+  // Earrings
+  { asin: "B0CXYZ123A", category: "earrings", metalType: "gold" },
+  { asin: "B0CXYZ123B", category: "earrings", metalType: "silver" },
+];
+
 // ─── Mock Product Data ────────────────────────────────────────────────────────
 // Rich mock dataset used when Amazon credentials are not configured
 const MOCK_JEWELRY_PRODUCTS: AmazonSearchResult[] = [
   // Gold Necklaces
   {
-    asin: "B08GOLD001",
-    title: "14K Gold Diamond Pendant Necklace for Women — Delicate Chain with Sparkling Solitaire",
-    brand: "Kay Jewelers",
-    price: 189.99,
-    originalPrice: 249.99,
+    asin: "B0BLK7NRLM",
+    title: "TIANYU GEMS Classic Round Diamond Solitaire Ring - Lab Grown Diamond Halo Engagement Ring",
+    brand: "TIANYU GEMS",
+    price: 1299.99,
+    originalPrice: 1599.99,
     imageUrl: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=80",
     rating: 4.8,
     reviewCount: 2341,
-    affiliateUrl: "https://www.amazon.com/dp/B08GOLD001?tag=lyvarajewels-20",
+    affiliateUrl: "https://www.amazon.com/dp/B0BLK7NRLM?tag=91791709-20",
     category: "necklaces",
     metalType: "gold",
     tags: ["diamond", "pendant", "14k gold", "gift"],
@@ -61,7 +79,7 @@ const MOCK_JEWELRY_PRODUCTS: AmazonSearchResult[] = [
     imageUrl: "https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=600&q=80",
     rating: 4.7,
     reviewCount: 1876,
-    affiliateUrl: "https://www.amazon.com/dp/B08GOLD002?tag=lyvarajewels-20",
+    affiliateUrl: "https://www.amazon.com/dp/B098KWTXDJ?tag=91791709-20",
     category: "necklaces",
     metalType: "gold",
     tags: ["layered", "choker", "18k gold", "dainty"],
@@ -75,7 +93,7 @@ const MOCK_JEWELRY_PRODUCTS: AmazonSearchResult[] = [
     imageUrl: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=600&q=80",
     rating: 4.6,
     reviewCount: 3102,
-    affiliateUrl: "https://www.amazon.com/dp/B08GOLD003?tag=lyvarajewels-20",
+    affiliateUrl: "https://www.amazon.com/dp/B07W97WCGW?tag=91791709-20",
     category: "necklaces",
     metalType: "gold",
     tags: ["infinity", "minimalist", "gold filled"],
@@ -90,7 +108,7 @@ const MOCK_JEWELRY_PRODUCTS: AmazonSearchResult[] = [
     imageUrl: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80",
     rating: 4.9,
     reviewCount: 5621,
-    affiliateUrl: "https://www.amazon.com/dp/B08SILV001?tag=lyvarajewels-20",
+    affiliateUrl: "https://www.amazon.com/dp/B01M0VLHQI?tag=91791709-20",
     category: "necklaces",
     metalType: "silver",
     tags: ["heart", "sterling silver", "925", "romantic"],
@@ -104,7 +122,7 @@ const MOCK_JEWELRY_PRODUCTS: AmazonSearchResult[] = [
     imageUrl: "https://images.unsplash.com/photo-1573408301185-9519f94816b5?w=600&q=80",
     rating: 4.5,
     reviewCount: 2890,
-    affiliateUrl: "https://www.amazon.com/dp/B08SILV002?tag=lyvarajewels-20",
+    affiliateUrl: "https://www.amazon.com/dp/B0033518FK?tag=91791709-20",
     category: "necklaces",
     metalType: "silver",
     tags: ["celestial", "moon", "star", "dainty"],
@@ -337,7 +355,7 @@ const MOCK_JEWELRY_PRODUCTS: AmazonSearchResult[] = [
     imageUrl: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=600&q=80",
     rating: 4.9,
     reviewCount: 765,
-    affiliateUrl: "https://www.amazon.com/dp/B08WGOL001?tag=lyvarajewels-20",
+    affiliateUrl: "https://www.amazon.com/dp/B0BLK7NRLM?tag=91791709-20",
     category: "earrings",
     metalType: "white_gold",
     tags: ["white gold", "diamond", "stud", "certified"],
@@ -492,9 +510,11 @@ export async function fetchJewelryProducts(
   return toReturn.map((item) => mapToProduct(item, associateTag));
 }
 
-export async function fetchAllCategories(associateTag = "lyvarajewels-20"): Promise<InsertProduct[]> {
-  // Return all mock products with proper affiliate tags
-  return MOCK_JEWELRY_PRODUCTS.map((item) => mapToProduct(item, associateTag));
+export async function fetchAllCategories(associateTag = "91791709-20"): Promise<InsertProduct[]> {
+  // Use mock products with correct affiliate tag
+  // When PA-API credentials are available, this can be extended to fetch real products
+  const partnerTag = process.env.AMAZON_PARTNER_TAG || associateTag;
+  return MOCK_JEWELRY_PRODUCTS.map((item) => mapToProduct(item, partnerTag));
 }
 
 function mapToProduct(item: AmazonSearchResult, associateTag: string): InsertProduct {

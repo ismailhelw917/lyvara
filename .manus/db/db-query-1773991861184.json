@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE products SET isFeatured = 1, displayRank = id WHERE id <= 8;\nUPDATE products SET isHero = 1, displayRank = id WHERE id <= 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute UPDATE products SET isFeatured = 1, displayRank = id WHERE id <= 8;\nUPDATE products SET isHero = 1, displayRank = id WHERE id <= 3;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1897
+}
