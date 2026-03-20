@@ -1,0 +1,40 @@
+{
+  "query": "SELECT id, asin, title, imageUrl FROM products LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, asin, title, imageUrl FROM products LIMIT 5;",
+  "rows": [
+    {
+      "id": "117",
+      "asin": "B0BLK7NRLM",
+      "title": "14K Gold Plated Layered Necklace Set",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B0BLK7NRLM/main-image.jpg"
+    },
+    {
+      "id": "118",
+      "asin": "B098KWTXDJ",
+      "title": "14K Rose Gold Sapphire Ring with Diamond Halo",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B098KWTXDJ/main-image.jpg"
+    },
+    {
+      "id": "119",
+      "asin": "B07W97WCGW",
+      "title": "Silver Diamond Pendant Necklace",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B07W97WCGW/main-image.jpg"
+    },
+    {
+      "id": "120",
+      "asin": "B01M0VLHQI",
+      "title": "14K Gold Chain Necklace with Black Moon Charm",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B01M0VLHQI/main-image.jpg"
+    },
+    {
+      "id": "121",
+      "asin": "B0033518FK",
+      "title": "Rose Gold Moonstone Bracelet",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B0033518FK/main-image.jpg"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tasin\ttitle\timageUrl\n117\tB0BLK7NRLM\t14K Gold Plated Layered Necklace Set\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B0BLK7NRLM/main-image.jpg\n118\tB098KWTXDJ\t14K Rose Gold Sapphire Ring with Diamond Halo\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B098KWTXDJ/main-image.jpg\n119\tB07W97WCGW\tSilver Diamond Pendant Necklace\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B07W97WCGW/main-image.jpg\n120\tB01M0VLHQI\t14K Gold Chain Necklace with Black Moon Charm\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B01M0VLHQI/main-image.jpg\n121\tB0033518FK\tRose Gold Moonstone Bracelet\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B0033518FK/main-image.jpg\n",
+  "stderr": "",
+  "execution_time_ms": 1644
+}

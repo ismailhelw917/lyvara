@@ -37,6 +37,7 @@ import { fetchAndCacheProductImages } from "./imageService";
 import { fetchAndUpdateJewelryProducts } from "./productFetcher";
 import { runFullVerification } from "./verificationEngine";
 import { updateMissingProductImages } from "./automaticImageUpdater";
+import { updateProductImagesWithAmazon } from "./simpleImageUpdater";
 
 // ─── Product Fetch Job ────────────────────────────────────────────────────────
 export async function runProductFetch(): Promise<{ success: boolean; productsUpdated: number; message: string }> {
@@ -82,11 +83,11 @@ export async function runProductFetch(): Promise<{ success: boolean; productsUpd
     // Get data quality report
     const qualityReport = await getDataQualityReport();
     
-    // Automatically fetch and update product images
-    console.log("[AutomationEngine] Fetching product images for new products...");
+    // Automatically fetch and update product images from Amazon
+    console.log("[AutomationEngine] Fetching real Amazon product images...");
     try {
-      const imageResult = await updateMissingProductImages();
-      console.log(`[AutomationEngine] Product images updated: ${imageResult.updated} images fetched from Amazon`);
+      const imageResult = await updateProductImagesWithAmazon();
+      console.log(`[AutomationEngine] Product images updated: ${imageResult.updated} updated, ${imageResult.failed} failed, ${imageResult.skipped} skipped`);
     } catch (imageErr) {
       console.error("[AutomationEngine] Image fetching failed:", imageErr);
     }
