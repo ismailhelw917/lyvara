@@ -1,0 +1,1 @@
+ALTER TABLE `automation_logs` MODIFY COLUMN `jobType` enum('product_fetch','blog_generation','layout_optimization','performance_scoring','hero_image_generation','cleanup','verification') NOT NULL;

@@ -111,7 +111,7 @@ export type InsertAnalyticsEvent = typeof analyticsEvents.$inferInsert;
 // ─── Automation Logs ──────────────────────────────────────────────────────────
 export const automationLogs = mysqlTable("automation_logs", {
   id: int("id").autoincrement().primaryKey(),
-  jobType: mysqlEnum("jobType", ["product_fetch", "blog_generation", "layout_optimization", "performance_scoring", "hero_image_generation", "cleanup"]).notNull(),
+  jobType: mysqlEnum("jobType", ["product_fetch", "blog_generation", "layout_optimization", "performance_scoring", "hero_image_generation", "cleanup", "verification"]).notNull(),
   status: mysqlEnum("status", ["running", "success", "failed", "partial"]).notNull(),
   message: text("message"),
   details: json("details"),

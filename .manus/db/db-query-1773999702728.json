@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE `automation_logs` MODIFY COLUMN `jobType` enum('product_fetch','blog_generation','layout_optimization','performance_scoring','hero_image_generation','cleanup','verification') NOT NULL;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute ALTER TABLE `automation_logs` MODIFY COLUMN `jobType` enum('product_fetch','blog_generation','layout_optimization','performance_scoring','hero_image_generation','cleanup','verification') NOT NULL;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2163
+}

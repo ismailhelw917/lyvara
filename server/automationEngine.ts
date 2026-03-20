@@ -35,6 +35,7 @@ import { replaceBrokenLinks } from "./linkReplacementService";
 import { validateAndDeduplicateProducts, cleanupDuplicates, getDataQualityReport } from "./productValidationService";
 import { fetchAndCacheProductImages } from "./imageService";
 import { fetchAndUpdateJewelryProducts } from "./productFetcher";
+import { runFullVerification } from "./verificationEngine";
 
 // ─── Product Fetch Job ────────────────────────────────────────────────────────
 export async function runProductFetch(): Promise<{ success: boolean; productsUpdated: number; message: string }> {
@@ -419,6 +420,57 @@ export async function runLayoutOptimization(): Promise<{ success: boolean; messa
   }
 }
 
+// ─── Verification Job ────────────────────────────────────────────────────────
+export async function runVerification(): Promise<{ success: boolean; message: string; report: any }> {
+  const startTime = Date.now();
+
+  const logResult = await createAutomationLog({
+    jobType: "verification",
+    status: "running",
+    message: "Starting product verification...",
+  });
+  const logId = (logResult as any)?.insertId;
+
+  try {
+    console.log("[AutomationEngine] Running comprehensive product verification...");
+    const report = await runFullVerification();
+    const duration = Date.now() - startTime;
+
+    if (logId) {
+      await updateAutomationLog(logId, {
+        status: "success",
+        message: report.summary,
+        duration,
+        details: {
+          asins: report.asins,
+          links: report.links,
+          images: report.images,
+          issues: report.issues,
+        },
+      });
+    }
+
+    if (report.issues.length > 0) {
+      await notifyOwner({
+        title: "Product Verification Issues Found",
+        content: `Verification found ${report.issues.length} issue(s). Check the verification report.`,
+      }).catch(() => {});
+    }
+
+    return { success: true, message: report.summary, report };
+  } catch (error: any) {
+    const duration = Date.now() - startTime;
+    if (logId) {
+      await updateAutomationLog(logId, {
+        status: "failed",
+        message: error.message,
+        duration,
+      });
+    }
+    throw error;
+  }
+}
+
 // ─── Scheduler Setup ──────────────────────────────────────────────────────────
 let schedulerStarted = false;
 
@@ -509,6 +561,20 @@ export function startScheduler() {
     runReplacement();
     setInterval(runReplacement, 12 * 60 * 60 * 1000); // Run every 12 hours
   }, 1 * 60 * 60 * 1000); // Start 1 hour after server start
+
+  // Daily verification: every 24 hours
+  setTimeout(() => {
+    const runVerify = async () => {
+      try {
+        console.log("[AutomationEngine] Running daily verification...");
+        await runVerification();
+      } catch (err) {
+        console.error("[AutomationEngine] Verification failed:", err);
+      }
+    };
+    runVerify();
+    setInterval(runVerify, 24 * 60 * 60 * 1000); // Run every 24 hours
+  }, 5 * 60 * 60 * 1000); // Start 5 hours after server start
 
   console.log("[AutomationEngine] Scheduler started successfully");
 }
