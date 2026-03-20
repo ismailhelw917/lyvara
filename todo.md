@@ -217,3 +217,10 @@
 - [x] Integrate validation into product fetch automation (runs on every fetch)
 - [x] Clean up existing duplicates and bad products from database (34 unique products, 0 duplicates)
 - [ ] Add data quality metrics to admin dashboard (data quality score display)
+
+## CRITICAL BUGS - FIXED
+- [x] Fix "View on Amazon" button links returning 404 — replaced fake demo ASINs with real Amazon product IDs
+- [x] Fix product images — populated with real Amazon product image URLs
+- [x] Build automated verification service (verificationService.ts) — daily link and image URL validation with health score
+- [x] Populate database with 10 real Amazon jewelry products (32 total after cleanup)
+- [x] Fix price type error in Meta catalog (was string, now decimal)

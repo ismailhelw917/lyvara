@@ -1,0 +1,8 @@
+{
+  "query": "SELECT COUNT(*) as total, COUNT(DISTINCT asin) as unique FROM products WHERE asin NOT LIKE 'B08DEMO%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT COUNT(*) as total, COUNT(DISTINCT asin) as unique FROM products WHERE asin NOT LIKE 'B08DEMO%';",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your TiDB version for the right syntax to use line 1 column 56 near \"unique FROM products WHERE asin NOT LIKE 'B08DEMO%'\""
+  ]
+}

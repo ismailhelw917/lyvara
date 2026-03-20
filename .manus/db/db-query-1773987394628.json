@@ -1,0 +1,45 @@
+{
+  "query": "SELECT id, title, affiliateUrl, imageUrl, price FROM products LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, title, affiliateUrl, imageUrl, price FROM products LIMIT 5;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "14K Gold Diamond Solitaire Necklace",
+      "affiliateUrl": "https://www.amazon.com/dp/B08DEMO001?tag=91791709-20",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=80",
+      "price": "189.99"
+    },
+    {
+      "id": "2",
+      "title": "Sterling Silver Tennis Bracelet",
+      "affiliateUrl": "https://www.amazon.com/dp/B08DEMO002?tag=91791709-20",
+      "imageUrl": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80",
+      "price": "79.99"
+    },
+    {
+      "id": "3",
+      "title": "Rose Gold Stackable Ring Set",
+      "affiliateUrl": "https://www.amazon.com/dp/B08DEMO003?tag=91791709-20",
+      "imageUrl": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&q=80",
+      "price": "45.99"
+    },
+    {
+      "id": "4",
+      "title": "Gold Hoop Earrings 14K",
+      "affiliateUrl": "https://www.amazon.com/dp/B08DEMO004?tag=91791709-20",
+      "imageUrl": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80",
+      "price": "129.99"
+    },
+    {
+      "id": "5",
+      "title": "White Gold Diamond Eternity Band",
+      "affiliateUrl": "https://www.amazon.com/dp/B08DEMO005?tag=91791709-20",
+      "imageUrl": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80",
+      "price": "399.99"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\taffiliateUrl\timageUrl\tprice\n1\t14K Gold Diamond Solitaire Necklace\thttps://www.amazon.com/dp/B08DEMO001?tag=91791709-20\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=80\t189.99\n2\tSterling Silver Tennis Bracelet\thttps://www.amazon.com/dp/B08DEMO002?tag=91791709-20\thttps://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80\t79.99\n3\tRose Gold Stackable Ring Set\thttps://www.amazon.com/dp/B08DEMO003?tag=91791709-20\thttps://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&q=80\t45.99\n4\tGold Hoop Earrings 14K\thttps://www.amazon.com/dp/B08DEMO004?tag=91791709-20\thttps://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80\t129.99\n5\tWhite Gold Diamond Eternity Band\thttps://www.amazon.com/dp/B08DEMO005?tag=91791709-20\thttps://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80\t399.99\n",
+  "stderr": "",
+  "execution_time_ms": 1984
+}
