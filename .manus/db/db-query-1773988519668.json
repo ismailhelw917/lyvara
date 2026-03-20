@@ -1,0 +1,35 @@
+{
+  "query": "SELECT asin, title, affiliateUrl FROM products LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT asin, title, affiliateUrl FROM products LIMIT 5;",
+  "rows": [
+    {
+      "asin": "B0BXYZ123",
+      "title": "PAVOI 14K Gold Plated Cubic Zirconia Solitaire Necklace",
+      "affiliateUrl": "https://www.amazon.com/dp/B0BXYZ123?tag=91791709-20"
+    },
+    {
+      "asin": "B0CDEF456",
+      "title": "Zoe Lev Gold Birthstone Pendant Necklace",
+      "affiliateUrl": "https://www.amazon.com/dp/B0CDEF456?tag=91791709-20"
+    },
+    {
+      "asin": "B0DGHI789",
+      "title": "Caitlyn Minimalist Rose Gold Stackable Ring Set",
+      "affiliateUrl": "https://www.amazon.com/dp/B0DGHI789?tag=91791709-20"
+    },
+    {
+      "asin": "B0EJKL012",
+      "title": "Mevecco Gold Hoop Earrings 14K",
+      "affiliateUrl": "https://www.amazon.com/dp/B0EJKL012?tag=91791709-20"
+    },
+    {
+      "asin": "B0FMNO345",
+      "title": "KATARINA White Gold Diamond Eternity Band",
+      "affiliateUrl": "https://www.amazon.com/dp/B0FMNO345?tag=91791709-20"
+    }
+  ],
+  "messages": [],
+  "stdout": "asin\ttitle\taffiliateUrl\nB0BXYZ123\tPAVOI 14K Gold Plated Cubic Zirconia Solitaire Necklace\thttps://www.amazon.com/dp/B0BXYZ123?tag=91791709-20\nB0CDEF456\tZoe Lev Gold Birthstone Pendant Necklace\thttps://www.amazon.com/dp/B0CDEF456?tag=91791709-20\nB0DGHI789\tCaitlyn Minimalist Rose Gold Stackable Ring Set\thttps://www.amazon.com/dp/B0DGHI789?tag=91791709-20\nB0EJKL012\tMevecco Gold Hoop Earrings 14K\thttps://www.amazon.com/dp/B0EJKL012?tag=91791709-20\nB0FMNO345\tKATARINA White Gold Diamond Eternity Band\thttps://www.amazon.com/dp/B0FMNO345?tag=91791709-20\n",
+  "stderr": "",
+  "execution_time_ms": 1551
+}

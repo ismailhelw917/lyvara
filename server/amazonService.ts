@@ -373,7 +373,7 @@ function getSignatureKey(key: string, dateStamp: string, regionName: string, ser
 async function callPaApi(payload: object): Promise<any> {
   const accessKey = process.env.AMAZON_ACCESS_KEY;
   const secretKey = process.env.AMAZON_SECRET_KEY;
-  const associateTag = process.env.AMAZON_ASSOCIATE_TAG;
+  const associateTag = process.env.AMAZON_PARTNER_TAG;
 
   if (!accessKey || !secretKey || !associateTag) {
     return null; // Fall back to mock data
@@ -454,7 +454,7 @@ export async function fetchJewelryProducts(
     other: `${metalType.replace("_", " ")} jewelry women`,
   };
 
-  const associateTag = process.env.AMAZON_ASSOCIATE_TAG || "lyvarajewels-20";
+  const associateTag = process.env.AMAZON_PARTNER_TAG || "91791709-20";
 
   // Try PA-API first
   const apiResponse = await callPaApi({

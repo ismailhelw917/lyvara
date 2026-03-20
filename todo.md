@@ -224,3 +224,9 @@
 - [x] Build automated verification service (verificationService.ts) — daily link and image URL validation with health score
 - [x] Populate database with 10 real Amazon jewelry products (32 total after cleanup)
 - [x] Fix price type error in Meta catalog (was string, now decimal)
+
+## CRITICAL PRODUCT DATA ISSUES - URGENT FIX REQUIRED
+- [ ] Products not updating from Amazon API — debug fetcher and verify credentials
+- [ ] Affiliate links are broken — fix URL generation and validation
+- [ ] Product titles are wrong — fetch fresh data from Amazon with correct metadata
+- [ ] Implement real-time product refresh instead of manual inserts

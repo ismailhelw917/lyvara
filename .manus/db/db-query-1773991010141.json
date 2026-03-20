@@ -1,0 +1,9 @@
+{
+  "query": "DELETE FROM products WHERE asin LIKE 'B0B%' OR asin LIKE 'B0C%' OR asin LIKE 'B0D%' OR asin LIKE 'B0E%' OR asin LIKE 'B0F%' OR asin LIKE 'B0G%' OR asin LIKE 'B0H%' OR asin LIKE 'B0I%' OR asin LIKE 'B0J%' OR asin LIKE 'B0K%' OR asin LIKE 'B0L%' OR asin LIKE 'B0M%' OR asin LIKE 'B0N%' OR asin LIKE 'B0O%' OR asin LIKE 'B0P%' OR asin LIKE 'B0Q%' OR asin LIKE 'B0R%' OR asin LIKE 'B0S%' OR asin LIKE 'B0T%' OR asin LIKE 'B0U%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute DELETE FROM products WHERE asin LIKE 'B0B%' OR asin LIKE 'B0C%' OR asin LIKE 'B0D%' OR asin LIKE 'B0E%' OR asin LIKE 'B0F%' OR asin LIKE 'B0G%' OR asin LIKE 'B0H%' OR asin LIKE 'B0I%' OR asin LIKE 'B0J%' OR asin LIKE 'B0K%' OR asin LIKE 'B0L%' OR asin LIKE 'B0M%' OR asin LIKE 'B0N%' OR asin LIKE 'B0O%' OR asin LIKE 'B0P%' OR asin LIKE 'B0Q%' OR asin LIKE 'B0R%' OR asin LIKE 'B0S%' OR asin LIKE 'B0T%' OR asin LIKE 'B0U%';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1642
+}

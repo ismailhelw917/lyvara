@@ -1,0 +1,82 @@
+{
+  "query": "SELECT asin, title FROM products LIMIT 30;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT asin, title FROM products LIMIT 30;",
+  "rows": [
+    {
+      "asin": "B08GOLD001",
+      "title": "14K Gold Diamond Pendant Necklace for Women — Delicate Chain with Sparkling Solitaire"
+    },
+    {
+      "asin": "B08GOLD002",
+      "title": "18K Gold Layered Necklace Set — Dainty Chain Choker with Satellite Chain, Women's Jewelry"
+    },
+    {
+      "asin": "B08GOLD003",
+      "title": "Gold Infinity Necklace — 14K Gold Filled Infinity Symbol Pendant, Minimalist Jewelry"
+    },
+    {
+      "asin": "B08SILV001",
+      "title": "Sterling Silver Heart Necklace — 925 Silver Open Heart Pendant with Box Chain"
+    },
+    {
+      "asin": "B08SILV002",
+      "title": "Silver Moon and Star Necklace — Celestial Crescent Moon Pendant, Dainty Silver Jewelry"
+    },
+    {
+      "asin": "B08BRAC001",
+      "title": "14K Gold Tennis Bracelet — Classic Diamond Line Bracelet, 7 Inch Women's Fine Jewelry"
+    },
+    {
+      "asin": "B08BRAC002",
+      "title": "Gold Bangle Bracelet Set — 18K Gold Plated Stackable Bangles, Set of 3"
+    },
+    {
+      "asin": "B08RING001",
+      "title": "14K Gold Solitaire Diamond Ring — Classic Prong Setting, Engagement or Promise Ring"
+    },
+    {
+      "asin": "B08RING003",
+      "title": "Rose Gold Eternity Band — 14K Rose Gold Diamond Eternity Ring, Wedding Band"
+    },
+    {
+      "asin": "B08RING004",
+      "title": "Sterling Silver Moonstone Ring — 925 Silver Oval Moonstone Cocktail Ring, Boho Jewelry"
+    },
+    {
+      "asin": "B08EARR001",
+      "title": "14K Gold Huggie Hoop Earrings — Small Diamond Pave Huggies, Cartilage Earrings"
+    },
+    {
+      "asin": "B08EARR003",
+      "title": "Gold Stud Earrings — 14K Solid Gold Ball Stud Earrings, Classic Everyday Jewelry"
+    },
+    {
+      "asin": "B08EARR004",
+      "title": "Sterling Silver Hoop Earrings — 925 Silver Classic Thin Hoops, Multiple Sizes"
+    },
+    {
+      "asin": "B08PEND001",
+      "title": "Gold Butterfly Pendant — 14K Gold Filled Butterfly Charm Pendant, Nature Jewelry"
+    },
+    {
+      "asin": "B08PEND002",
+      "title": "Silver Evil Eye Pendant — 925 Sterling Silver Blue Evil Eye Charm, Protective Jewelry"
+    },
+    {
+      "asin": "B08SETS001",
+      "title": "Gold Jewelry Set — 14K Gold Plated Necklace, Bracelet & Earrings Set for Women, Gift Box"
+    },
+    {
+      "asin": "B08SETS002",
+      "title": "Rose Gold Jewelry Gift Set — Rose Gold Filled Layered Necklace and Stacking Ring Set"
+    },
+    {
+      "asin": "B08WGOL001",
+      "title": "14K White Gold Diamond Stud Earrings — 0.5 Carat Total Weight, Certified Diamonds"
+    }
+  ],
+  "messages": [],
+  "stdout": "asin\ttitle\nB08GOLD001\t14K Gold Diamond Pendant Necklace for Women — Delicate Chain with Sparkling Solitaire\nB08GOLD002\t18K Gold Layered Necklace Set — Dainty Chain Choker with Satellite Chain, Women's Jewelry\nB08GOLD003\tGold Infinity Necklace — 14K Gold Filled Infinity Symbol Pendant, Minimalist Jewelry\nB08SILV001\tSterling Silver Heart Necklace — 925 Silver Open Heart Pendant with Box Chain\nB08SILV002\tSilver Moon and Star Necklace — Celestial Crescent Moon Pendant, Dainty Silver Jewelry\nB08BRAC001\t14K Gold Tennis Bracelet — Classic Diamond Line Bracelet, 7 Inch Women's Fine Jewelry\nB08BRAC002\tGold Bangle Bracelet Set — 18K Gold Plated Stackable Bangles, Set of 3\nB08RING001\t14K Gold Solitaire Diamond Ring — Classic Prong Setting, Engagement or Promise Ring\nB08RING003\tRose Gold Eternity Band — 14K Rose Gold Diamond Eternity Ring, Wedding Band\nB08RING004\tSterling Silver Moonstone Ring — 925 Silver Oval Moonstone Cocktail Ring, Boho Jewelry\nB08EARR001\t14K Gold Huggie Hoop Earrings — Small Diamond Pave Huggies, Cartilage Earrings\nB08EARR003\tGold Stud Earrings — 14K Solid Gold Ball Stud Earrings, Classic Everyday Jewelry\nB08EARR004\tSterling Silver Hoop Earrings — 925 Silver Classic Thin Hoops, Multiple Sizes\nB08PEND001\tGold Butterfly Pendant — 14K Gold Filled Butterfly Charm Pendant, Nature Jewelry\nB08PEND002\tSilver Evil Eye Pendant — 925 Sterling Silver Blue Evil Eye Charm, Protective Jewelry\nB08SETS001\tGold Jewelry Set — 14K Gold Plated Necklace, Bracelet & Earrings Set for Women, Gift Box\nB08SETS002\tRose Gold Jewelry Gift Set — Rose Gold Filled Layered Necklace and Stacking Ring Set\nB08WGOL001\t14K White Gold Diamond Stud Earrings — 0.5 Carat Total Weight, Certified Diamonds\n",
+  "stderr": "",
+  "execution_time_ms": 1561
+}

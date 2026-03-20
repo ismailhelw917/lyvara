@@ -1,0 +1,45 @@
+{
+  "query": "SELECT id, asin, title, affiliateUrl, imageUrl FROM products LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, asin, title, affiliateUrl, imageUrl FROM products LIMIT 5;",
+  "rows": [
+    {
+      "id": "13",
+      "asin": "B08GOLD001",
+      "title": "14K Gold Diamond Pendant Necklace for Women — Delicate Chain with Sparkling Solitaire",
+      "affiliateUrl": "https://www.amazon.com/dp/B08GOLD001?tag=lyvarajewels-20",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=80"
+    },
+    {
+      "id": "14",
+      "asin": "B08GOLD002",
+      "title": "18K Gold Layered Necklace Set — Dainty Chain Choker with Satellite Chain, Women's Jewelry",
+      "affiliateUrl": "https://www.amazon.com/dp/B08GOLD002?tag=lyvarajewels-20",
+      "imageUrl": "https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=600&q=80"
+    },
+    {
+      "id": "15",
+      "asin": "B08GOLD003",
+      "title": "Gold Infinity Necklace — 14K Gold Filled Infinity Symbol Pendant, Minimalist Jewelry",
+      "affiliateUrl": "https://www.amazon.com/dp/B08GOLD003?tag=lyvarajewels-20",
+      "imageUrl": "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=600&q=80"
+    },
+    {
+      "id": "16",
+      "asin": "B08SILV001",
+      "title": "Sterling Silver Heart Necklace — 925 Silver Open Heart Pendant with Box Chain",
+      "affiliateUrl": "https://www.amazon.com/dp/B08SILV001?tag=lyvarajewels-20",
+      "imageUrl": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80"
+    },
+    {
+      "id": "17",
+      "asin": "B08SILV002",
+      "title": "Silver Moon and Star Necklace — Celestial Crescent Moon Pendant, Dainty Silver Jewelry",
+      "affiliateUrl": "https://www.amazon.com/dp/B08SILV002?tag=lyvarajewels-20",
+      "imageUrl": "https://images.unsplash.com/photo-1573408301185-9519f94816b5?w=600&q=80"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tasin\ttitle\taffiliateUrl\timageUrl\n13\tB08GOLD001\t14K Gold Diamond Pendant Necklace for Women — Delicate Chain with Sparkling Solitaire\thttps://www.amazon.com/dp/B08GOLD001?tag=lyvarajewels-20\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=80\n14\tB08GOLD002\t18K Gold Layered Necklace Set — Dainty Chain Choker with Satellite Chain, Women's Jewelry\thttps://www.amazon.com/dp/B08GOLD002?tag=lyvarajewels-20\thttps://images.unsplash.com/photo-1611085583191-a3b181a88401?w=600&q=80\n15\tB08GOLD003\tGold Infinity Necklace — 14K Gold Filled Infinity Symbol Pendant, Minimalist Jewelry\thttps://www.amazon.com/dp/B08GOLD003?tag=lyvarajewels-20\thttps://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=600&q=80\n16\tB08SILV001\tSterling Silver Heart Necklace — 925 Silver Open Heart Pendant with Box Chain\thttps://www.amazon.com/dp/B08SILV001?tag=lyvarajewels-20\thttps://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80\n17\tB08SILV002\tSilver Moon and Star Necklace — Celestial Crescent Moon Pendant, Dainty Silver Jewelry\thttps://www.amazon.com/dp/B08SILV002?tag=lyvarajewels-20\thttps://images.unsplash.com/photo-1573408301185-9519f94816b5?w=600&q=80\n",
+  "stderr": "",
+  "execution_time_ms": 1590
+}
