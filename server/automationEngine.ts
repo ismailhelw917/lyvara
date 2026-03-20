@@ -34,6 +34,7 @@ import { runLinkAudit } from "./linkAuditService";
 import { replaceBrokenLinks } from "./linkReplacementService";
 import { validateAndDeduplicateProducts, cleanupDuplicates, getDataQualityReport } from "./productValidationService";
 import { fetchAndCacheProductImages } from "./imageService";
+import { fetchAndUpdateJewelryProducts } from "./productFetcher";
 
 // ─── Product Fetch Job ────────────────────────────────────────────────────────
 export async function runProductFetch(): Promise<{ success: boolean; productsUpdated: number; message: string }> {
