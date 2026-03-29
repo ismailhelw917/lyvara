@@ -276,3 +276,6 @@
 - [x] Display 12 featured products on home page instead of 5
 - [x] Adjust grid layout for 12 products (3 columns on desktop, 2 on tablet, 1 on mobile)
 - [x] Test responsive layout on all screen sizes
+
+## AUTOMATION SCHEDULE UPDATES
+- [x] Update link audit schedule from every 24 hours to every 6 hours

@@ -570,18 +570,18 @@ export function startScheduler() {
     }
   }, 6 * 60 * 60 * 1000);
 
-  // Daily link audit: every 24 hours
+  // Link audit: every 6 hours
   setTimeout(() => {
     const runAudit = async () => {
       try {
-        console.log("[AutomationEngine] Running daily link audit...");
+        console.log("[AutomationEngine] Running link audit...");
         await runLinkAudit();
       } catch (err) {
         console.error("[AutomationEngine] Link audit failed:", err);
       }
     };
     runAudit();
-    setInterval(runAudit, 24 * 60 * 60 * 1000);
+    setInterval(runAudit, 6 * 60 * 60 * 1000);
   }, 3 * 60 * 60 * 1000); // Start 3 hours after server start
 
   // Twice-daily link replacement: every 12 hours
