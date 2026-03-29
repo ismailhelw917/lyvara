@@ -271,3 +271,8 @@
 - [x] Add image validation to skip products with missing images
 - [x] Test fetcher with image validation
 - [x] Verify all 38 products have valid images displayed
+
+## HOME PAGE UPDATES
+- [x] Display 12 featured products on home page instead of 5
+- [x] Adjust grid layout for 12 products (3 columns on desktop, 2 on tablet, 1 on mobile)
+- [x] Test responsive layout on all screen sizes

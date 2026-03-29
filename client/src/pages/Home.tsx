@@ -138,7 +138,7 @@ function CategoryStrip() {
 
 // ─── Featured Products ────────────────────────────────────────────────────────
 function FeaturedProducts() {
-  const { data: products, isLoading } = trpc.products.featured.useQuery({ limit: 8 });
+  const { data: products, isLoading } = trpc.products.featured.useQuery({ limit: 12 });
 
   return (
     <section className="py-20">
@@ -168,13 +168,13 @@ function FeaturedProducts() {
 
         {/* Products Grid */}
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {Array.from({ length: 8 }).map((_, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {Array.from({ length: 12 }).map((_, i) => (
               <div key={i} className="skeleton h-80 rounded" />
             ))}
           </div>
         ) : products && products.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {products.map((product, i) => (
               <div key={product.id} className="animate-scale-in" style={{ animationDelay: `${i * 0.05}s` }}>
                 <ProductCard product={product as any} size={i === 0 ? "large" : "medium"} />
