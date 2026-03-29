@@ -291,3 +291,8 @@
 - [x] Update product detail page descriptions
 - [x] Update index.html title and meta tags
 - [x] Update Products.tsx page title and keywords
+
+## HOME PAGE LAYOUT UPDATE
+- [x] Reduce featured products from 12 to 4 on home page
+- [x] Update grid to show 4 products in single row on desktop (lg:grid-cols-4)
+- [x] Maintain responsive layout for tablet and mobile (2 cols on mobile, 2 on tablet, 4 on desktop)
