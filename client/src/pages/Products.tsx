@@ -284,20 +284,20 @@ export default function Products() {
           </div>
         )}
 
-        {/* Products Grid */}
+        {/* Products Grid — Masonry Layout */}
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
             {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="skeleton h-72 rounded" />
+              <div key={i} className="skeleton h-72 rounded break-inside-avoid" />
             ))}
           </div>
         ) : products && products.length > 0 ? (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
               {products.map((product, i) => (
                 <div
                   key={product.id}
-                  className="animate-scale-in"
+                  className="animate-scale-in break-inside-avoid"
                   style={{ animationDelay: `${Math.min(i * 0.03, 0.3)}s` }}
                 >
                   <ProductCard product={product as any} />
