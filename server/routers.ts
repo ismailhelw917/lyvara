@@ -189,9 +189,41 @@ const automationRouter = router({
 
   triggerRainforestFetch: adminProcedure.mutation(async () => {
     try {
-      const { fetchAndPopulateProducts } = await import("./rainforestProductFetcher");
-      return await fetchAndPopulateProducts();
+      const { fetchJewelryProducts } = await import("./rainforestAPI");
+      const dbModule = await import("./db");
+      const { upsertProduct } = dbModule;
+      
+      console.log("🚀 Starting Rainforest API product fetch...");
+      const products = await fetchJewelryProducts(20);
+      
+      console.log(`✅ Fetched ${products.length} products`);
+      
+      // Insert each product into database
+      for (const product of products) {
+        await upsertProduct({
+          asin: product.asin,
+          title: product.title,
+          brand: product.brand,
+          category: product.category,
+          metalType: product.metalType,
+          price: String(product.price),
+          originalPrice: String(product.originalPrice),
+          imageUrl: product.imageUrl,
+          affiliateUrl: product.affiliateUrl,
+          amazonRating: product.amazonRating,
+          reviewCount: product.reviewCount,
+          isFeatured: product.isFeatured,
+          isActive: true,
+        });
+      }
+      
+      return {
+        success: true,
+        message: `Successfully fetched and stored ${products.length} real jewelry products from Amazon`,
+        productCount: products.length,
+      };
     } catch (error: any) {
+      console.error("❌ Rainforest fetch error:", error);
       throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message });
     }
   }),
