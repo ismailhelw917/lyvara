@@ -254,3 +254,13 @@
 - [x] Integrate image fetching into product fetch workflow
 - [x] Test and verify all products display correct Amazon images
 - [x] Ensure images update automatically when products are refreshed
+
+## RAINFOREST API INTEGRATION - IN PROGRESS
+- [x] Create Rainforest API SDK wrapper service (server/rainforestSDK.ts)
+- [x] Implement product search with jewelry keywords
+- [x] Extract real product data (ASIN, title, price, image, rating)
+- [x] Generate affiliate links with partner tag
+- [ ] Populate database with real products (API having connection issues)
+- [ ] Test affiliate links on website
+- [ ] Verify all product images display correctly
+- [x] Update button text to "BUY ON AMAZON"

@@ -1,0 +1,178 @@
+{
+  "query": "SELECT id, asin, title, imageUrl FROM products ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, asin, title, imageUrl FROM products ORDER BY id;",
+  "rows": [
+    {
+      "id": "167",
+      "asin": "B08KQMVXVL",
+      "title": "PANDORA Sparkling Halo Ring",
+      "imageUrl": "https://m.media-amazon.com/images/P/B08KQMVXVL.jpg"
+    },
+    {
+      "id": "168",
+      "asin": "B08L7QXQZJ",
+      "title": "SWAROVSKI Attract Round Necklace",
+      "imageUrl": "https://m.media-amazon.com/images/P/B08L7QXQZJ.jpg"
+    },
+    {
+      "id": "169",
+      "asin": "B07YKZQ8ZV",
+      "title": "FOSSIL Harlow Gold-Tone Bracelet",
+      "imageUrl": "https://m.media-amazon.com/images/P/B07YKZQ8ZV.jpg"
+    },
+    {
+      "id": "170",
+      "asin": "B08QKXQVQZ",
+      "title": "MICHAEL KORS Brilliance Earrings",
+      "imageUrl": "https://m.media-amazon.com/images/P/B08QKXQVQZ.jpg"
+    },
+    {
+      "id": "171",
+      "asin": "B07Z5QXQXZ",
+      "title": "GUESS Iconic Bracelet",
+      "imageUrl": "https://m.media-amazon.com/images/P/B07Z5QXQXZ.jpg"
+    },
+    {
+      "id": "172",
+      "asin": "B08RKXQZQZ",
+      "title": "TOMMY HILFIGER Gold Necklace",
+      "imageUrl": "https://m.media-amazon.com/images/P/B08RKXQZQZ.jpg"
+    },
+    {
+      "id": "173",
+      "asin": "B07YQXQZQZ",
+      "title": "SKAGEN Kariana Earrings",
+      "imageUrl": "https://m.media-amazon.com/images/P/B07YQXQZQZ.jpg"
+    },
+    {
+      "id": "174",
+      "asin": "B08LKXQZQZ",
+      "title": "EMPORIO ARMANI Ring",
+      "imageUrl": "https://m.media-amazon.com/images/P/B08LKXQZQZ.jpg"
+    },
+    {
+      "id": "175",
+      "asin": "B07XQXQZQZ",
+      "title": "CALVIN KLEIN Bracelet",
+      "imageUrl": "https://m.media-amazon.com/images/P/B07XQXQZQZ.jpg"
+    },
+    {
+      "id": "176",
+      "asin": "B08MKXQZQZ",
+      "title": "CITIZEN Eco-Drive Pendant",
+      "imageUrl": "https://m.media-amazon.com/images/P/B08MKXQZQZ.jpg"
+    },
+    {
+      "id": "177",
+      "asin": "B0BLK7NRLM",
+      "title": "TIANYU GEMS Classic Round Diamond Solitaire Ring - Lab Grown Diamond Halo Engagement Ring",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B0BLK7NRLM/main-image.jpg"
+    },
+    {
+      "id": "178",
+      "asin": "B08GOLD002",
+      "title": "18K Gold Layered Necklace Set — Dainty Chain Choker with Satellite Chain, Women's Jewelry",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "179",
+      "asin": "B08GOLD003",
+      "title": "Gold Infinity Necklace — 14K Gold Filled Infinity Symbol Pendant, Minimalist Jewelry",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "180",
+      "asin": "B08SILV001",
+      "title": "Sterling Silver Heart Necklace — 925 Silver Open Heart Pendant with Box Chain",
+      "imageUrl": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "181",
+      "asin": "B08SILV002",
+      "title": "Silver Moon and Star Necklace — Celestial Crescent Moon Pendant, Dainty Silver Jewelry",
+      "imageUrl": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "182",
+      "asin": "B08BRAC001",
+      "title": "14K Gold Tennis Bracelet — Classic Diamond Line Bracelet, 7 Inch Women's Fine Jewelry",
+      "imageUrl": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "183",
+      "asin": "B08BRAC002",
+      "title": "Gold Bangle Bracelet Set — 18K Gold Plated Stackable Bangles, Set of 3",
+      "imageUrl": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "184",
+      "asin": "B08RING001",
+      "title": "14K Gold Solitaire Diamond Ring — Classic Prong Setting, Engagement or Promise Ring",
+      "imageUrl": "https://images.unsplash.com/photo-1515562141207-6811bcb33ce7?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "185",
+      "asin": "B08RING003",
+      "title": "Rose Gold Eternity Band — 14K Rose Gold Diamond Eternity Ring, Wedding Band",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "186",
+      "asin": "B08RING004",
+      "title": "Sterling Silver Moonstone Ring — 925 Silver Oval Moonstone Cocktail Ring, Boho Jewelry",
+      "imageUrl": "https://images.unsplash.com/photo-1515562141207-6811bcb33ce7?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "187",
+      "asin": "B08EARR001",
+      "title": "14K Gold Huggie Hoop Earrings — Small Diamond Pave Huggies, Cartilage Earrings",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "188",
+      "asin": "B08EARR003",
+      "title": "Gold Stud Earrings — 14K Solid Gold Ball Stud Earrings, Classic Everyday Jewelry",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "189",
+      "asin": "B08EARR004",
+      "title": "Sterling Silver Hoop Earrings — 925 Silver Classic Thin Hoops, Multiple Sizes",
+      "imageUrl": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "190",
+      "asin": "B08PEND001",
+      "title": "Gold Butterfly Pendant — 14K Gold Filled Butterfly Charm Pendant, Nature Jewelry",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "191",
+      "asin": "B08PEND002",
+      "title": "Silver Evil Eye Pendant — 925 Sterling Silver Blue Evil Eye Charm, Protective Jewelry",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "192",
+      "asin": "B08SETS001",
+      "title": "Gold Jewelry Set — 14K Gold Plated Necklace, Bracelet & Earrings Set for Women, Gift Box",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "193",
+      "asin": "B08SETS002",
+      "title": "Rose Gold Jewelry Gift Set — Rose Gold Filled Layered Necklace and Stacking Ring Set",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop"
+    },
+    {
+      "id": "194",
+      "asin": "B08WGOL001",
+      "title": "14K White Gold Diamond Stud Earrings — 0.5 Carat Total Weight, Certified Diamonds",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tasin\ttitle\timageUrl\n167\tB08KQMVXVL\tPANDORA Sparkling Halo Ring\thttps://m.media-amazon.com/images/P/B08KQMVXVL.jpg\n168\tB08L7QXQZJ\tSWAROVSKI Attract Round Necklace\thttps://m.media-amazon.com/images/P/B08L7QXQZJ.jpg\n169\tB07YKZQ8ZV\tFOSSIL Harlow Gold-Tone Bracelet\thttps://m.media-amazon.com/images/P/B07YKZQ8ZV.jpg\n170\tB08QKXQVQZ\tMICHAEL KORS Brilliance Earrings\thttps://m.media-amazon.com/images/P/B08QKXQVQZ.jpg\n171\tB07Z5QXQXZ\tGUESS Iconic Bracelet\thttps://m.media-amazon.com/images/P/B07Z5QXQXZ.jpg\n172\tB08RKXQZQZ\tTOMMY HILFIGER Gold Necklace\thttps://m.media-amazon.com/images/P/B08RKXQZQZ.jpg\n173\tB07YQXQZQZ\tSKAGEN Kariana Earrings\thttps://m.media-amazon.com/images/P/B07YQXQZQZ.jpg\n174\tB08LKXQZQZ\tEMPORIO ARMANI Ring\thttps://m.media-amazon.com/images/P/B08LKXQZQZ.jpg\n175\tB07XQXQZQZ\tCALVIN KLEIN Bracelet\thttps://m.media-amazon.com/images/P/B07XQXQZQZ.jpg\n176\tB08MKXQZQZ\tCITIZEN Eco-Drive Pendant\thttps://m.media-amazon.com/images/P/B08MKXQZQZ.jpg\n177\tB0BLK7NRLM\tTIANYU GEMS Classic Round Diamond Solitaire Ring - Lab Grown Diamond Halo Engagement Ring\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B0BLK7NRLM/main-image.jpg\n178\tB08GOLD002\t18K Gold Layered Necklace Set — Dainty Chain Choker with Satellite Chain, Women's Jewelry\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop\n179\tB08GOLD003\tGold Infinity Necklace — 14K Gold Filled Infinity Symbol Pendant, Minimalist Jewelry\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop\n180\tB08SILV001\tSterling Silver Heart Necklace — 925 Silver Open Heart Pendant with Box Chain\thttps://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&h=500&fit=crop\n181\tB08SILV002\tSilver Moon and Star Necklace — Celestial Crescent Moon Pendant, Dainty Silver Jewelry\thttps://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&h=500&fit=crop\n182\tB08BRAC001\t14K Gold Tennis Bracelet — Classic Diamond Line Bracelet, 7 Inch Women's Fine Jewelry\thttps://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&h=500&fit=crop\n183\tB08BRAC002\tGold Bangle Bracelet Set — 18K Gold Plated Stackable Bangles, Set of 3\thttps://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&h=500&fit=crop\n184\tB08RING001\t14K Gold Solitaire Diamond Ring — Classic Prong Setting, Engagement or Promise Ring\thttps://images.unsplash.com/photo-1515562141207-6811bcb33ce7?w=500&h=500&fit=crop\n185\tB08RING003\tRose Gold Eternity Band — 14K Rose Gold Diamond Eternity Ring, Wedding Band\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop\n186\tB08RING004\tSterling Silver Moonstone Ring — 925 Silver Oval Moonstone Cocktail Ring, Boho Jewelry\thttps://images.unsplash.com/photo-1515562141207-6811bcb33ce7?w=500&h=500&fit=crop\n187\tB08EARR001\t14K Gold Huggie Hoop Earrings — Small Diamond Pave Huggies, Cartilage Earrings\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop\n188\tB08EARR003\tGold Stud Earrings — 14K Solid Gold Ball Stud Earrings, Classic Everyday Jewelry\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop\n189\tB08EARR004\tSterling Silver Hoop Earrings — 925 Silver Classic Thin Hoops, Multiple Sizes\thttps://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&h=500&fit=crop\n190\tB08PEND001\tGold Butterfly Pendant — 14K Gold Filled Butterfly Charm Pendant, Nature Jewelry\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop\n191\tB08PEND002\tSilver Evil Eye Pendant — 925 Sterling Silver Blue Evil Eye Charm, Protective Jewelry\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop\n192\tB08SETS001\tGold Jewelry Set — 14K Gold Plated Necklace, Bracelet & Earrings Set for Women, Gift Box\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop\n193\tB08SETS002\tRose Gold Jewelry Gift Set — Rose Gold Filled Layered Necklace and Stacking Ring Set\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop\n194\tB08WGOL001\t14K White Gold Diamond Stud Earrings — 0.5 Carat Total Weight, Certified Diamonds\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop\n",
+  "stderr": "",
+  "execution_time_ms": 1604
+}

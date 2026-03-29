@@ -1,0 +1,40 @@
+{
+  "query": "SELECT id, title, imageUrl, affiliateUrl FROM products LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, title, imageUrl, affiliateUrl FROM products LIMIT 5;",
+  "rows": [
+    {
+      "id": "167",
+      "title": "PANDORA Sparkling Halo Ring",
+      "imageUrl": "https://m.media-amazon.com/images/P/B08KQMVXVL.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B08KQMVXVL?tag=91791709-20"
+    },
+    {
+      "id": "168",
+      "title": "SWAROVSKI Attract Round Necklace",
+      "imageUrl": "https://m.media-amazon.com/images/P/B08L7QXQZJ.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B08L7QXQZJ?tag=91791709-20"
+    },
+    {
+      "id": "169",
+      "title": "FOSSIL Harlow Gold-Tone Bracelet",
+      "imageUrl": "https://m.media-amazon.com/images/P/B07YKZQ8ZV.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B07YKZQ8ZV?tag=91791709-20"
+    },
+    {
+      "id": "170",
+      "title": "MICHAEL KORS Brilliance Earrings",
+      "imageUrl": "https://m.media-amazon.com/images/P/B08QKXQVQZ.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B08QKXQVQZ?tag=91791709-20"
+    },
+    {
+      "id": "171",
+      "title": "GUESS Iconic Bracelet",
+      "imageUrl": "https://m.media-amazon.com/images/P/B07Z5QXQXZ.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B07Z5QXQXZ?tag=91791709-20"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\timageUrl\taffiliateUrl\n167\tPANDORA Sparkling Halo Ring\thttps://m.media-amazon.com/images/P/B08KQMVXVL.jpg\thttps://www.amazon.com/dp/B08KQMVXVL?tag=91791709-20\n168\tSWAROVSKI Attract Round Necklace\thttps://m.media-amazon.com/images/P/B08L7QXQZJ.jpg\thttps://www.amazon.com/dp/B08L7QXQZJ?tag=91791709-20\n169\tFOSSIL Harlow Gold-Tone Bracelet\thttps://m.media-amazon.com/images/P/B07YKZQ8ZV.jpg\thttps://www.amazon.com/dp/B07YKZQ8ZV?tag=91791709-20\n170\tMICHAEL KORS Brilliance Earrings\thttps://m.media-amazon.com/images/P/B08QKXQVQZ.jpg\thttps://www.amazon.com/dp/B08QKXQVQZ?tag=91791709-20\n171\tGUESS Iconic Bracelet\thttps://m.media-amazon.com/images/P/B07Z5QXQXZ.jpg\thttps://www.amazon.com/dp/B07Z5QXQXZ?tag=91791709-20\n",
+  "stderr": "",
+  "execution_time_ms": 2172
+}

@@ -1,0 +1,25 @@
+{
+  "query": "SELECT id, title, imageUrl FROM products LIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, title, imageUrl FROM products LIMIT 3;",
+  "rows": [
+    {
+      "id": "5730001",
+      "title": "PANDORA Sparkling Halo Ring",
+      "imageUrl": "https://m.media-amazon.com/images/I/71gHvnHvPGL._AC_SY879_.jpg"
+    },
+    {
+      "id": "5730002",
+      "title": "SWAROVSKI Attract Round Necklace",
+      "imageUrl": "https://m.media-amazon.com/images/I/71mHvnHvPGL._AC_SY879_.jpg"
+    },
+    {
+      "id": "5730003",
+      "title": "FOSSIL Harlow Gold-Tone Bracelet",
+      "imageUrl": "https://m.media-amazon.com/images/I/71B6xDkQ5GL._AC_SY879_.jpg"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\timageUrl\n5730001\tPANDORA Sparkling Halo Ring\thttps://m.media-amazon.com/images/I/71gHvnHvPGL._AC_SY879_.jpg\n5730002\tSWAROVSKI Attract Round Necklace\thttps://m.media-amazon.com/images/I/71mHvnHvPGL._AC_SY879_.jpg\n5730003\tFOSSIL Harlow Gold-Tone Bracelet\thttps://m.media-amazon.com/images/I/71B6xDkQ5GL._AC_SY879_.jpg\n",
+  "stderr": "",
+  "execution_time_ms": 1660
+}

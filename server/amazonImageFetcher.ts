@@ -1,124 +1,129 @@
-/**
- * Amazon Image Fetcher
- *
- * Fetches real product images directly from Amazon using ASINs
- * Uses Amazon's image URLs which are publicly available
- */
+import * as cheerio from "cheerio";
 
 /**
- * Get Amazon product image URL from ASIN
- * Amazon image URLs follow a predictable pattern based on ASIN
- */
-export function getAmazonImageUrl(asin: string, imageIndex = 0): string {
-  // Amazon images are typically hosted at:
-  // https://m.media-amazon.com/images/I/{ASIN_DERIVED_ID}.jpg
-  // We'll use the direct Amazon product image endpoint
-  
-  // Format: https://images-na.ssl-images-amazon.com/images/P/{ASIN}.01.L.jpg
-  // Or: https://m.media-amazon.com/images/I/{ENCODED_ASIN}.jpg
-  
-  // For real ASINs, we can construct the image URL
-  const imageUrls: Record<string, string[]> = {
-    // Real Amazon product images
-    B0BLK7NRLM: [
-      "https://m.media-amazon.com/images/I/71gHvnHvPGL._AC_SY879_.jpg",
-      "https://m.media-amazon.com/images/I/71B6xDkQ5GL._AC_SY879_.jpg",
-    ],
-    B098KWTXDJ: [
-      "https://m.media-amazon.com/images/I/71mHvnHvPGL._AC_SY879_.jpg",
-      "https://m.media-amazon.com/images/I/71B6xDkQ5GL._AC_SY879_.jpg",
-    ],
-    B07W97WCGW: [
-      "https://m.media-amazon.com/images/I/71gHvnHvPGL._AC_SY879_.jpg",
-      "https://m.media-amazon.com/images/I/71B6xDkQ5GL._AC_SY879_.jpg",
-    ],
-    B01M0VLHQI: [
-      "https://m.media-amazon.com/images/I/71mHvnHvPGL._AC_SY879_.jpg",
-      "https://m.media-amazon.com/images/I/71B6xDkQ5GL._AC_SY879_.jpg",
-    ],
-    B0033518FK: [
-      "https://m.media-amazon.com/images/I/71gHvnHvPGL._AC_SY879_.jpg",
-      "https://m.media-amazon.com/images/I/71B6xDkQ5GL._AC_SY879_.jpg",
-    ],
-    B0C8JQMZ7X: [
-      "https://m.media-amazon.com/images/I/71mHvnHvPGL._AC_SY879_.jpg",
-      "https://m.media-amazon.com/images/I/71B6xDkQ5GL._AC_SY879_.jpg",
-    ],
-    B0D4LXQZ9K: [
-      "https://m.media-amazon.com/images/I/71gHvnHvPGL._AC_SY879_.jpg",
-      "https://m.media-amazon.com/images/I/71B6xDkQ5GL._AC_SY879_.jpg",
-    ],
-    B0CXYZ123A: [
-      "https://m.media-amazon.com/images/I/71mHvnHvPGL._AC_SY879_.jpg",
-      "https://m.media-amazon.com/images/I/71B6xDkQ5GL._AC_SY879_.jpg",
-    ],
-    B0CXYZ123B: [
-      "https://m.media-amazon.com/images/I/71gHvnHvPGL._AC_SY879_.jpg",
-      "https://m.media-amazon.com/images/I/71B6xDkQ5GL._AC_SY879_.jpg",
-    ],
-  };
-
-  const urls = imageUrls[asin];
-  if (!urls) {
-    return `https://images-na.ssl-images-amazon.com/images/P/${asin}.01.L.jpg`;
-  }
-
-  return urls[imageIndex] || urls[0];
-}
-
-/**
- * Fetch product image from Amazon and verify it exists
+ * Fetches real product images from Amazon product pages using ASIN
+ * Extracts the main product image URL from the HTML
  */
 export async function fetchAmazonProductImage(asin: string): Promise<string | null> {
   try {
-    const imageUrl = getAmazonImageUrl(asin);
+    const url = `https://www.amazon.com/dp/${asin}`;
     
-    // Verify the image exists by making a HEAD request
-    const response = await fetch(imageUrl, { method: "HEAD" });
+    // Use a realistic User-Agent to avoid being blocked
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
     
-    if (response.ok) {
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Accept-Encoding": "gzip, deflate",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Cache-Control": "max-age=0",
+      },
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      console.warn(`Failed to fetch Amazon page for ASIN ${asin}: ${response.status}`);
+      return null;
+    }
+
+    const html = await response.text();
+    const $ = cheerio.load(html);
+
+    // Try multiple selectors to find the main product image
+    let imageUrl = null;
+
+    // Method 1: Look for the main product image in the landingImage script
+    const scripts = $('script[type="text/javascript"]').toArray();
+    for (const script of scripts) {
+      const content = $(script).html();
+      if (content && content.includes('"landingImage"')) {
+        try {
+          // Extract the image URL from the JSON data
+          const match = content.match(/"landingImage"\s*:\s*"([^"]+)"/);
+          if (match && match[1]) {
+            imageUrl = match[1];
+            break;
+          }
+        } catch (e) {
+          // Continue to next method
+        }
+      }
+    }
+
+    // Method 2: Look for image in the main image container
+    if (!imageUrl) {
+      const mainImage = $("#landingImage, img[data-a-dynamic-image]");
+      if (mainImage.length > 0) {
+        imageUrl = mainImage.attr("src");
+      }
+    }
+
+    // Method 3: Look for images in the image gallery
+    if (!imageUrl) {
+      const galleryImages = $("img.s-image, img[alt*='product']");
+      if (galleryImages.length > 0) {
+        imageUrl = galleryImages.first().attr("src");
+      }
+    }
+
+    // Method 4: Look for any large image in the page
+    if (!imageUrl) {
+      const allImages = $("img");
+      for (let i = 0; i < allImages.length; i++) {
+        const src = $(allImages[i]).attr("src");
+        if (src && (src.includes("images-amazon.com") || src.includes("m.media-amazon.com"))) {
+          imageUrl = src;
+          break;
+        }
+      }
+    }
+
+    // Clean up the image URL if needed
+    if (imageUrl) {
+      // Remove query parameters and ensure it's a full URL
+      if (!imageUrl.startsWith("http")) {
+        imageUrl = "https:" + imageUrl;
+      }
+      // Ensure we have a high-quality image by adjusting the URL if needed
+      imageUrl = imageUrl.replace(/\._[A-Z0-9]+_\./, "._AC_");
       return imageUrl;
     }
-    
-    // If primary image doesn't exist, try alternative format
-    const altUrl = `https://images-na.ssl-images-amazon.com/images/P/${asin}.01.L.jpg`;
-    const altResponse = await fetch(altUrl, { method: "HEAD" });
-    
-    if (altResponse.ok) {
-      return altUrl;
-    }
-    
+
+    console.warn(`Could not find image URL for ASIN ${asin}`);
     return null;
-  } catch (err) {
-    console.warn(`[AmazonImageFetcher] Failed to fetch image for ${asin}:`, err);
+  } catch (error) {
+    console.error(`Error fetching image for ASIN ${asin}:`, error);
     return null;
   }
 }
 
 /**
- * Get all image URLs for a product
+ * Batch fetch images for multiple ASINs
+ */
+export async function fetchMultipleAmazonImages(
+  asins: string[]
+): Promise<Map<string, string | null>> {
+  const results = new Map<string, string | null>();
+  
+  // Add delay between requests to avoid rate limiting
+  for (const asin of asins) {
+    results.set(asin, await fetchAmazonProductImage(asin));
+    // Wait 1-2 seconds between requests
+    await new Promise((resolve) => setTimeout(resolve, 1000 + Math.random() * 1000));
+  }
+  
+  return results;
+}
+
+/**
+ * Get all image URLs for a product (legacy function for compatibility)
  */
 export async function fetchAmazonProductImages(asin: string): Promise<string[]> {
-  try {
-    const imageUrls = getAmazonImageUrl(asin);
-    const images: string[] = [];
-    
-    // Try to fetch multiple images (typically 0-5)
-    for (let i = 0; i < 5; i++) {
-      const url = getAmazonImageUrl(asin, i);
-      try {
-        const response = await fetch(url, { method: "HEAD" });
-        if (response.ok) {
-          images.push(url);
-        }
-      } catch {
-        // Image doesn't exist, continue
-      }
-    }
-    
-    return images.length > 0 ? images : [imageUrls];
-  } catch (err) {
-    console.warn(`[AmazonImageFetcher] Failed to fetch images for ${asin}:`, err);
-    return [getAmazonImageUrl(asin)];
-  }
+  const image = await fetchAmazonProductImage(asin);
+  return image ? [image] : [];
 }
