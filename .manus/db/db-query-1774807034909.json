@@ -1,0 +1,25 @@
+{
+  "query": "SELECT COUNT(*) as total_products FROM products; SELECT COUNT(*) as missing_images FROM products WHERE imageUrl IS NULL OR imageUrl = ''; SELECT COUNT(*) as placeholder_images FROM products WHERE imageUrl LIKE '%placeholder%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT COUNT(*) as total_products FROM products; SELECT COUNT(*) as missing_images FROM products WHERE imageUrl IS NULL OR imageUrl = ''; SELECT COUNT(*) as placeholder_images FROM products WHERE imageUrl LIKE '%placeholder%';",
+  "rows": [
+    {
+      "total_products": "38"
+    },
+    {
+      "total_products": "missing_images"
+    },
+    {
+      "total_products": "0"
+    },
+    {
+      "total_products": "placeholder_images"
+    },
+    {
+      "total_products": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_products\n38\nmissing_images\n0\nplaceholder_images\n0\n",
+  "stderr": "",
+  "execution_time_ms": 2036
+}

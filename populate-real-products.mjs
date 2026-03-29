@@ -3,6 +3,8 @@
 /**
  * Standalone script to fetch real jewelry products from Rainforest API
  * and populate the database with working affiliate links
+ * 
+ * Image Validation: Skips products without images or with invalid image URLs
  */
 
 import axios from 'axios';
@@ -65,6 +67,38 @@ function detectMetalType(title) {
   return 'gold';
 }
 
+/**
+ * Validate that an image URL is accessible and returns a valid image
+ */
+async function validateImageUrl(imageUrl) {
+  if (!imageUrl || typeof imageUrl !== 'string') {
+    return false;
+  }
+
+  try {
+    const response = await axios.head(imageUrl, {
+      timeout: 5000,
+      maxRedirects: 5,
+    });
+
+    // Check if response is an image
+    const contentType = response.headers['content-type'] || '';
+    if (!contentType.includes('image')) {
+      return false;
+    }
+
+    // Check content length
+    const contentLength = parseInt(response.headers['content-length'] || '0', 10);
+    if (contentLength === 0) {
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 async function searchProducts(searchTerm, maxResults = 10, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
@@ -78,26 +112,18 @@ async function searchProducts(searchTerm, maxResults = 10, retries = 3) {
         max_results: maxResults,
       };
 
-      const response = await axios.get(BASE_URL, {
-        params,
-        timeout: 30000,
-      });
+      const response = await axios.get(BASE_URL, { params, timeout: 10000 });
 
-      if (response.data.search_results && Array.isArray(response.data.search_results)) {
-        console.log(`✅ Found ${response.data.search_results.length} products`);
-        return response.data.search_results;
-      } else {
-        console.log('⚠️ No search results in response');
-        return [];
+      if (response.data.results && response.data.results.length > 0) {
+        console.log(`   Found ${response.data.results.length} results`);
+        return response.data.results;
       }
     } catch (error) {
-      console.error(`❌ Attempt ${attempt} failed: ${error.message}`);
-
-      if (attempt < retries) {
-        const waitTime = Math.pow(2, attempt) * 1000;
-        console.log(`⏳ Waiting ${waitTime}ms before retry...`);
-        await new Promise(resolve => setTimeout(resolve, waitTime));
+      if (attempt === retries) {
+        throw error;
       }
+      console.log(`   Attempt ${attempt} failed, retrying...`);
+      await new Promise(resolve => setTimeout(resolve, 2000));
     }
   }
 
@@ -128,6 +154,23 @@ async function fetchJewelryProducts(maxProducts = 20) {
 
       for (const product of results) {
         if (product.asin && !seenASINs.has(product.asin) && allProducts.length < maxProducts) {
+          // VALIDATE IMAGE BEFORE ADDING
+          const imageUrl = product.image;
+          
+          if (!imageUrl) {
+            console.log(`⏭️  Skipping "${product.title}" - no image URL provided`);
+            continue;
+          }
+
+          // Check if image URL is valid
+          console.log(`🖼️  Validating image for "${product.title}"...`);
+          const isImageValid = await validateImageUrl(imageUrl);
+          
+          if (!isImageValid) {
+            console.log(`⏭️  Skipping "${product.title}" - image URL is broken or inaccessible`);
+            continue;
+          }
+
           seenASINs.add(product.asin);
           const isFeatured = allProducts.length < 5;
           
@@ -139,12 +182,14 @@ async function fetchJewelryProducts(maxProducts = 20) {
             metalType: detectMetalType(product.title),
             price: extractPrice(product.price),
             originalPrice: extractPrice(product.original_price) || extractPrice(product.price) * 1.2,
-            imageUrl: product.image || 'https://via.placeholder.com/300x300?text=Jewelry',
+            imageUrl: imageUrl,
             affiliateUrl: `https://www.amazon.com/dp/${product.asin}?tag=${AFFILIATE_TAG}`,
             amazonRating: product.rating || 4.5,
             reviewCount: product.review_count || 0,
             isFeatured,
           });
+
+          console.log(`✅ Added: ${product.title}`);
         }
       }
 
@@ -211,15 +256,14 @@ async function populateDatabase(products) {
 
 async function main() {
   try {
-    console.log('🚀 Starting Rainforest API product fetch...\n');
+    console.log('🚀 Starting Rainforest API product fetch with image validation...\n');
     
     const products = await fetchJewelryProducts(20);
-    console.log(`\n✅ Fetched ${products.length} products from Rainforest API\n`);
+    console.log(`\n✅ Fetched ${products.length} products from Rainforest API (all with valid images)\n`);
     
     await populateDatabase(products);
     
-    console.log('\n✨ All done! Your jewelry affiliate site now has real Amazon products with working affiliate links.');
-    process.exit(0);
+    console.log('\n✨ All done! Products are ready for display.');
   } catch (error) {
     console.error('\n❌ Error:', error.message);
     process.exit(1);

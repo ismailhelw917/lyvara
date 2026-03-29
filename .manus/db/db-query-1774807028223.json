@@ -1,0 +1,40 @@
+{
+  "query": "SELECT id, title, imageUrl, asin FROM products LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, title, imageUrl, asin FROM products LIMIT 5;",
+  "rows": [
+    {
+      "id": "6120115",
+      "title": "WomenGifts Layered Gold Necklaces for Women, 14K Gold Sterling Silver Plated Dainty Pendant Necklace Set with Cubic Zirconia Circle, Chunky Stackable Cuban Chain Choker, Trendy Personalized Birthstone Jewelry Gift Non Tarnish",
+      "imageUrl": "https://m.media-amazon.com/images/I/51H-3RJCR9L._AC_UL320_.jpg",
+      "asin": "B0FFTH89XT"
+    },
+    {
+      "id": "6120116",
+      "title": "PAVOI 14K Gold Plated Cubic Zirconia Cross Necklace for Women | Cross Faith Pendant Necklaces",
+      "imageUrl": "https://m.media-amazon.com/images/I/514P5Dv4b7L._AC_UL320_.jpg",
+      "asin": "B07QTJ1WWL"
+    },
+    {
+      "id": "6120117",
+      "title": "FAXHION 68 Pcs Gold Jewelry Set for Women with 7 Necklace, 17 Bracelet, 5 Hoop Earrings, 15 Stud Earrings, 24 Knuckle Rings for Women Jewelry Set for Women",
+      "imageUrl": "https://m.media-amazon.com/images/I/81sSfHk-VyL._AC_UL320_.jpg",
+      "asin": "B0FCY8GX7N"
+    },
+    {
+      "id": "6120118",
+      "title": "FUNEIA Diamond Necklaces for Women 14K Gold Plated Emerald Birthstone Necklace for Women Mothers Dainty Gold Necklace Blue Green Cubic Zirconia Pendant Necklace Birthday Gifts for Women Jewelry",
+      "imageUrl": "https://m.media-amazon.com/images/I/61B9Ij8ZjoL._AC_UL320_.jpg",
+      "asin": "B0CL9KDMMV"
+    },
+    {
+      "id": "6120119",
+      "title": "Airmb Heart Necklace for Women Gold/Silver Plated Trendy Heart Choker Lover Pendant Hypoallergenic Fashion Gold/Silver Necklace for Women Love Jewelry Gift for Women Girlfriend",
+      "imageUrl": "https://m.media-amazon.com/images/I/51buWC5sibL._AC_UL320_.jpg",
+      "asin": "B0DLW5J86B"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\timageUrl\tasin\n6120115\tWomenGifts Layered Gold Necklaces for Women, 14K Gold Sterling Silver Plated Dainty Pendant Necklace Set with Cubic Zirconia Circle, Chunky Stackable Cuban Chain Choker, Trendy Personalized Birthstone Jewelry Gift Non Tarnish\thttps://m.media-amazon.com/images/I/51H-3RJCR9L._AC_UL320_.jpg\tB0FFTH89XT\n6120116\tPAVOI 14K Gold Plated Cubic Zirconia Cross Necklace for Women | Cross Faith Pendant Necklaces\thttps://m.media-amazon.com/images/I/514P5Dv4b7L._AC_UL320_.jpg\tB07QTJ1WWL\n6120117\tFAXHION 68 Pcs Gold Jewelry Set for Women with 7 Necklace, 17 Bracelet, 5 Hoop Earrings, 15 Stud Earrings, 24 Knuckle Rings for Women Jewelry Set for Women\thttps://m.media-amazon.com/images/I/81sSfHk-VyL._AC_UL320_.jpg\tB0FCY8GX7N\n6120118\tFUNEIA Diamond Necklaces for Women 14K Gold Plated Emerald Birthstone Necklace for Women Mothers Dainty Gold Necklace Blue Green Cubic Zirconia Pendant Necklace Birthday Gifts for Women Jewelry\thttps://m.media-amazon.com/images/I/61B9Ij8ZjoL._AC_UL320_.jpg\tB0CL9KDMMV\n6120119\tAirmb Heart Necklace for Women Gold/Silver Plated Trendy Heart Choker Lover Pendant Hypoallergenic Fashion Gold/Silver Necklace for Women Love Jewelry Gift for Women Girlfriend\thttps://m.media-amazon.com/images/I/51buWC5sibL._AC_UL320_.jpg\tB0DLW5J86B\n",
+  "stderr": "",
+  "execution_time_ms": 1590
+}
