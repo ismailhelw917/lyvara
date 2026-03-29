@@ -1,0 +1,70 @@
+{
+  "query": "SELECT id, title, metalType, imageUrl FROM products WHERE metalType LIKE '%silver%' OR metalType LIKE '%Silver%' OR title LIKE '%silver%' OR title LIKE '%Silver%' LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, title, metalType, imageUrl FROM products WHERE metalType LIKE '%silver%' OR metalType LIKE '%Silver%' OR title LIKE '%silver%' OR title LIKE '%Silver%' LIMIT 20;",
+  "rows": [
+    {
+      "id": "6120115",
+      "title": "WomenGifts Layered Gold Necklaces for Women, 14K Gold Sterling Silver Plated Dainty Pendant Necklace Set with Cubic Zirconia Circle, Chunky Stackable Cuban Chain Choker, Trendy Personalized Birthstone Jewelry Gift Non Tarnish",
+      "metalType": "gold",
+      "imageUrl": "https://m.media-amazon.com/images/I/51H-3RJCR9L._AC_UL320_.jpg"
+    },
+    {
+      "id": "6120119",
+      "title": "Airmb Heart Necklace for Women Gold/Silver Plated Trendy Heart Choker Lover Pendant Hypoallergenic Fashion Gold/Silver Necklace for Women Love Jewelry Gift for Women Girlfriend",
+      "metalType": "gold",
+      "imageUrl": "https://m.media-amazon.com/images/I/51buWC5sibL._AC_UL320_.jpg"
+    },
+    {
+      "id": "6120123",
+      "title": "Poxtex Easter Basket Stuffer Cross Necklace for Women Girls, Dainty 14K Gold Silver Plated Cross Choker Jewelry Non Tarnish Waterproof Cute Simple Small Necklace Christian Baptism Religious Faith Jewelry Gifts",
+      "metalType": "gold",
+      "imageUrl": "https://m.media-amazon.com/images/I/61XqPwTbMYL._AC_UL320_.jpg"
+    },
+    {
+      "id": "6120127",
+      "title": "Jewlpire 18k Gold Plated 925 Sterling Silver Chain Necklace for Women, 1.1mm Cable Chains Necklace Thin & Dainty & Sturdy Women's Chain Necklaces, 14/16/17/18/20/22/24 Inches",
+      "metalType": "gold",
+      "imageUrl": "https://m.media-amazon.com/images/I/51FPK4B65jL._AC_UL320_.jpg"
+    },
+    {
+      "id": "6120132",
+      "title": "Rotnso Cross Necklace for Women 14K Gold Silver Plated Dainty Small Cross Pendant Choker Simple Trendy Cute Cross Charm Chain Necklace Easter Basket Stuffers Baptism Religious Faith Jewelry Gift",
+      "metalType": "gold",
+      "imageUrl": "https://m.media-amazon.com/images/I/51RKEUngjOL._AC_UL320_.jpg"
+    },
+    {
+      "id": "6120138",
+      "title": "Sterling Silver Heart Necklace — 925 Silver Open Heart Pendant with Box Chain",
+      "metalType": "silver",
+      "imageUrl": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80"
+    },
+    {
+      "id": "6120139",
+      "title": "Silver Moon and Star Necklace — Celestial Crescent Moon Pendant, Dainty Silver Jewelry",
+      "metalType": "silver",
+      "imageUrl": "https://images.unsplash.com/photo-1573408301185-9519f94816b5?w=600&q=80"
+    },
+    {
+      "id": "6120144",
+      "title": "Sterling Silver Moonstone Ring — 925 Silver Oval Moonstone Cocktail Ring, Boho Jewelry",
+      "metalType": "silver",
+      "imageUrl": "https://images.unsplash.com/photo-1599459183200-59c7687a0c70?w=600&q=80"
+    },
+    {
+      "id": "6120147",
+      "title": "Sterling Silver Hoop Earrings — 925 Silver Classic Thin Hoops, Multiple Sizes",
+      "metalType": "silver",
+      "imageUrl": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80"
+    },
+    {
+      "id": "6120149",
+      "title": "Silver Evil Eye Pendant — 925 Sterling Silver Blue Evil Eye Charm, Protective Jewelry",
+      "metalType": "silver",
+      "imageUrl": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=80"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tmetalType\timageUrl\n6120115\tWomenGifts Layered Gold Necklaces for Women, 14K Gold Sterling Silver Plated Dainty Pendant Necklace Set with Cubic Zirconia Circle, Chunky Stackable Cuban Chain Choker, Trendy Personalized Birthstone Jewelry Gift Non Tarnish\tgold\thttps://m.media-amazon.com/images/I/51H-3RJCR9L._AC_UL320_.jpg\n6120119\tAirmb Heart Necklace for Women Gold/Silver Plated Trendy Heart Choker Lover Pendant Hypoallergenic Fashion Gold/Silver Necklace for Women Love Jewelry Gift for Women Girlfriend\tgold\thttps://m.media-amazon.com/images/I/51buWC5sibL._AC_UL320_.jpg\n6120123\tPoxtex Easter Basket Stuffer Cross Necklace for Women Girls, Dainty 14K Gold Silver Plated Cross Choker Jewelry Non Tarnish Waterproof Cute Simple Small Necklace Christian Baptism Religious Faith Jewelry Gifts\tgold\thttps://m.media-amazon.com/images/I/61XqPwTbMYL._AC_UL320_.jpg\n6120127\tJewlpire 18k Gold Plated 925 Sterling Silver Chain Necklace for Women, 1.1mm Cable Chains Necklace Thin & Dainty & Sturdy Women's Chain Necklaces, 14/16/17/18/20/22/24 Inches\tgold\thttps://m.media-amazon.com/images/I/51FPK4B65jL._AC_UL320_.jpg\n6120132\tRotnso Cross Necklace for Women 14K Gold Silver Plated Dainty Small Cross Pendant Choker Simple Trendy Cute Cross Charm Chain Necklace Easter Basket Stuffers Baptism Religious Faith Jewelry Gift\tgold\thttps://m.media-amazon.com/images/I/51RKEUngjOL._AC_UL320_.jpg\n6120138\tSterling Silver Heart Necklace — 925 Silver Open Heart Pendant with Box Chain\tsilver\thttps://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80\n6120139\tSilver Moon and Star Necklace — Celestial Crescent Moon Pendant, Dainty Silver Jewelry\tsilver\thttps://images.unsplash.com/photo-1573408301185-9519f94816b5?w=600&q=80\n6120144\tSterling Silver Moonstone Ring — 925 Silver Oval Moonstone Cocktail Ring, Boho Jewelry\tsilver\thttps://images.unsplash.com/photo-1599459183200-59c7687a0c70?w=600&q=80\n6120147\tSterling Silver Hoop Earrings — 925 Silver Classic Thin Hoops, Multiple Sizes\tsilver\thttps://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80\n6120149\tSilver Evil Eye Pendant — 925 Sterling Silver Blue Evil Eye Charm, Protective Jewelry\tsilver\thttps://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=80\n",
+  "stderr": "",
+  "execution_time_ms": 1547
+}

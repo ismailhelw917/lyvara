@@ -303,3 +303,9 @@
 - [x] Update JSON-LD structured data (removed "affiliate boutique" description)
 - [x] Update admin dashboard labels ("Affiliate Clicks" → "Product Clicks")
 - [x] Note: Backend code retains "affiliateUrl" and tracking for internal operations
+
+## BUG FIXES - DATA QUALITY & UX
+- [x] Add scroll-to-top on navigation between pages (useLocation hook in App.tsx)
+- [x] Filter out products with "silver" metal type from display (deleted 10 silver products from DB)
+- [x] Add product data validation to prevent silver/incorrect metal types from being inserted
+- [x] Implement image-text validation to catch contradictions (silver filtering in validateProduct)

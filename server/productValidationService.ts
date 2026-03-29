@@ -58,6 +58,16 @@ export function validateProduct(product: InsertProduct): ValidationResult {
     errors.push("Review count cannot be negative");
   }
 
+  // Filter out silver products (we only sell gold jewelry)
+  if (product.metalType && product.metalType.toLowerCase().includes("silver")) {
+    errors.push("Silver products are not supported - only gold jewelry is available");
+  }
+
+  // Filter out products with silver in title
+  if (product.title && (product.title.toLowerCase().includes("sterling silver") || product.title.toLowerCase().includes(" silver "))) {
+    errors.push("Products with silver in title are not supported");
+  }
+
   return {
     isValid: errors.length === 0,
     errors,
