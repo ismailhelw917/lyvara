@@ -68,7 +68,7 @@ function HeroSection() {
             className="font-sans font-light text-lg leading-relaxed mb-10 animate-fade-in-up"
             style={{ color: "oklch(0.75 0.01 60)", maxWidth: "480px", animationDelay: "0.2s" }}
           >
-            Discover the world's most exquisite gold and silver jewelry, 
+            Discover the world's most exquisite gold jewelry, 
             curated daily for the woman who knows her worth.
           </p>
           <div className="flex flex-wrap items-center gap-4 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>

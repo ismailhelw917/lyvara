@@ -24,7 +24,6 @@ const METALS = [
   { value: "gold", label: "Yellow Gold" },
   { value: "white_gold", label: "White Gold" },
   { value: "rose_gold", label: "Rose Gold" },
-  { value: "silver", label: "Sterling Silver" },
   { value: "platinum", label: "Platinum" },
 ];
 
@@ -59,9 +58,9 @@ export default function Products() {
     ? CATEGORIES.find((c) => c.value === category)?.label || "Jewelry"
     : "All Jewelry";
   useSEO({
-    title: `Shop ${categoryLabel} — Gold & Silver Jewelry`,
-    description: `Browse our curated collection of luxury ${categoryLabel.toLowerCase()} in gold, silver, and rose gold. New arrivals added daily.`,
-    keywords: `${categoryLabel.toLowerCase()} jewelry, gold ${categoryLabel.toLowerCase()}, silver ${categoryLabel.toLowerCase()}, luxury jewelry women`,
+    title: `Shop ${categoryLabel} — Gold Jewelry`,
+    description: `Browse our curated collection of luxury ${categoryLabel.toLowerCase()} in gold and rose gold. New arrivals added daily.`,
+    keywords: `${categoryLabel.toLowerCase()} jewelry, gold ${categoryLabel.toLowerCase()}, luxury jewelry women`,
     url: location,
   });
   const [sortBy, setSortBy] = useState<"rank" | "price_asc" | "price_desc" | "rating" | "newest" | "performance">("rank");

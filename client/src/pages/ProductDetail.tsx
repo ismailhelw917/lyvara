@@ -316,7 +316,7 @@ export default function ProductDetail() {
 
   useSEO({
     title: product ? `${product.title} | LYVARA JEWELS` : "Product | LYVARA JEWELS",
-    description: product?.description ?? `Shop ${product?.title} — luxury gold and silver jewelry curated for women.`,
+    description: product?.description ?? `Shop ${product?.title} — luxury gold jewelry curated for women.`,
   });
 
   const imageUrl = imgError

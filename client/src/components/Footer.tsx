@@ -16,7 +16,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="font-sans font-light text-sm leading-relaxed mb-6" style={{ color: "oklch(0.75 0.01 60)", maxWidth: "320px" }}>
-              Curating the world's most exquisite gold and silver jewelry for the discerning woman. 
+              Curating the world's most exquisite gold jewelry for the discerning woman. 
               Every piece tells a story of craftsmanship, elegance, and timeless beauty.
             </p>
             <div className="flex items-center gap-3">
