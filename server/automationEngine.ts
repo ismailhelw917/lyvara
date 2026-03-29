@@ -39,6 +39,32 @@ import { runFullVerification } from "./verificationEngine";
 import { updateMissingProductImages } from "./automaticImageUpdater";
 import { updateProductImagesWithAmazon } from "./simpleImageUpdater";
 import { fetchAndPopulateProducts } from "./rainforestProductFetcher";
+import schedule from "node-cron";
+
+// ─── Initialize Daily Rainforest Fetch ────────────────────────────────────────
+export function initializeDailyRainforestFetch() {
+  // Run every day at 2 AM
+  schedule.schedule("0 2 * * *", async () => {
+    console.log("[Automation] Starting daily Rainforest product fetch...");
+    try {
+      const result = await fetchAndPopulateProducts();
+      console.log("[Automation] Rainforest fetch completed:", result);
+      if (result.success) {
+        await notifyOwner({
+          title: "Daily Product Fetch Complete",
+          content: `Fetched and inserted ${result.count} new jewelry products from Rainforest API.`,
+        });
+      }
+    } catch (error) {
+      console.error("[Automation] Rainforest fetch failed:", error);
+      await notifyOwner({
+        title: "Daily Product Fetch Failed",
+        content: `Error: ${error instanceof Error ? error.message : String(error)}`,
+      });
+    }
+  });
+  console.log("[Automation] Daily Rainforest fetch scheduled for 2 AM");
+}
 
 // ─── Product Fetch Job ────────────────────────────────────────────────────────
 export async function runProductFetch(): Promise<{ success: boolean; productsUpdated: number; message: string }> {

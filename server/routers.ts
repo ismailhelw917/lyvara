@@ -187,6 +187,32 @@ const automationRouter = router({
     }
   }),
 
+  triggerRainforestFetch: adminProcedure.mutation(async () => {
+    try {
+      const { fetchAndPopulateProducts } = await import("./rainforestProductFetcher");
+      return await fetchAndPopulateProducts();
+    } catch (error: any) {
+      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message });
+    }
+  }),
+
+  checkPriceDrops: adminProcedure.mutation(async () => {
+    try {
+      const { checkPriceDrops } = await import("./priceDropAlerts");
+      const alerts = await checkPriceDrops();
+      return { success: true, alerts };
+    } catch (error: any) {
+      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message });
+    }
+  }),
+
+  getTopDiscountedProducts: publicProcedure
+    .input(z.object({ limit: z.number().min(1).max(50).default(10) }))
+    .query(async ({ input }) => {
+      const { getTopDiscountedProducts } = await import("./priceDropAlerts");
+      return await getTopDiscountedProducts(input.limit);
+    }),
+
   counters: adminProcedure.query(async () => counterGetAll()),
 
   settings: adminProcedure.query(() => getAllSettings()),
