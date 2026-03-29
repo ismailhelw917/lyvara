@@ -309,3 +309,12 @@
 - [x] Filter out products with "silver" metal type from display (deleted 10 silver products from DB)
 - [x] Add product data validation to prevent silver/incorrect metal types from being inserted
 - [x] Implement image-text validation to catch contradictions (silver filtering in validateProduct)
+
+## LINK AUDIT SCHEDULE UPDATE
+- [x] Update link audit from every 6 hours to every 3 hours (now runs every 3 hours starting 10 seconds after server start)
+
+## LINK AUDIT NOTIFICATIONS
+- [ ] Add owner notification when link audit starts
+- [ ] Add owner notification when broken links are found
+- [ ] Add owner notification when links are replaced
+- [ ] Include audit summary in notifications (total checked, broken found, replaced)
