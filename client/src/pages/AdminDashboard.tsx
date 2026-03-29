@@ -129,7 +129,7 @@ function AnalyticsSection() {
     <div className="space-y-6">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard label="Total Clicks" value={summary?.totalClicks || 0} icon={Activity} color="var(--gold)" />
-        <StatCard label="Affiliate Clicks" value={summary?.affiliateClicks || 0} icon={TrendingUp} color="var(--rose-gold)" />
+        <StatCard label="Product Clicks" value={summary?.affiliateClicks || 0} icon={TrendingUp} color="var(--rose-gold)" />
         <StatCard label="Page Views" value={summary?.pageViews || 0} icon={BarChart2} color="var(--silver)" />
         <StatCard label="Blog Views" value={summary?.blogViews || 0} icon={FileText} color="oklch(0.65 0.12 250)" />
       </div>

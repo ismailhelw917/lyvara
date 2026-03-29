@@ -296,3 +296,10 @@
 - [x] Reduce featured products from 12 to 4 on home page
 - [x] Update grid to show 4 products in single row on desktop (lg:grid-cols-4)
 - [x] Maintain responsive layout for tablet and mobile (2 cols on mobile, 2 on tablet, 4 on desktop)
+
+## REMOVE AFFILIATE MENTIONS
+- [x] Remove "affiliate" from public-facing copy and headlines
+- [x] Update footer copyright text (removed "As an Amazon Associate" disclosure)
+- [x] Update JSON-LD structured data (removed "affiliate boutique" description)
+- [x] Update admin dashboard labels ("Affiliate Clicks" → "Product Clicks")
+- [x] Note: Backend code retains "affiliateUrl" and tracking for internal operations
