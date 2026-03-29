@@ -38,6 +38,7 @@ import { fetchAndUpdateJewelryProducts } from "./productFetcher";
 import { runFullVerification } from "./verificationEngine";
 import { updateMissingProductImages } from "./automaticImageUpdater";
 import { updateProductImagesWithAmazon } from "./simpleImageUpdater";
+import { fetchAndPopulateProducts } from "./rainforestProductFetcher";
 
 // ─── Product Fetch Job ────────────────────────────────────────────────────────
 export async function runProductFetch(): Promise<{ success: boolean; productsUpdated: number; message: string }> {

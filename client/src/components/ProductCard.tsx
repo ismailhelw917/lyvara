@@ -146,9 +146,9 @@ export default function ProductCard({ product, size, showBadge = true }: Product
               e.stopPropagation();
               handleAffiliateClick();
             }}
-            className="btn-luxury-filled text-xs px-5 py-2 flex items-center gap-2"
+            className="btn-luxury-filled text-xs px-5 py-2 flex items-center gap-2 font-semibold hover:shadow-lg transition-shadow"
           >
-            View on Amazon
+            Check Price
             <ExternalLink className="w-3 h-3" />
           </button>
         </div>
@@ -208,10 +208,10 @@ export default function ProductCard({ product, size, showBadge = true }: Product
               e.stopPropagation();
               handleAffiliateClick();
             }}
-            className="btn-luxury text-xs px-3 py-1.5"
+            className="btn-luxury text-xs px-3 py-1.5 font-semibold hover:shadow-md transition-shadow"
             style={{ fontSize: "0.6rem" }}
           >
-            Shop
+            Check Price
           </button>
         </div>
       </div>
