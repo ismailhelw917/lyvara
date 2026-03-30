@@ -212,7 +212,7 @@ export async function runBlogGeneration(forcedCategory?: BlogCategory): Promise<
     }
 
     // Save to database
-    await createBlogPost({
+    const createdPost = await createBlogPost({
       title: generatedPost.title,
       slug: generatedPost.slug,
       content: generatedPost.content,
@@ -226,6 +226,27 @@ export async function runBlogGeneration(forcedCategory?: BlogCategory): Promise<
       isAiGenerated: true,
       publishedAt: new Date(),
     });
+
+    // Send webhook to Zapier for social media posting
+    const webhookUrl = process.env.ZAPIER_BLOG_WEBHOOK_URL;
+    if (webhookUrl && createdPost) {
+      const { sendBlogWebhook } = await import("./webhookService");
+      const baseUrl = process.env.SITE_URL || "https://lyvara-jewels.manus.space";
+      sendBlogWebhook(
+        {
+          id: String((createdPost as any).insertId || (createdPost as any).id),
+          title: generatedPost.title,
+          slug: generatedPost.slug,
+          content: generatedPost.content,
+          excerpt: generatedPost.excerpt,
+          imageUrl: heroImageUrl || undefined,
+          category: generatedPost.category,
+          publishedAt: Date.now(),
+          url: `${baseUrl}/blog/${generatedPost.slug}`,
+        },
+        webhookUrl
+      ).catch((err: any) => console.warn("[Webhook] Failed to send blog webhook:", err.message));
+    }
 
     await setSetting("last_blog_category_index", String(categoryIndex));
 
