@@ -14,6 +14,7 @@ import { eq, and, gt } from "drizzle-orm";
 import { generateCatalogXML, generateCatalogJSON, getCampaignInsights, runBudgetOptimization, isMetaConfigured } from "../metaService";
 import { getBoardAnalytics, getBoardPins, isPinterestConfigured } from "../pinterestService";
 import { generateGoogleShoppingXML, generateGoogleShoppingJSON } from "../googleShoppingService";
+import { generateRSSFeed } from "../rssService";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -184,6 +185,20 @@ async function startServer() {
     }
     const [analytics, pins] = await Promise.all([getBoardAnalytics(), getBoardPins()]);
     res.json({ configured: true, analytics, recentPins: pins.slice(0, 10) });
+  });
+
+  // ─── RSS Feed: blog posts for Zapier and other aggregators ──────────────────
+  app.get("/blog/feed.xml", async (_req, res) => {
+    try {
+      const BASE = process.env.SITE_URL || "https://lyvara-jewels.manus.space";
+      const xml = await generateRSSFeed(BASE);
+      res.setHeader("Content-Type", "application/xml; charset=utf-8");
+      res.setHeader("Cache-Control", "public, max-age=3600");
+      res.send(xml);
+    } catch (err) {
+      console.error("[RSS Feed] Error:", err);
+      res.status(500).send("Error generating RSS feed");
+    }
   });
 
   // ─── Google Shopping: product feed for Google Ads ──────────────────────────
