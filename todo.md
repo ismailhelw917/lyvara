@@ -350,3 +350,11 @@
 - [x] Add Adsterra pop-under ads to Home page (auto-initialized on load)
 - [x] Add Adsterra in-text ads to Blog posts (after article content)
 - [x] Test all Adsterra placements (compiles successfully)
+
+## CUSTOMER REVIEWS SYSTEM
+- [ ] Create reviews database schema (product_reviews table)
+- [ ] Add tRPC procedures for fetching and submitting reviews
+- [ ] Build reviews display component with ratings and photos
+- [ ] Add review submission form with photo upload
+- [ ] Seed database with sample verified reviews
+- [ ] Test reviews on product detail pages
