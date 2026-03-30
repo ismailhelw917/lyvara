@@ -304,7 +304,17 @@ export default function Products() {
               ))}
             </div>
 
-
+            {/* Google AdSense Display Ad — Between Products and Pagination */}
+            <div className="my-12 flex justify-center">
+              <ins
+                className="adsbygoogle"
+                style={{ display: "block", textAlign: "center" }}
+                data-ad-layout="in-article"
+                data-ad-format="fluid"
+                data-ad-client="ca-pub-8994944583632468"
+                data-ad-slot="1234567890"
+              />
+            </div>
 
             {/* Pagination */}
             {products.length === LIMIT && (
