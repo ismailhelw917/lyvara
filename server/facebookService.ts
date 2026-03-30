@@ -134,3 +134,115 @@ export async function postBlogToFacebook(blog: {
     scheduled: blog.schedule,
   };
 }
+
+
+/**
+ * Post content to Instagram
+ */
+export async function postToInstagram(options: {
+  caption: string;
+  imageUrl: string;
+  scheduled_publish_time?: number;
+}): Promise<{ id: string; success: boolean }> {
+  const accountId = process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID;
+  const accessToken = process.env.INSTAGRAM_ACCESS_TOKEN;
+
+  if (!accountId || !accessToken) {
+    throw new Error("Instagram credentials not configured");
+  }
+
+  const postData = new URLSearchParams({
+    image_url: options.imageUrl,
+    caption: options.caption,
+    access_token: accessToken,
+  });
+
+  if (options.scheduled_publish_time) {
+    postData.append("published", "false");
+    postData.append("scheduled_publish_time", options.scheduled_publish_time.toString());
+  } else {
+    postData.append("published", "true");
+  }
+
+  try {
+    const response = await fetch(`${FACEBOOK_GRAPH_URL}/${accountId}/media`, {
+      method: "POST",
+      body: postData,
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Instagram API Error:", data);
+      throw new Error(data.error?.message || "Failed to post to Instagram");
+    }
+
+    return {
+      id: data.id,
+      success: true,
+    };
+  } catch (error) {
+    console.error("Instagram posting error:", error);
+    throw error;
+  }
+}
+
+/**
+ * Format blog post for Instagram sharing
+ */
+export function formatBlogPostForInstagram(blog: {
+  title: string;
+  slug: string;
+  excerpt?: string;
+  category?: string;
+  imageUrl?: string;
+  siteUrl: string;
+}): { caption: string; imageUrl: string } {
+  const caption = `✨ ${blog.title}${blog.category ? ` - ${blog.category}` : ""}
+
+${blog.excerpt || "Read our latest jewelry insights and styling tips."}
+
+👉 Link in bio for the full story!
+
+#JewelryBlog #LuxuryJewelry #StylingTips #GoldJewelry #JewelryInspo`;
+
+  return {
+    caption,
+    imageUrl: blog.imageUrl || "",
+  };
+}
+
+/**
+ * Post blog to Instagram with scheduling
+ */
+export async function postBlogToInstagram(blog: {
+  title: string;
+  slug: string;
+  excerpt?: string;
+  category?: string;
+  imageUrl?: string;
+  siteUrl: string;
+  schedule?: boolean;
+}): Promise<{ id: string; success: boolean; scheduled?: boolean }> {
+  if (!blog.imageUrl) {
+    throw new Error("Instagram posts require an image URL");
+  }
+
+  const postOptions = formatBlogPostForInstagram(blog);
+
+  const instagramOptions: any = {
+    caption: postOptions.caption,
+    imageUrl: postOptions.imageUrl,
+  };
+
+  if (blog.schedule) {
+    instagramOptions.scheduled_publish_time = getOptimalPostTime();
+  }
+
+  const result = await postToInstagram(instagramOptions);
+
+  return {
+    ...result,
+    scheduled: blog.schedule,
+  };
+}

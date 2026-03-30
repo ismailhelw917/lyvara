@@ -198,3 +198,19 @@ export const blogPostsFacebookShares = mysqlTable("blog_posts_facebook_shares", 
 
 export type BlogPostFacebookShare = typeof blogPostsFacebookShares.$inferSelect;
 export type InsertBlogPostFacebookShare = typeof blogPostsFacebookShares.$inferInsert;
+
+// ─── Blog Posts Instagram Shares ──────────────────────────────────────────
+export const blogPostsInstagramShares = mysqlTable("blog_posts_instagram_shares", {
+  id: int("id").autoincrement().primaryKey(),
+  blogPostId: int("blogPostId").notNull(),
+  instagramMediaId: varchar("instagramMediaId", { length: 255 }).notNull(),
+  status: mysqlEnum("status", ["pending", "published", "scheduled", "failed"]).default("pending").notNull(),
+  scheduledFor: timestamp("scheduledFor"),
+  publishedAt: timestamp("publishedAt"),
+  errorMessage: text("errorMessage"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type BlogPostInstagramShare = typeof blogPostsInstagramShares.$inferSelect;
+export type InsertBlogPostInstagramShare = typeof blogPostsInstagramShares.$inferInsert;

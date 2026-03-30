@@ -17,6 +17,7 @@ import {
   getBlogPosts,
   getDailyAnalytics,
   getFacebookSharesByBlogPost,
+  getInstagramSharesByBlogPost,
   getFeaturedProducts,
   getHeroProducts,
   getNewsletterSubscriberCount,
@@ -29,11 +30,13 @@ import {
   incrementBlogViews,
   recordAnalyticsEvent,
   recordFacebookShare,
+  recordInstagramShare,
   setSetting,
   subscribeToNewsletter,
   unsubscribeFromNewsletter,
   updateAutomationLog,
   updateFacebookShareStatus,
+  updateInstagramShareStatus,
   updateProductDisplay,
   updateProductMetrics,
   upsertProduct,
@@ -41,7 +44,7 @@ import {
 } from "./db";
 import { runProductFetch, runBlogGeneration, runLayoutOptimization, runPerformanceScoring } from "./automationEngine";
 import { trackPageView, trackProductClick, trackContentEvent, trackReviewEvent, counterGetAll } from "./counterService";
-import { postBlogToFacebook } from "./facebookService";
+import { postBlogToFacebook, postBlogToInstagram } from "./facebookService";
 
 // ─── Admin Procedure ──────────────────────────────────────────────────────────
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -159,6 +162,62 @@ const blogRouter = router({
   getFacebookShares: adminProcedure
     .input(z.object({ blogPostId: z.number() }))
     .query(async ({ input }) => getFacebookSharesByBlogPost(input.blogPostId)),
+
+  shareToInstagram: adminProcedure
+    .input(
+      z.object({
+        blogPostId: z.number(),
+        schedule: z.boolean().default(false),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const post = await getBlogPostBySlug("");
+      if (!post) throw new TRPCError({ code: "NOT_FOUND", message: "Blog post not found" });
+
+      if (!post.heroImageUrl) {
+        throw new TRPCError({ code: "BAD_REQUEST", message: "Blog post requires a hero image for Instagram" });
+      }
+
+      const siteUrl = process.env.SITE_URL || "https://lyvarajewels.com";
+
+      try {
+        const result = await postBlogToInstagram({
+          title: post.title,
+          slug: post.slug,
+          excerpt: post.excerpt || undefined,
+          category: post.category || undefined,
+          imageUrl: post.heroImageUrl,
+          siteUrl,
+          schedule: input.schedule,
+        });
+
+        await recordInstagramShare({
+          blogPostId: input.blogPostId,
+          instagramMediaId: result.id,
+          status: input.schedule ? "scheduled" : "published",
+          scheduledFor: input.schedule ? new Date(Date.now() + 86400000) : undefined,
+        });
+
+        return {
+          success: true,
+          instagramMediaId: result.id,
+          scheduled: result.scheduled,
+        };
+      } catch (error: any) {
+        const errorMsg = error.message || "Failed to post to Instagram";
+        await recordInstagramShare({
+          blogPostId: input.blogPostId,
+          instagramMediaId: "error",
+          status: "failed",
+          errorMessage: errorMsg,
+        });
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: errorMsg });
+      }
+    }),
+
+  getInstagramShares: adminProcedure
+    .input(z.object({ blogPostId: z.number() }))
+    .query(async ({ input }) => getInstagramSharesByBlogPost(input.blogPostId)),
 });
 
 // ─── Analytics Router ─────────────────────────────────────────────────────────

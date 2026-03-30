@@ -5,9 +5,11 @@ import {
   automationLogs,
   blogPosts,
   blogPostsFacebookShares,
+  blogPostsInstagramShares,
   InsertAutomationLog,
   InsertBlogPost,
   InsertBlogPostFacebookShare,
+  InsertBlogPostInstagramShare,
   InsertProduct,
   InsertReview,
   InsertNewsletterSubscriber,
@@ -616,6 +618,64 @@ export async function getScheduledFacebookShares(): Promise<any[]> {
       and(
         eq(blogPostsFacebookShares.status, "scheduled"),
         lte(blogPostsFacebookShares.scheduledFor, now)
+      )
+    );
+}
+
+
+// ─── Blog Posts Instagram Shares ──────────────────────────────────────────
+export async function recordInstagramShare(share: InsertBlogPostInstagramShare): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  await db.insert(blogPostsInstagramShares).values(share);
+}
+
+export async function updateInstagramShareStatus(
+  id: number,
+  status: "pending" | "published" | "scheduled" | "failed",
+  errorMessage?: string
+): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  const updates: any = { status, updatedAt: new Date() };
+  if (status === "published") {
+    updates.publishedAt = new Date();
+  }
+  if (errorMessage) {
+    updates.errorMessage = errorMessage;
+  }
+  await db.update(blogPostsInstagramShares).set(updates).where(eq(blogPostsInstagramShares.id, id));
+}
+
+export async function getInstagramSharesByBlogPost(blogPostId: number): Promise<any[]> {
+  const db = await getDb();
+  if (!db) return [];
+  return await db
+    .select()
+    .from(blogPostsInstagramShares)
+    .where(eq(blogPostsInstagramShares.blogPostId, blogPostId));
+}
+
+export async function getPendingInstagramShares(): Promise<any[]> {
+  const db = await getDb();
+  if (!db) return [];
+  return await db
+    .select()
+    .from(blogPostsInstagramShares)
+    .where(eq(blogPostsInstagramShares.status, "pending"));
+}
+
+export async function getScheduledInstagramShares(): Promise<any[]> {
+  const db = await getDb();
+  if (!db) return [];
+  const now = new Date();
+  return await db
+    .select()
+    .from(blogPostsInstagramShares)
+    .where(
+      and(
+        eq(blogPostsInstagramShares.status, "scheduled"),
+        lte(blogPostsInstagramShares.scheduledFor, now)
       )
     );
 }
