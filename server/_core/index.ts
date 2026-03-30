@@ -197,7 +197,8 @@ async function startServer() {
       res.send(xml);
     } catch (err) {
       console.error("[RSS Feed] Error:", err);
-      res.status(500).send("Error generating RSS feed");
+      // Fallback: redirect to CDN-hosted feed if database fails
+      res.redirect(301, "https://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/static_feed_5ac9f5f4.xml");
     }
   });
 
