@@ -199,6 +199,8 @@ function FeaturedProducts() {
 
 // ─── Amazon Native Shopping Ads ───────────────────────────────────────────────
 function AmazonNativeAds() {
+  const { data: recommendedProducts } = trpc.products.featured.useQuery({ limit: 8 });
+
   return (
     <section className="py-16" style={{ background: "var(--champagne)" }}>
       <div className="container">
@@ -206,24 +208,21 @@ function AmazonNativeAds() {
           <p className="font-sans text-xs tracking-widest uppercase" style={{ color: "var(--gold-dark)" }}>
             Recommended for You
           </p>
+          <h2 className="font-serif text-3xl font-light mt-2" style={{ color: "var(--foreground)" }}>
+            Bestsellers & Favorites
+          </h2>
         </div>
-        <script
-          type="text/javascript"
-          dangerouslySetInnerHTML={{
-            __html: `
-              amzn_assoc_placement = "adunit0";
-              amzn_assoc_search_bar = "true";
-              amzn_assoc_tracking_id = "91791709-20";
-              amzn_assoc_ad_mode = "auto";
-              amzn_assoc_ad_type = "smart";
-              amzn_assoc_marketplace = "amazon";
-              amzn_assoc_region = "US";
-              amzn_assoc_title = "Shop Jewelry";
-              amzn_assoc_linkid = "91791709-20";
-            `
-          }}
-        />
-        <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US" />
+        {recommendedProducts && recommendedProducts.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {recommendedProducts.map((product) => (
+              <ProductCard key={product.id} product={product} size="medium" />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p style={{ color: "var(--muted-foreground)" }}>Loading recommendations...</p>
+          </div>
+        )}
       </div>
     </section>
   );

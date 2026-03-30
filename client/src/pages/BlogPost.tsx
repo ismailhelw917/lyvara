@@ -184,23 +184,22 @@ export default function BlogPost() {
           </div>
         )}
 
-        {/* Outbrain Recommendations */}
-        <div className="mt-16 pt-12 border-t" style={{ borderColor: "var(--border)" }}>
-          <div className="flex items-center gap-3 mb-8">
-            <div className="divider-gold w-8" />
-            <h2 className="font-serif text-2xl font-light" style={{ color: "var(--foreground)" }}>
-              Recommended Reading
-            </h2>
+        {/* Related Products Section */}
+        {relatedProducts && relatedProducts.length > 0 && (
+          <div className="mt-16 pt-12 border-t" style={{ borderColor: "var(--border)" }}>
+            <div className="flex items-center gap-3 mb-8">
+              <div className="divider-gold w-8" />
+              <h2 className="font-serif text-2xl font-light" style={{ color: "var(--foreground)" }}>
+                Explore Related Jewelry
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {relatedProducts.map((product) => (
+                <ProductCard key={product.id} product={product as any} size="medium" />
+              ))}
+            </div>
           </div>
-          <div
-            id="outbrain"
-            className="outbrain"
-            data-ob-template="default"
-            data-ob-key="ARF_1"
-            data-ob-dynamic-items="true"
-          />
-          <script async src="//widgets.outbrain.com/outbrain.js" />
-        </div>
+        )}
       </div>
 
       <Footer />

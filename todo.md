@@ -338,3 +338,8 @@
 - [x] Add Google AdSense display ads to sidebar and between products (Products.tsx)
 - [x] Implement Amazon Native Shopping Ads on home page (Home.tsx)
 - [x] Add Outbrain recommendation widgets to blog posts (BlogPost.tsx)
+
+## SIMPLE MONETIZATION REPLACEMENTS - COMPLETE
+- [x] Replace Google AdSense with affiliate product carousel on Products page (Premium Picks section)
+- [x] Replace Amazon Native Ads with curated product recommendations on Home page (Bestsellers & Favorites)
+- [x] Replace Outbrain with related products section on Blog posts (Explore Related Jewelry)

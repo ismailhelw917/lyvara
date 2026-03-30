@@ -304,17 +304,24 @@ export default function Products() {
               ))}
             </div>
 
-            {/* Google AdSense Display Ad — Between Products and Pagination */}
-            <div className="my-12 flex justify-center">
-              <ins
-                className="adsbygoogle"
-                style={{ display: "block", textAlign: "center" }}
-                data-ad-layout="in-article"
-                data-ad-format="fluid"
-                data-ad-client="ca-pub-8994944583632468"
-                data-ad-slot="1234567890"
-              />
-            </div>
+            {/* Featured Affiliate Products Carousel */}
+            {products && products.length > 0 && (
+              <div className="my-12 py-8 px-6 rounded" style={{ background: "var(--champagne)" }}>
+                <div className="text-center mb-6">
+                  <p className="font-sans text-xs tracking-widest uppercase" style={{ color: "var(--gold-dark)" }}>
+                    Curated for You
+                  </p>
+                  <h3 className="font-serif text-2xl font-light mt-2" style={{ color: "var(--foreground)" }}>
+                    Premium Picks
+                  </h3>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {products.slice(0, 4).map((product) => (
+                    <ProductCard key={product.id} product={product} size="small" />
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Pagination */}
             {products.length === LIMIT && (
