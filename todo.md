@@ -318,3 +318,10 @@
 - [ ] Add owner notification when broken links are found
 - [ ] Add owner notification when links are replaced
 - [ ] Include audit summary in notifications (total checked, broken found, replaced)
+
+## GOOGLE ADS & VERIFICATION SETUP
+- [x] Add Google site verification meta tag (aViRE7MSQ1eTLZ1pjKGFOPSXdPBuwIiO9MNscYI5sRk)
+- [x] Install Google Tag Manager and gtag library in index.html
+- [x] Configure Google Ads conversion tracking (AW-18019264911) in App.tsx
+- [x] Set up view_item event tracking for affiliate clicks in ProductDetail.tsx
+- [x] Track page views with Google Ads on route changes

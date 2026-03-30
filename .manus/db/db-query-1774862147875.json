@@ -1,0 +1,14 @@
+{
+  "query": "SELECT DATE(createdAt) as date, COUNT(*) as total_clicks FROM analytics_events WHERE eventType = 'affiliate_click' AND DATE(createdAt) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) GROUP BY DATE(createdAt);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT DATE(createdAt) as date, COUNT(*) as total_clicks FROM analytics_events WHERE eventType = 'affiliate_click' AND DATE(createdAt) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) GROUP BY DATE(createdAt);",
+  "rows": [
+    {
+      "date": "2026-03-29",
+      "total_clicks": "16"
+    }
+  ],
+  "messages": [],
+  "stdout": "date\ttotal_clicks\n2026-03-29\t16\n",
+  "stderr": "",
+  "execution_time_ms": 1641
+}

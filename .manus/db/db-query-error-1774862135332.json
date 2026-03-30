@@ -1,0 +1,8 @@
+{
+  "query": "SELECT DATE(createdAt) as date, COUNT(*) as total_clicks FROM analytics_events WHERE event_type = 'click' AND DATE(createdAt) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) GROUP BY DATE(createdAt);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT DATE(createdAt) as date, COUNT(*) as total_clicks FROM analytics_events WHERE event_type = 'click' AND DATE(createdAt) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) GROUP BY DATE(createdAt);",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'event_type' in 'where clause'"
+  ]
+}

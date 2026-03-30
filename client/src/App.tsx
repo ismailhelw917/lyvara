@@ -6,6 +6,14 @@ import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
+// Declare gtag for TypeScript
+declare global {
+  interface Window {
+    gtag?: (command: string, ...args: any[]) => void;
+    __GOOGLE_ADS_INITIALIZED__?: boolean;
+  }
+}
+
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import BlogList from "./pages/BlogList";
@@ -18,6 +26,16 @@ function Router() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, [location]);
+
+  // Track page views with Google Ads
+  useEffect(() => {
+    if (typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'page_view', {
+        page_path: location,
+        page_title: document.title,
+      });
+    }
   }, [location]);
 
   return (
@@ -36,6 +54,14 @@ function Router() {
 }
 
 function App() {
+  // Initialize Google Ads on app load
+  useEffect(() => {
+    if (typeof window.gtag !== 'undefined' && !window.__GOOGLE_ADS_INITIALIZED__) {
+      window.__GOOGLE_ADS_INITIALIZED__ = true;
+      window.gtag('config', 'AW-18019264911');
+    }
+  }, []);
+
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light">

@@ -1,0 +1,37 @@
+{
+  "query": "SHOW TABLES;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SHOW TABLES;",
+  "rows": [
+    {
+      "Tables_in_Fb7vXnzeJhLwFywj8Ci5L6": "__drizzle_migrations"
+    },
+    {
+      "Tables_in_Fb7vXnzeJhLwFywj8Ci5L6": "analytics_events"
+    },
+    {
+      "Tables_in_Fb7vXnzeJhLwFywj8Ci5L6": "automation_logs"
+    },
+    {
+      "Tables_in_Fb7vXnzeJhLwFywj8Ci5L6": "blog_posts"
+    },
+    {
+      "Tables_in_Fb7vXnzeJhLwFywj8Ci5L6": "products"
+    },
+    {
+      "Tables_in_Fb7vXnzeJhLwFywj8Ci5L6": "review_votes"
+    },
+    {
+      "Tables_in_Fb7vXnzeJhLwFywj8Ci5L6": "reviews"
+    },
+    {
+      "Tables_in_Fb7vXnzeJhLwFywj8Ci5L6": "site_settings"
+    },
+    {
+      "Tables_in_Fb7vXnzeJhLwFywj8Ci5L6": "users"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_Fb7vXnzeJhLwFywj8Ci5L6\n__drizzle_migrations\nanalytics_events\nautomation_logs\nblog_posts\nproducts\nreview_votes\nreviews\nsite_settings\nusers\n",
+  "stderr": "",
+  "execution_time_ms": 1666
+}

@@ -335,6 +335,17 @@ export default function ProductDetail() {
         price: Number(product.price) || 0,
         category: product.category ?? undefined,
       });
+      // Fire Google Ads conversion event
+      if (typeof window.gtag !== 'undefined') {
+        window.gtag('event', 'view_item', {
+          items: [{
+            id: product.asin || product.id.toString(),
+            name: product.title,
+            price: Number(product.price) || 0,
+            category: product.category || 'jewelry',
+          }]
+        });
+      }
       window.open(product.affiliateUrl, "_blank", "noopener,noreferrer");
     }
   };
