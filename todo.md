@@ -343,3 +343,10 @@
 - [x] Replace Google AdSense with affiliate product carousel on Products page (Premium Picks section)
 - [x] Replace Amazon Native Ads with curated product recommendations on Home page (Bestsellers & Favorites)
 - [x] Replace Outbrain with related products section on Blog posts (Explore Related Jewelry)
+
+## ADSTERRA AD NETWORK INTEGRATION - COMPLETE
+- [x] Add Adsterra initialization script to HTML head (index.html)
+- [x] Add Adsterra banner ads to Products page (728x250 responsive)
+- [x] Add Adsterra pop-under ads to Home page (auto-initialized on load)
+- [x] Add Adsterra in-text ads to Blog posts (after article content)
+- [x] Test all Adsterra placements (compiles successfully)

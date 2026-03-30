@@ -149,6 +149,11 @@ export default function BlogPost() {
             <Streamdown>{post.content || ""}</Streamdown>
           </div>
 
+          {/* Adsterra In-Text Ad */}
+          <div className="my-12 p-6 rounded" style={{ background: "var(--champagne)", minHeight: "250px" }}>
+            <div id="adsterra-intext-1" style={{ minHeight: "200px" }} />
+          </div>
+
           {/* Tags */}
           {post.tags && Array.isArray(post.tags) && post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-12 pt-6 border-t" style={{ borderColor: "var(--border)" }}>
