@@ -16,6 +16,7 @@ import {
   getBlogPostBySlug,
   getBlogPosts,
   getDailyAnalytics,
+  getFacebookSharesByBlogPost,
   getFeaturedProducts,
   getHeroProducts,
   getNewsletterSubscriberCount,
@@ -27,10 +28,12 @@ import {
   getTopProducts,
   incrementBlogViews,
   recordAnalyticsEvent,
+  recordFacebookShare,
   setSetting,
   subscribeToNewsletter,
   unsubscribeFromNewsletter,
   updateAutomationLog,
+  updateFacebookShareStatus,
   updateProductDisplay,
   updateProductMetrics,
   upsertProduct,
@@ -38,6 +41,7 @@ import {
 } from "./db";
 import { runProductFetch, runBlogGeneration, runLayoutOptimization, runPerformanceScoring } from "./automationEngine";
 import { trackPageView, trackProductClick, trackContentEvent, trackReviewEvent, counterGetAll } from "./counterService";
+import { postBlogToFacebook } from "./facebookService";
 
 // ─── Admin Procedure ──────────────────────────────────────────────────────────
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -103,6 +107,58 @@ const blogRouter = router({
     }),
 
   count: publicProcedure.query(() => countBlogPosts("published")),
+
+  shareToFacebook: adminProcedure
+    .input(
+      z.object({
+        blogPostId: z.number(),
+        schedule: z.boolean().default(false),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const post = await getBlogPostBySlug("");
+      if (!post) throw new TRPCError({ code: "NOT_FOUND", message: "Blog post not found" });
+
+      const siteUrl = process.env.SITE_URL || "https://lyvarajewels.com";
+
+      try {
+        const result = await postBlogToFacebook({
+          title: post.title,
+          slug: post.slug,
+          excerpt: post.excerpt || undefined,
+          category: post.category || undefined,
+          imageUrl: post.heroImageUrl || undefined,
+          siteUrl,
+          schedule: input.schedule,
+        });
+
+        await recordFacebookShare({
+          blogPostId: input.blogPostId,
+          facebookPostId: result.id,
+          status: input.schedule ? "scheduled" : "published",
+          scheduledFor: input.schedule ? new Date(Date.now() + 86400000) : undefined,
+        });
+
+        return {
+          success: true,
+          facebookPostId: result.id,
+          scheduled: result.scheduled,
+        };
+      } catch (error: any) {
+        const errorMsg = error.message || "Failed to post to Facebook";
+        await recordFacebookShare({
+          blogPostId: input.blogPostId,
+          facebookPostId: "error",
+          status: "failed",
+          errorMessage: errorMsg,
+        });
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: errorMsg });
+      }
+    }),
+
+  getFacebookShares: adminProcedure
+    .input(z.object({ blogPostId: z.number() }))
+    .query(async ({ input }) => getFacebookSharesByBlogPost(input.blogPostId)),
 });
 
 // ─── Analytics Router ─────────────────────────────────────────────────────────

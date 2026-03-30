@@ -182,3 +182,19 @@ export const newsletterSubscribers = mysqlTable("newsletter_subscribers", {
 
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 export type InsertNewsletterSubscriber = typeof newsletterSubscribers.$inferInsert;
+
+// ─── Blog Posts Facebook Shares ───────────────────────────────────────────
+export const blogPostsFacebookShares = mysqlTable("blog_posts_facebook_shares", {
+  id: int("id").autoincrement().primaryKey(),
+  blogPostId: int("blogPostId").notNull(),
+  facebookPostId: varchar("facebookPostId", { length: 255 }).notNull(),
+  status: mysqlEnum("status", ["pending", "published", "scheduled", "failed"]).default("pending").notNull(),
+  scheduledFor: timestamp("scheduledFor"),
+  publishedAt: timestamp("publishedAt"),
+  errorMessage: text("errorMessage"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type BlogPostFacebookShare = typeof blogPostsFacebookShares.$inferSelect;
+export type InsertBlogPostFacebookShare = typeof blogPostsFacebookShares.$inferInsert;

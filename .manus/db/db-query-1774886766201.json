@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `blog_posts_facebook_shares` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`blogPostId` int NOT NULL,\n\t`facebookPostId` varchar(255) NOT NULL,\n\t`status` enum('pending','published','scheduled','failed') NOT NULL DEFAULT 'pending',\n\t`scheduledFor` timestamp,\n\t`publishedAt` timestamp,\n\t`errorMessage` text,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `blog_posts_facebook_shares_id` PRIMARY KEY(`id`)\n)",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute CREATE TABLE `blog_posts_facebook_shares` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`blogPostId` int NOT NULL,\n\t`facebookPostId` varchar(255) NOT NULL,\n\t`status` enum('pending','published','scheduled','failed') NOT NULL DEFAULT 'pending',\n\t`scheduledFor` timestamp,\n\t`publishedAt` timestamp,\n\t`errorMessage` text,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `blog_posts_facebook_shares_id` PRIMARY KEY(`id`)\n)",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2058
+}
