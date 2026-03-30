@@ -1,0 +1,40 @@
+{
+  "query": "SELECT id, title, slug, status FROM blog_posts LIMIT 5",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, title, slug, status FROM blog_posts LIMIT 5",
+  "rows": [
+    {
+      "id": "1",
+      "title": "The Luminous Duet: Gold & Silver's Reign in This Season's Adornments",
+      "slug": "luminous-duet-gold-silver-jewelry-trends-1773871428037",
+      "status": "published"
+    },
+    {
+      "id": "2",
+      "title": "The Art of Adornment: Mastering the Elegant Layer and Stack",
+      "slug": "the-art-of-adornment-mastering-the-elegant-layer-and-stack-1773926407245",
+      "status": "published"
+    },
+    {
+      "id": "3",
+      "title": "The Luminous Allure: Gold and Silver's Reign in This Season's Collections",
+      "slug": "luminous-allure-gold-silver-trend-report-1773926443028",
+      "status": "published"
+    },
+    {
+      "id": "4",
+      "title": "The Luminous Language of Gold and Silver: A Curated Gift Guide",
+      "slug": "luminous-language-gold-silver-curated-gift-guide-1773926474112",
+      "status": "published"
+    },
+    {
+      "id": "5",
+      "title": "The Enduring Radiance: A Connoisseur's Guide to Fine Jewelry Care",
+      "slug": "enduring-radiance-fine-jewelry-care-guide-1773926509426",
+      "status": "published"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\tstatus\n1\tThe Luminous Duet: Gold & Silver's Reign in This Season's Adornments\tluminous-duet-gold-silver-jewelry-trends-1773871428037\tpublished\n2\tThe Art of Adornment: Mastering the Elegant Layer and Stack\tthe-art-of-adornment-mastering-the-elegant-layer-and-stack-1773926407245\tpublished\n3\tThe Luminous Allure: Gold and Silver's Reign in This Season's Collections\tluminous-allure-gold-silver-trend-report-1773926443028\tpublished\n4\tThe Luminous Language of Gold and Silver: A Curated Gift Guide\tluminous-language-gold-silver-curated-gift-guide-1773926474112\tpublished\n5\tThe Enduring Radiance: A Connoisseur's Guide to Fine Jewelry Care\tenduring-radiance-fine-jewelry-care-guide-1773926509426\tpublished\n",
+  "stderr": "",
+  "execution_time_ms": 1658
+}
