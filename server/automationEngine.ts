@@ -560,17 +560,24 @@ export function startScheduler() {
     }
   }, 24 * 60 * 60 * 1000);
 
-  // Daily blog post: every 24 hours (offset by 2 hours from product fetch)
-  setTimeout(() => {
-    const runBlog = async () => {
-      try {
+  // Daily blog posts: Generate 5 posts per day (every 4.8 hours)
+  // Posts are generated at: 2h, 6.8h, 11.6h, 16.4h, 21.2h after server start
+  const generateMultiplePosts = async () => {
+    try {
+      for (let i = 0; i < 5; i++) {
         await runBlogGeneration();
-      } catch (err) {
-        console.error("[AutomationEngine] Daily blog generation failed:", err);
+        // Small delay between posts to avoid overwhelming the system
+        if (i < 4) await new Promise(resolve => setTimeout(resolve, 2000));
       }
-    };
-    runBlog();
-    setInterval(runBlog, 24 * 60 * 60 * 1000);
+      console.log("[AutomationEngine] Generated 5 blog posts");
+    } catch (err) {
+      console.error("[AutomationEngine] Daily blog generation failed:", err);
+    }
+  };
+  
+  setTimeout(() => {
+    generateMultiplePosts();
+    setInterval(generateMultiplePosts, 24 * 60 * 60 * 1000);
   }, 2 * 60 * 60 * 1000); // Start 2 hours after server start
 
   // Weekly layout optimization: every 7 days
