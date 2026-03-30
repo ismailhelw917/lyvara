@@ -11,6 +11,30 @@ interface ValidationResult {
 }
 
 /**
+ * Validate ASIN format (must be B followed by 9 alphanumeric characters)
+ */
+function isValidASINFormat(asin: string): boolean {
+  // Amazon ASINs are 10 characters: B followed by 9 alphanumeric characters
+  // Real format: B[A-Z0-9]{9}
+  return /^B[A-Z0-9]{9}$/.test(asin);
+}
+
+/**
+ * Check if ASIN looks like a placeholder/test ASIN
+ */
+function isPlaceholderASIN(asin: string): boolean {
+  const placeholderPatterns = [
+    /^B08[A-Z]+00[0-9]$/,  // B08XXXX001, B08XXXX002 pattern
+    /^B0[0-7][A-Z]+00[0-9]$/,  // B07XXXX001, B06XXXX002 pattern
+    /TEST/i,  // TEST in ASIN
+    /DEMO/i,  // DEMO in ASIN
+    /PLACEHOLDER/i,  // PLACEHOLDER in ASIN
+    /FAKE/i,  // FAKE in ASIN
+  ];
+  return placeholderPatterns.some(pattern => pattern.test(asin));
+}
+
+/**
  * Validate a single product for data quality
  */
 export function validateProduct(product: InsertProduct): ValidationResult {
@@ -19,6 +43,10 @@ export function validateProduct(product: InsertProduct): ValidationResult {
 
   if (!product.asin || product.asin.trim() === "") {
     errors.push("Missing ASIN");
+  } else if (!isValidASINFormat(product.asin)) {
+    errors.push(`Invalid ASIN format: "${product.asin}" - must be B followed by 9 alphanumeric characters`);
+  } else if (isPlaceholderASIN(product.asin)) {
+    errors.push(`ASIN appears to be a placeholder/test ASIN: "${product.asin}" - only real Amazon ASINs allowed`);
   }
   if (!product.title || product.title.trim().length < 10) {
     errors.push("Title missing or too short (min 10 chars)");

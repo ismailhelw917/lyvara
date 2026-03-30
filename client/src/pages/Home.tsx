@@ -7,7 +7,7 @@ import ProductCard from "@/components/ProductCard";
 import { trpc } from "@/lib/trpc";
 import { useSEO } from "@/hooks/useSEO";
 import { usePageView } from "@/hooks/useTracking";
-import { SkimlinksHorizontalBanner } from "@/components/SkimlinksBanner";
+
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 function HeroSection() {
@@ -448,9 +448,6 @@ export default function Home() {
       <HeroSection />
       <CategoryStrip />
       <FeaturedProducts />
-      <div className="container">
-        <SkimlinksHorizontalBanner seed={0} />
-      </div>
       <BrandBanner />
       <MetalShowcase />
       <BlogPreview />

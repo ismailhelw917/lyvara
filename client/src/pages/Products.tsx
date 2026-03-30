@@ -7,7 +7,7 @@ import ProductCard from "@/components/ProductCard";
 import { trpc } from "@/lib/trpc";
 import { useSEO } from "@/hooks/useSEO";
 import { useTracking } from "@/hooks/useTracking";
-import { SkimlinksHorizontalBanner } from "@/components/SkimlinksBanner";
+
 
 const CATEGORIES = [
   { value: "", label: "All Jewelry" },
@@ -304,8 +304,7 @@ export default function Products() {
               ))}
             </div>
 
-            {/* Skimlinks Promotional Banner — after first page of results */}
-            <SkimlinksHorizontalBanner seed={1} />
+
 
             {/* Pagination */}
             {products.length === LIMIT && (

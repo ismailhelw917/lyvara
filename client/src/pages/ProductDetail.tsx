@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { Star, ThumbsUp, ThumbsDown, ChevronLeft, ShoppingBag, Shield, Truck, Award, ChevronDown } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
 import { nanoid } from "nanoid";
-import { SkimlinksHorizontalBanner } from "@/components/SkimlinksBanner";
+
 import { useMetaPixel } from "@/hooks/useMetaPixel";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -603,9 +603,7 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 pb-8">
-        <SkimlinksHorizontalBanner seed={5} />
-      </div>
+
 
       <Footer />
     </div>

@@ -1,0 +1,18 @@
+{
+  "query": "SELECT id, title, asin, affiliateUrl, price, brand FROM products WHERE title LIKE '%Tennis Bracelet%' OR brand LIKE '%ZALES%' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, title, asin, affiliateUrl, price, brand FROM products WHERE title LIKE '%Tennis Bracelet%' OR brand LIKE '%ZALES%' LIMIT 5;",
+  "rows": [
+    {
+      "id": "6120140",
+      "title": "14K Gold Tennis Bracelet — Classic Diamond Line Bracelet, 7 Inch Women's Fine Jewelry",
+      "asin": "B08BRAC001",
+      "affiliateUrl": "https://www.amazon.com/dp/B08BRAC001?tag=lyvarajewels-20",
+      "price": "349.99",
+      "brand": "Zales"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tasin\taffiliateUrl\tprice\tbrand\n6120140\t14K Gold Tennis Bracelet — Classic Diamond Line Bracelet, 7 Inch Women's Fine Jewelry\tB08BRAC001\thttps://www.amazon.com/dp/B08BRAC001?tag=lyvarajewels-20\t349.99\tZales\n",
+  "stderr": "",
+  "execution_time_ms": 1517
+}

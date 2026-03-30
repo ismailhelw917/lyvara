@@ -325,3 +325,11 @@
 - [x] Configure Google Ads conversion tracking (AW-18019264911) in App.tsx
 - [x] Set up view_item event tracking for affiliate clicks in ProductDetail.tsx
 - [x] Track page views with Google Ads on route changes
+
+## ASIN VALIDATION & DATA CLEANUP
+- [ ] Audit database for invalid ASINs (format validation)
+- [ ] Delete products with invalid/placeholder ASINs
+- [ ] Add ASIN format validation to productValidationService
+- [ ] Add ASIN verification before product insertion
+- [ ] Update link audit to catch and remove invalid ASIN products
+- [ ] Implement permanent ASIN validation layer

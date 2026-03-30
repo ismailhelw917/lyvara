@@ -1,0 +1,130 @@
+{
+  "query": "SELECT asin, COUNT(*) as count FROM products GROUP BY asin ORDER BY count DESC LIMIT 30;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT asin, COUNT(*) as count FROM products GROUP BY asin ORDER BY count DESC LIMIT 30;",
+  "rows": [
+    {
+      "asin": "B00RYURH8M",
+      "count": "1"
+    },
+    {
+      "asin": "B07QSFHT27",
+      "count": "1"
+    },
+    {
+      "asin": "B07QTJ1WWL",
+      "count": "1"
+    },
+    {
+      "asin": "B08BRAC001",
+      "count": "1"
+    },
+    {
+      "asin": "B08BRAC002",
+      "count": "1"
+    },
+    {
+      "asin": "B08EARR001",
+      "count": "1"
+    },
+    {
+      "asin": "B08EARR003",
+      "count": "1"
+    },
+    {
+      "asin": "B08EARR004",
+      "count": "1"
+    },
+    {
+      "asin": "B08GOLD002",
+      "count": "1"
+    },
+    {
+      "asin": "B08GOLD003",
+      "count": "1"
+    },
+    {
+      "asin": "B08PEND001",
+      "count": "1"
+    },
+    {
+      "asin": "B08PEND002",
+      "count": "1"
+    },
+    {
+      "asin": "B08RING001",
+      "count": "1"
+    },
+    {
+      "asin": "B08RING003",
+      "count": "1"
+    },
+    {
+      "asin": "B08RING004",
+      "count": "1"
+    },
+    {
+      "asin": "B08SETS001",
+      "count": "1"
+    },
+    {
+      "asin": "B08SETS002",
+      "count": "1"
+    },
+    {
+      "asin": "B08SILV001",
+      "count": "1"
+    },
+    {
+      "asin": "B08SILV002",
+      "count": "1"
+    },
+    {
+      "asin": "B08WGOL001",
+      "count": "1"
+    },
+    {
+      "asin": "B0B56FHPCX",
+      "count": "1"
+    },
+    {
+      "asin": "B0B6H8BDJM",
+      "count": "1"
+    },
+    {
+      "asin": "B0BLK7NRLM",
+      "count": "1"
+    },
+    {
+      "asin": "B0C8DC8QMB",
+      "count": "1"
+    },
+    {
+      "asin": "B0CDC2QD6N",
+      "count": "1"
+    },
+    {
+      "asin": "B0CL9KDMMV",
+      "count": "1"
+    },
+    {
+      "asin": "B0D59ZNLZ7",
+      "count": "1"
+    },
+    {
+      "asin": "B0DC68KMYG",
+      "count": "1"
+    },
+    {
+      "asin": "B0DDHC3M9J",
+      "count": "1"
+    },
+    {
+      "asin": "B0F93FBQCX",
+      "count": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "asin\tcount\nB00RYURH8M\t1\nB07QSFHT27\t1\nB07QTJ1WWL\t1\nB08BRAC001\t1\nB08BRAC002\t1\nB08EARR001\t1\nB08EARR003\t1\nB08EARR004\t1\nB08GOLD002\t1\nB08GOLD003\t1\nB08PEND001\t1\nB08PEND002\t1\nB08RING001\t1\nB08RING003\t1\nB08RING004\t1\nB08SETS001\t1\nB08SETS002\t1\nB08SILV001\t1\nB08SILV002\t1\nB08WGOL001\t1\nB0B56FHPCX\t1\nB0B6H8BDJM\t1\nB0BLK7NRLM\t1\nB0C8DC8QMB\t1\nB0CDC2QD6N\t1\nB0CL9KDMMV\t1\nB0D59ZNLZ7\t1\nB0DC68KMYG\t1\nB0DDHC3M9J\t1\nB0F93FBQCX\t1\n",
+  "stderr": "",
+  "execution_time_ms": 1589
+}
