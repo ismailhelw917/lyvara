@@ -1,4 +1,3 @@
-import { useState, useEffect, useMemo } from "react";
 import { useRoute, Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import Navbar from "@/components/Navbar";
@@ -10,7 +9,7 @@ import { toast } from "sonner";
 import { Star, ThumbsUp, ThumbsDown, ChevronLeft, ShoppingBag, Shield, Truck, Award, ChevronDown } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
 import { nanoid } from "nanoid";
-
+import { useEffect, useState, useMemo } from "react";
 import { useMetaPixel } from "@/hooks/useMetaPixel";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -319,6 +318,68 @@ export default function ProductDetail() {
     description: product?.description ?? `Shop ${product?.title} — luxury gold jewelry curated for women.`,
   });
 
+  const avgRating = aggregate?.averageRating ?? 0;
+  const totalReviews = aggregate?.totalCount ?? 0;
+
+  // Add Product schema JSON-LD
+  useEffect(() => {
+    if (product) {
+      const productSchema = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": product.title,
+        "description": product.description || `Luxury gold jewelry: ${product.title}`,
+        "image": product.imageUrl || FALLBACK_IMAGES[0],
+        "brand": {
+          "@type": "Brand",
+          "name": product.brand || "LYVARA JEWELS"
+        },
+        "offers": {
+          "@type": "Offer",
+          "url": window.location.href,
+          "priceCurrency": "USD",
+          "price": product.price?.toString() || "0",
+          "availability": "https://schema.org/InStock",
+          "seller": {
+            "@type": "Organization",
+            "name": "LYVARA JEWELS"
+          }
+        },
+        "aggregateRating": totalReviews > 0 ? {
+          "@type": "AggregateRating",
+          "ratingValue": avgRating.toFixed(1),
+          "ratingCount": totalReviews,
+          "bestRating": "5",
+          "worstRating": "1"
+        } : undefined,
+        "review": reviews && reviews.length > 0 ? reviews.slice(0, 5).map(r => ({
+          "@type": "Review",
+          "author": {
+            "@type": "Person",
+            "name": r.authorName
+          },
+          "datePublished": new Date(r.createdAt).toISOString().split('T')[0],
+          "description": r.body,
+          "name": r.title || "Review",
+          "ratingValue": r.rating.toString()
+        })) : undefined
+      };
+      
+      // Remove undefined values
+      if (!productSchema.aggregateRating) delete productSchema.aggregateRating;
+      if (!productSchema.review || productSchema.review.length === 0) delete productSchema.review;
+      
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(productSchema);
+      document.head.appendChild(script);
+      
+      return () => {
+        document.head.removeChild(script);
+      };
+    }
+  }, [product, avgRating, totalReviews, reviews]);
+
   const imageUrl = imgError
     ? FALLBACK_IMAGES[productId % FALLBACK_IMAGES.length]
     : product?.imageUrl
@@ -365,8 +426,6 @@ export default function ProductDetail() {
     );
   }
 
-  const avgRating = aggregate?.averageRating ?? 0;
-  const totalReviews = aggregate?.totalCount ?? 0;
   const dist = aggregate?.distribution ?? { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
   return (

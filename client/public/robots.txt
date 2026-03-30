@@ -1,10 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /admin
-Disallow: /api/
-
-# Sitemap
+Disallow: /api
+Disallow: /*.json$
 Sitemap: https://lyvara-jewels.manus.space/sitemap.xml
-
-# Crawl delay for polite crawling
 Crawl-delay: 1
