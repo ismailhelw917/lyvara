@@ -98,13 +98,14 @@ function generateRSSXml(items: RSSItem[], baseUrl: string): string {
 
 /**
  * Escape XML special characters
+ * Use numeric entities for better compatibility with strict XML validators
  */
 function escapeXml(str: string): string {
   if (!str) return "";
   return str
-    .replace(/&/g, "&amp;")
+    .replace(/&/g, "&amp;")  // Must be first!
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
+    .replace(/'/g, "&#39;");  // Use numeric entity instead of &apos;
 }
