@@ -473,15 +473,7 @@ export default function Home() {
   });
   usePageView("/");
 
-  // Initialize Adsterra pop-under ads on page load
-  useEffect(() => {
-    // Adsterra pop-under initialization
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = 'https://cdn.adsterra.com/js/v1/pop.js';
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
+
 
   return (
     <div className="min-h-screen" style={{ background: "var(--background)" }}>

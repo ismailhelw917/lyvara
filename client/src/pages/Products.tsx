@@ -304,10 +304,7 @@ export default function Products() {
               ))}
             </div>
 
-            {/* Adsterra Banner Ad */}
-            <div className="my-12 flex justify-center">
-              <div id="adsterra-banner-1" style={{ minHeight: "250px", width: "100%", maxWidth: "728px" }} />
-            </div>
+
 
             {/* Featured Affiliate Products Carousel */}
             {products && products.length > 0 && (
