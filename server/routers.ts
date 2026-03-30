@@ -18,6 +18,8 @@ import {
   getDailyAnalytics,
   getFeaturedProducts,
   getHeroProducts,
+  getNewsletterSubscriberCount,
+  getNewsletterSubscribers,
   getProductAnalytics,
   getProducts,
   getReviewAggregate,
@@ -26,6 +28,8 @@ import {
   incrementBlogViews,
   recordAnalyticsEvent,
   setSetting,
+  subscribeToNewsletter,
+  unsubscribeFromNewsletter,
   updateAutomationLog,
   updateProductDisplay,
   updateProductMetrics,
@@ -260,17 +264,55 @@ const automationRouter = router({
 // ─── Newsletter Router ──────────────────────────────────────────────────────────────
 const newsletterRouter = router({
   subscribe: publicProcedure
-    .input(z.object({ email: z.string().email() }))
+    .input(
+      z.object({
+        email: z.string().email(),
+        name: z.string().max(255).optional(),
+        source: z.enum(["homepage", "footer", "popup", "blog", "product_page", "other"]).default("other"),
+        preferredCategories: z.array(z.string()).optional(),
+      })
+    )
     .mutation(async ({ input }) => {
-      // Store email in a simple way - could be extended to use a database table
-      // For now, send a notification to the owner
+      await subscribeToNewsletter({
+        email: input.email,
+        name: input.name || null,
+        source: input.source,
+        preferredCategories: input.preferredCategories || null,
+      });
       const { notifyOwner } = await import("./_core/notification");
       await notifyOwner({
         title: "New Newsletter Subscriber",
-        content: `New email signup: ${input.email}`,
+        content: `New email signup: ${input.email}${input.name ? ` (${input.name})` : ""}`,
       });
       return { success: true, message: "Thank you for subscribing!" };
     }),
+
+  unsubscribe: publicProcedure
+    .input(z.object({ email: z.string().email() }))
+    .mutation(async ({ input }) => {
+      await unsubscribeFromNewsletter(input.email);
+      return { success: true, message: "Successfully unsubscribed from newsletter" };
+    }),
+
+  count: adminProcedure
+    .input(z.object({ status: z.enum(["subscribed", "unsubscribed", "bounced"]).optional() }))
+    .query(async ({ input }) => {
+      const total = await getNewsletterSubscriberCount();
+      const subscribed = await getNewsletterSubscriberCount("subscribed");
+      const unsubscribed = await getNewsletterSubscriberCount("unsubscribed");
+      const bounced = await getNewsletterSubscriberCount("bounced");
+      return { total, subscribed, unsubscribed, bounced };
+    }),
+
+  list: adminProcedure
+    .input(
+      z.object({
+        status: z.enum(["subscribed", "unsubscribed", "bounced"]).optional(),
+        limit: z.number().min(1).max(100).default(50),
+        offset: z.number().min(0).default(0),
+      })
+    )
+    .query(async ({ input }) => getNewsletterSubscribers(input)),
 });
 
 // ─── Reviews Router ─────────────────────────────────────────────────────────────────

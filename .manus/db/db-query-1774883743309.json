@@ -1,0 +1,80 @@
+{
+  "query": "SELECT id, title, price, originalPrice, currency FROM products LIMIT 10",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, title, price, originalPrice, currency FROM products LIMIT 10",
+  "rows": [
+    {
+      "id": "6120116",
+      "title": "PAVOI 14K Gold Plated Cubic Zirconia Cross Necklace for Women | Cross Faith Pendant Necklaces",
+      "price": "99.99",
+      "originalPrice": "99.99",
+      "currency": "USD"
+    },
+    {
+      "id": "6120117",
+      "title": "FAXHION 68 Pcs Gold Jewelry Set for Women with 7 Necklace, 17 Bracelet, 5 Hoop Earrings, 15 Stud Earrings, 24 Knuckle Rings for Women Jewelry Set for Women",
+      "price": "99.99",
+      "originalPrice": "99.99",
+      "currency": "USD"
+    },
+    {
+      "id": "6120118",
+      "title": "FUNEIA Diamond Necklaces for Women 14K Gold Plated Emerald Birthstone Necklace for Women Mothers Dainty Gold Necklace Blue Green Cubic Zirconia Pendant Necklace Birthday Gifts for Women Jewelry",
+      "price": "99.99",
+      "originalPrice": "99.99",
+      "currency": "USD"
+    },
+    {
+      "id": "6120120",
+      "title": "JECOMY 14K Gold Plated Layering Necklaces For Women Gold Necklace Set, Cuban Link, Snake Chain, Paperclip Layered Chains, Twisted Rope and Twisted Chain, Trendy Layering Necklace",
+      "price": "99.99",
+      "originalPrice": "99.99",
+      "currency": "USD"
+    },
+    {
+      "id": "6120121",
+      "title": "Turandoss Easter Basket Stuffer Cross Necklace for Women Girls, Dainty 14K Gold Plated Cross Necklace Infinity CZ Holy Mary Medal Necklaces for Women Christian Baptism Religious Faith Jewelry Gifts",
+      "price": "99.99",
+      "originalPrice": "99.99",
+      "currency": "USD"
+    },
+    {
+      "id": "6120122",
+      "title": "Fettero Gold Clover Necklace for Women Dainty 14K Gold Plated CZ Pendant Necklace Adjustable Chain Choker Charm Colorful Clover Pendant Lucky Necklaces for Women Jewelry",
+      "price": "99.99",
+      "originalPrice": "99.99",
+      "currency": "USD"
+    },
+    {
+      "id": "6120124",
+      "title": "DEARMAY 14K Gold Plated Necklaces for Women, Dainty Gold Herringbone Choker Necklace Thin Layered Snake Chain Jewelry for Gifts",
+      "price": "99.99",
+      "originalPrice": "99.99",
+      "currency": "USD"
+    },
+    {
+      "id": "6120125",
+      "title": "Freekiss Gold Pendant Necklace for Women, Dainty Diamond Necklaces for Women Simple 14K Gold Plated Paperclip Choker Necklaces Cute Minimalist Open Oval Necklaces Gold Jewelry for Women Gifts",
+      "price": "99.99",
+      "originalPrice": "99.99",
+      "currency": "USD"
+    },
+    {
+      "id": "6120126",
+      "title": "Hothrty Layered Gold Necklace for Women Trendy 14K Gold Plated Heart CZ Pendant Layered Gold Necklaces Set Coin Choker Necklaces Simple Circle Cubic Zirconia Pearl Necklace Stack Herringbone Paperclip Chain Jewelry Set",
+      "price": "99.99",
+      "originalPrice": "99.99",
+      "currency": "USD"
+    },
+    {
+      "id": "6120128",
+      "title": "Freekiss Women's Layered Necklace Set - 3 Piece Dainty Gold Jewelry for Everyday Stacking | 14K Gold Plated Snake Chain, Rope Chain, Cuban Chain | Adjustable Length 14-18.5 Inch | Gift Ready",
+      "price": "99.99",
+      "originalPrice": "99.99",
+      "currency": "USD"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tprice\toriginalPrice\tcurrency\n6120116\tPAVOI 14K Gold Plated Cubic Zirconia Cross Necklace for Women | Cross Faith Pendant Necklaces\t99.99\t99.99\tUSD\n6120117\tFAXHION 68 Pcs Gold Jewelry Set for Women with 7 Necklace, 17 Bracelet, 5 Hoop Earrings, 15 Stud Earrings, 24 Knuckle Rings for Women Jewelry Set for Women\t99.99\t99.99\tUSD\n6120118\tFUNEIA Diamond Necklaces for Women 14K Gold Plated Emerald Birthstone Necklace for Women Mothers Dainty Gold Necklace Blue Green Cubic Zirconia Pendant Necklace Birthday Gifts for Women Jewelry\t99.99\t99.99\tUSD\n6120120\tJECOMY 14K Gold Plated Layering Necklaces For Women Gold Necklace Set, Cuban Link, Snake Chain, Paperclip Layered Chains, Twisted Rope and Twisted Chain, Trendy Layering Necklace\t99.99\t99.99\tUSD\n6120121\tTurandoss Easter Basket Stuffer Cross Necklace for Women Girls, Dainty 14K Gold Plated Cross Necklace Infinity CZ Holy Mary Medal Necklaces for Women Christian Baptism Religious Faith Jewelry Gifts\t99.99\t99.99\tUSD\n6120122\tFettero Gold Clover Necklace for Women Dainty 14K Gold Plated CZ Pendant Necklace Adjustable Chain Choker Charm Colorful Clover Pendant Lucky Necklaces for Women Jewelry\t99.99\t99.99\tUSD\n6120124\tDEARMAY 14K Gold Plated Necklaces for Women, Dainty Gold Herringbone Choker Necklace Thin Layered Snake Chain Jewelry for Gifts\t99.99\t99.99\tUSD\n6120125\tFreekiss Gold Pendant Necklace for Women, Dainty Diamond Necklaces for Women Simple 14K Gold Plated Paperclip Choker Necklaces Cute Minimalist Open Oval Necklaces Gold Jewelry for Women Gifts\t99.99\t99.99\tUSD\n6120126\tHothrty Layered Gold Necklace for Women Trendy 14K Gold Plated Heart CZ Pendant Layered Gold Necklaces Set Coin Choker Necklaces Simple Circle Cubic Zirconia Pearl Necklace Stack Herringbone Paperclip Chain Jewelry Set\t99.99\t99.99\tUSD\n6120128\tFreekiss Women's Layered Necklace Set - 3 Piece Dainty Gold Jewelry for Everyday Stacking | 14K Gold Plated Snake Chain, Rope Chain, Cuban Chain | Adjustable Length 14-18.5 Inch | Gift Ready\t99.99\t99.99\tUSD\n",
+  "stderr": "",
+  "execution_time_ms": 1618
+}

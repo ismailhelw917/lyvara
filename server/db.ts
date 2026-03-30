@@ -8,6 +8,8 @@ import {
   InsertBlogPost,
   InsertProduct,
   InsertReview,
+  InsertNewsletterSubscriber,
+  newsletterSubscribers,
   products,
   reviews,
   reviewVotes,
@@ -492,4 +494,68 @@ export async function getReviewCountByProduct(productId: number) {
     .from(reviews)
     .where(and(eq(reviews.productId, productId), eq(reviews.status, "approved")));
   return rows.length;
+}
+
+
+// ─── Newsletter Subscribers ───────────────────────────────────────────────────
+export async function subscribeToNewsletter(subscriber: InsertNewsletterSubscriber) {
+  const db = await getDb();
+  if (!db) return;
+  try {
+    await db.insert(newsletterSubscribers).values(subscriber).onDuplicateKeyUpdate({
+      set: {
+        name: subscriber.name,
+        status: "subscribed",
+        source: subscriber.source,
+        preferredCategories: subscriber.preferredCategories,
+        updatedAt: new Date(),
+      },
+    });
+  } catch (error) {
+    console.error("[Newsletter] Failed to subscribe:", error);
+    throw error;
+  }
+}
+
+export async function unsubscribeFromNewsletter(email: string) {
+  const db = await getDb();
+  if (!db) return;
+  await db
+    .update(newsletterSubscribers)
+    .set({ status: "unsubscribed", unsubscribedAt: new Date() })
+    .where(eq(newsletterSubscribers.email, email));
+}
+
+export async function getNewsletterSubscriberCount(status?: string) {
+  const db = await getDb();
+  if (!db) return 0;
+  let query: any = db.select({ id: newsletterSubscribers.id }).from(newsletterSubscribers);
+  if (status) {
+    query = query.where(eq(newsletterSubscribers.status, status as any));
+  }
+  const rows = await query;
+  return rows.length;
+}
+
+export async function getNewsletterSubscribers(opts?: { status?: string; limit?: number; offset?: number }) {
+  const db = await getDb();
+  if (!db) return [];
+  let query: any = db.select().from(newsletterSubscribers);
+  if (opts?.status) {
+    query = query.where(eq(newsletterSubscribers.status, opts.status as any));
+  }
+  if (opts?.limit) {
+    query = query.limit(opts.limit);
+  }
+  if (opts?.offset) {
+    query = query.offset(opts.offset);
+  }
+  return await query.orderBy(desc(newsletterSubscribers.createdAt));
+}
+
+export async function getNewsletterSubscriberByEmail(email: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(newsletterSubscribers).where(eq(newsletterSubscribers.email, email)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
 }

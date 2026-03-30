@@ -194,12 +194,12 @@ export default function ProductCard({ product, size, showBadge = true }: Product
           <div>
             {product.price && (
               <span className="font-serif text-base font-medium" style={{ color: "var(--foreground)" }}>
-                ${Number(product.price).toFixed(2)}
+                ${typeof product.price === 'string' ? product.price : Number(product.price).toFixed(2)}
               </span>
             )}
             {product.originalPrice && Number(product.originalPrice) > Number(product.price) && (
               <span className="font-sans text-xs ml-2 line-through" style={{ color: "var(--muted-foreground)" }}>
-                ${Number(product.originalPrice).toFixed(2)}
+                ${typeof product.originalPrice === 'string' ? product.originalPrice : Number(product.originalPrice).toFixed(2)}
               </span>
             )}
           </div>

@@ -165,3 +165,20 @@ export const reviewVotes = mysqlTable("review_votes", {
 
 export type ReviewVote = typeof reviewVotes.$inferSelect;
 export type InsertReviewVote = typeof reviewVotes.$inferInsert;
+
+// ─── Newsletter Subscribers ───────────────────────────────────────────────────
+export const newsletterSubscribers = mysqlTable("newsletter_subscribers", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 320 }).notNull().unique(),
+  name: varchar("name", { length: 255 }),
+  status: mysqlEnum("status", ["subscribed", "unsubscribed", "bounced"]).default("subscribed").notNull(),
+  source: mysqlEnum("source", ["homepage", "footer", "popup", "blog", "product_page", "other"]).default("other"),
+  preferredCategories: json("preferredCategories").$type<string[]>(),
+  lastEmailSentAt: timestamp("lastEmailSentAt"),
+  unsubscribedAt: timestamp("unsubscribedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
+export type InsertNewsletterSubscriber = typeof newsletterSubscribers.$inferInsert;

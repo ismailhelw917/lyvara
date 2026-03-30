@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `newsletter_subscribers` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`email` varchar(320) NOT NULL,\n\t`name` varchar(255),\n\t`status` enum('subscribed','unsubscribed','bounced') NOT NULL DEFAULT 'subscribed',\n\t`source` enum('homepage','footer','popup','blog','product_page','other') DEFAULT 'other',\n\t`preferredCategories` json,\n\t`lastEmailSentAt` timestamp,\n\t`unsubscribedAt` timestamp,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `newsletter_subscribers_id` PRIMARY KEY(`id`),\n\tCONSTRAINT `newsletter_subscribers_email_unique` UNIQUE(`email`)\n)",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute CREATE TABLE `newsletter_subscribers` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`email` varchar(320) NOT NULL,\n\t`name` varchar(255),\n\t`status` enum('subscribed','unsubscribed','bounced') NOT NULL DEFAULT 'subscribed',\n\t`source` enum('homepage','footer','popup','blog','product_page','other') DEFAULT 'other',\n\t`preferredCategories` json,\n\t`lastEmailSentAt` timestamp,\n\t`unsubscribedAt` timestamp,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `newsletter_subscribers_id` PRIMARY KEY(`id`),\n\tCONSTRAINT `newsletter_subscribers_email_unique` UNIQUE(`email`)\n)",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1741
+}
