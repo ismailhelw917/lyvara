@@ -40,10 +40,10 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { label: "All Jewelry", href: "/shop" },
-                { label: "Necklaces", href: "/shop/necklaces" },
-                { label: "Bracelets", href: "/shop/bracelets" },
-                { label: "Rings", href: "/shop/rings" },
-                { label: "Earrings", href: "/shop/earrings" },
+                { label: "Gold Necklaces", href: "/shop/necklaces" },
+                { label: "Gold Bracelets", href: "/shop/bracelets" },
+                { label: "Gold Rings", href: "/shop/rings" },
+                { label: "Gold Earrings", href: "/shop/earrings" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -66,9 +66,11 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { label: "Style Journal", href: "/journal" },
-                { label: "Gold Guide", href: "/journal" },
-                { label: "Gift Ideas", href: "/journal" },
-                { label: "Care Tips", href: "/journal" },
+                { label: "Style Guides", href: "/journal?category=style_guide" },
+                { label: "Jewelry Trends", href: "/journal?category=trend_report" },
+                { label: "Gift Ideas", href: "/journal?category=gift_ideas" },
+                { label: "Care Tips", href: "/journal?category=care_tips" },
+                { label: "Brand Stories", href: "/journal?category=brand_spotlight" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link

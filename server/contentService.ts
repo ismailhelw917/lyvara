@@ -29,15 +29,17 @@ const BLOG_CATEGORIES = [
   "care_tips",
   "seasonal",
   "promotional",
+  "brand_spotlight",
 ] as const;
 
 const BLOG_PROMPTS: Record<string, string> = {
-  style_guide: "Write a luxury jewelry styling guide for women. Focus on how to layer gold necklaces, stack rings, or mix metals elegantly.",
-  trend_report: "Write an editorial trend report on the hottest gold and silver jewelry trends this season. Reference runway looks and celebrity style.",
-  gift_ideas: "Write a curated gift guide featuring gold and silver jewelry for women — covering birthdays, anniversaries, and self-gifting.",
-  care_tips: "Write an expert guide on caring for gold and silver jewelry — cleaning, storage, and maintaining brilliance.",
-  seasonal: "Write a seasonal jewelry lookbook — how to style gold and silver pieces for the current season.",
-  promotional: "Write a compelling promotional piece about a curated selection of gold and silver jewelry deals and must-have pieces.",
+  style_guide: "Write a luxury jewelry styling guide for women. Focus on how to layer gold necklaces, stack rings, or mix metals elegantly. Include keywords: gold jewelry for women, luxury gold jewelry, gold ring stacking, gold necklace layering.",
+  trend_report: "Write an editorial trend report on the hottest gold jewelry trends this season. Reference runway looks and celebrity style. Include keywords: luxury gold jewelry, gold jewelry trends, designer gold jewelry, gold jewelry brands.",
+  gift_ideas: "Write a curated gift guide featuring gold jewelry for women — covering birthdays, anniversaries, and self-gifting. Include keywords: gold jewelry gifts for women, luxury jewelry gifts, best gold jewelry brands, gold jewelry for special occasions.",
+  care_tips: "Write an expert guide on caring for gold jewelry — cleaning, storage, and maintaining brilliance. Include keywords: how to care for gold jewelry, gold jewelry maintenance, gold jewelry cleaning tips, preserve gold jewelry.",
+  seasonal: "Write a seasonal jewelry lookbook — how to style gold jewelry pieces for the current season. Include keywords: gold jewelry for women, luxury gold jewelry, seasonal jewelry trends, gold jewelry styling.",
+  promotional: "Write a compelling promotional piece about a curated selection of gold jewelry deals and must-have pieces. Include keywords: luxury gold jewelry, best gold jewelry, affordable luxury jewelry, gold jewelry online.",
+  brand_spotlight: "Write an editorial feature on a luxury gold jewelry brand, their heritage, craftsmanship, and signature pieces. Include keywords: luxury jewelry brands, gold jewelry designers, premium gold jewelry, jewelry brand story.",
 };
 
 export async function generateBlogPost(

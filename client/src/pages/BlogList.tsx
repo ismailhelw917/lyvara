@@ -15,6 +15,7 @@ const BLOG_CATEGORIES = [
   { value: "gift_ideas", label: "Gift Ideas" },
   { value: "care_tips", label: "Care Tips" },
   { value: "seasonal", label: "Seasonal" },
+  { value: "brand_spotlight", label: "Brand Stories" },
   { value: "promotional", label: "Spotlights" },
 ];
 
