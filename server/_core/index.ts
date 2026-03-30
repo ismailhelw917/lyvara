@@ -10,7 +10,7 @@ import { serveStatic, setupVite } from "./vite";
 import { startScheduler } from "../automationEngine";
 import { getDb } from "../db";
 import { blogPosts, products } from "../../drizzle/schema";
-import { eq, and, gt } from "drizzle-orm";
+import { eq, and, gt, desc } from "drizzle-orm";
 import { generateCatalogXML, generateCatalogJSON, getCampaignInsights, runBudgetOptimization, isMetaConfigured } from "../metaService";
 import { getBoardAnalytics, getBoardPins, isPinterestConfigured } from "../pinterestService";
 import { generateGoogleShoppingXML, generateGoogleShoppingJSON } from "../googleShoppingService";
@@ -185,6 +185,46 @@ async function startServer() {
     }
     const [analytics, pins] = await Promise.all([getBoardAnalytics(), getBoardPins()]);
     res.json({ configured: true, analytics, recentPins: pins.slice(0, 10) });
+  });
+
+  // ─── Simple REST API for blog posts (for Zapier and external integrations) ───
+  app.get("/api/blog/latest", async (req, res) => {
+    try {
+      const limit = Math.min(parseInt(req.query.limit as string) || 5, 50);
+      const db = await getDb();
+      if (!db) {
+        return res.status(503).json({ error: "Database not available" });
+      }
+      
+      const posts = await db
+        .select()
+        .from(blogPosts)
+        .where(eq(blogPosts.status, "published"))
+        .orderBy(desc(blogPosts.publishedAt))
+        .limit(limit);
+      
+      const baseUrl = process.env.SITE_URL || "https://lyvarajewels.com";
+      
+      res.json({
+        success: true,
+        count: posts.length,
+        posts: posts.map((post: any) => ({
+          id: post.id,
+          title: post.title,
+          slug: post.slug,
+          excerpt: post.excerpt,
+          content: post.content?.substring(0, 500) || "",
+          imageUrl: post.heroImageUrl,
+          category: post.category,
+          publishedAt: post.publishedAt,
+          url: `${baseUrl}/blog/${post.slug}`,
+          tags: post.tags || []
+        }))
+      });
+    } catch (error: any) {
+      console.error("[API] Error fetching blog posts:", error);
+      res.status(500).json({ error: "Failed to fetch blog posts" });
+    }
   });
 
   // ─── RSS Feed: blog posts for Zapier and other aggregators ──────────────────
