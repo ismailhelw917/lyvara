@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, gt, gte, inArray, like, lt, lte, or, sql } from "drizzle-orm";
+import { and, asc, desc, eq, gt, gte, inArray, like, lt, lte, ne, or, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   analyticsEvents,
@@ -118,13 +118,18 @@ export async function getProducts(opts: {
 }) {
   const db = await getDb();
   if (!db) return [];
-  const conditions = [];
-  if (opts.active !== false) conditions.push(eq(products.isActive, true));
+  const conditions = [
+    eq(products.isActive, opts.active !== false),
+    // CRITICAL: Only show products with valid images - no fallbacks allowed
+    sql`${products.imageUrl} IS NOT NULL AND ${products.imageUrl} != ''`
+  ];
   if (opts.category) conditions.push(eq(products.category, opts.category as any));
   if (opts.metalType) conditions.push(eq(products.metalType, opts.metalType as any));
   if (opts.minPrice) conditions.push(gte(products.price, String(opts.minPrice)));
   if (opts.maxPrice) conditions.push(lte(products.price, String(opts.maxPrice)));
   if (opts.featured !== undefined) conditions.push(eq(products.isFeatured, opts.featured));
+  
+  const whereClause = and(...conditions);
 
   let orderClause;
   switch (opts.orderBy) {
@@ -139,7 +144,7 @@ export async function getProducts(opts: {
   return db
     .select()
     .from(products)
-    .where(conditions.length > 0 ? and(...conditions) : undefined)
+    .where(whereClause)
     .orderBy(orderClause)
     .limit(opts.limit ?? 24)
     .offset(opts.offset ?? 0);

@@ -10,19 +10,7 @@ interface ProductCardProps {
   showBadge?: boolean;
 }
 
-// Curated fallback jewelry images from Unsplash (all verified working)
-const FALLBACK_IMAGES = [
-  "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=80",  // gold necklace
-  "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80",  // silver bracelet
-  "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&q=80",  // diamond ring
-  "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80",  // earrings
-  "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80",  // jewelry set
-  "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=600&q=80",  // gold ring
-  "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=600&q=80",  // pearl necklace
-  "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=600&q=80",  // rose gold
-  "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&q=80",  // silver ring
-  "https://images.unsplash.com/photo-1589128777073-263566ae5e4d?w=600&q=80",  // gold bracelet
-];
+// No fallback images - products without images will not be displayed
 
 export default function ProductCard({ product, size, showBadge = true }: ProductCardProps) {
   const effectiveSize = size || product.imageSize || "medium";
@@ -30,26 +18,10 @@ export default function ProductCard({ product, size, showBadge = true }: Product
   const [imgError, setImgError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
-  // Pick a deterministic fallback based on product id
-  const fallbackSrc = FALLBACK_IMAGES[product.id % FALLBACK_IMAGES.length];
-  const imageSrc = (!product.imageUrl || imgError) ? fallbackSrc : product.imageUrl;
+  // Use product image - no fallbacks allowed (products without images filtered at DB level)
+  const imageSrc = product.imageUrl || '';
 
-  // Detect silent failures: image complete but naturalWidth is 0
-  useEffect(() => {
-    const img = imgRef.current;
-    if (!img) return;
-    const checkLoaded = () => {
-      if (img.complete && img.naturalWidth === 0) {
-        setImgError(true);
-      }
-    };
-    if (img.complete) {
-      checkLoaded();
-    } else {
-      img.addEventListener('load', checkLoaded);
-      return () => img.removeEventListener('load', checkLoaded);
-    }
-  }, [imageSrc]);
+  // No error handling needed - products without valid images are filtered at DB level
 
   const handleAffiliateClick = () => {
     trackAffiliateClick(product.id, product.title);
@@ -89,7 +61,6 @@ export default function ProductCard({ product, size, showBadge = true }: Product
           alt={product.title}
           className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
-          onError={() => setImgError(true)}
         />
 
         {/* Subtle gradient overlay for text legibility */}
