@@ -68,6 +68,7 @@ const productsRouter = router({
         minPrice: z.number().optional(),
         maxPrice: z.number().optional(),
         featured: z.boolean().optional(),
+        tab: z.enum(["classic", "bargains"]).optional(),
         limit: z.number().min(1).max(100).default(24),
         offset: z.number().min(0).default(0),
         orderBy: z.enum(["rank", "price_asc", "price_desc", "rating", "newest", "performance"]).default("rank"),
@@ -76,18 +77,18 @@ const productsRouter = router({
     .query(async ({ input }) => getProducts({ ...input, active: true })),
 
   featured: publicProcedure
-    .input(z.object({ limit: z.number().min(1).max(20).default(8) }))
-    .query(async ({ input }) => getFeaturedProducts(input.limit)),
+    .input(z.object({ limit: z.number().min(1).max(20).default(8), tab: z.enum(["classic", "bargains"]).optional() }))
+    .query(async ({ input }) => getFeaturedProducts(input.limit, input.tab)),
 
   hero: publicProcedure
-    .input(z.object({ limit: z.number().min(1).max(6).default(3) }))
-    .query(async ({ input }) => getHeroProducts(input.limit)),
+    .input(z.object({ limit: z.number().min(1).max(6).default(3), tab: z.enum(["classic", "bargains"]).optional() }))
+    .query(async ({ input }) => getHeroProducts(input.limit, input.tab)),
 
   count: publicProcedure.query(() => countProducts()),
 
   topPerformers: publicProcedure
-    .input(z.object({ limit: z.number().min(1).max(20).default(10) }))
-    .query(async ({ input }) => getTopProducts(input.limit)),
+    .input(z.object({ limit: z.number().min(1).max(20).default(10), tab: z.enum(["classic", "bargains"]).optional() }))
+    .query(async ({ input }) => getTopProducts(input.limit, input.tab)),
 });
 
 // ─── Blog Router ──────────────────────────────────────────────────────────────

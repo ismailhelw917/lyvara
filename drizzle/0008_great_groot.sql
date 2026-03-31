@@ -1,0 +1,1 @@
+ALTER TABLE `products` ADD `tab` enum('classic','bargains') DEFAULT 'classic' NOT NULL;

@@ -68,6 +68,7 @@ export default function Products() {
     url: location,
   });
   const [sortBy, setSortBy] = useState<"rank" | "price_asc" | "price_desc" | "rating" | "newest" | "performance">(isBargainsTab ? "price_asc" : "rank");
+
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [page, setPage] = useState(0);
   const LIMIT = 24;
@@ -92,10 +93,11 @@ export default function Products() {
     metalType: metalType || undefined,
     minPrice: selectedPriceRange.min,
     maxPrice: selectedPriceRange.max,
+    tab: isBargainsTab ? 'bargains' : 'classic',
     orderBy: sortBy,
     limit: LIMIT,
     offset: page * LIMIT,
-  }), [category, metalType, priceRange, sortBy, page]);
+  } as const), [category, metalType, priceRange, sortBy, page, isBargainsTab]);
 
   const { data: products, isLoading } = trpc.products.list.useQuery(queryInput);
   const { data: totalCount } = trpc.products.count.useQuery();

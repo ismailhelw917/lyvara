@@ -112,6 +112,7 @@ export async function getProducts(opts: {
   maxPrice?: number;
   featured?: boolean;
   active?: boolean;
+  tab?: "classic" | "bargains";
   limit?: number;
   offset?: number;
   orderBy?: "rank" | "price_asc" | "price_desc" | "rating" | "newest" | "performance";
@@ -128,8 +129,13 @@ export async function getProducts(opts: {
   if (opts.minPrice) conditions.push(gte(products.price, String(opts.minPrice)));
   if (opts.maxPrice) conditions.push(lte(products.price, String(opts.maxPrice)));
   if (opts.featured !== undefined) conditions.push(eq(products.isFeatured, opts.featured));
+  if (opts.tab) conditions.push(eq(products.tab, opts.tab));
   
   const whereClause = and(...conditions);
+  // Default to 'classic' tab if not specified
+  if (!opts.tab && !opts.category && !opts.metalType && !opts.minPrice && !opts.maxPrice) {
+    conditions.push(eq(products.tab, 'classic'));
+  }
 
   let orderClause;
   switch (opts.orderBy) {
@@ -144,30 +150,34 @@ export async function getProducts(opts: {
   return db
     .select()
     .from(products)
-    .where(whereClause)
+    .where(and(...conditions))
     .orderBy(orderClause)
     .limit(opts.limit ?? 24)
     .offset(opts.offset ?? 0);
 }
 
-export async function getFeaturedProducts(limit = 8) {
+export async function getFeaturedProducts(limit = 8, tab?: "classic" | "bargains") {
   const db = await getDb();
   if (!db) return [];
+  const conditions = [eq(products.isActive, true), eq(products.isFeatured, true)];
+  if (tab) conditions.push(eq(products.tab, tab));
   return db
     .select()
     .from(products)
-    .where(and(eq(products.isActive, true), eq(products.isFeatured, true)))
+    .where(and(...conditions))
     .orderBy(desc(products.performanceScore))
     .limit(limit);
 }
 
-export async function getHeroProducts(limit = 3) {
+export async function getHeroProducts(limit = 3, tab?: "classic" | "bargains") {
   const db = await getDb();
   if (!db) return [];
+  const conditions = [eq(products.isActive, true), eq(products.isHero, true)];
+  if (tab) conditions.push(eq(products.tab, tab));
   return db
     .select()
     .from(products)
-    .where(and(eq(products.isActive, true), eq(products.isHero, true)))
+    .where(and(...conditions))
     .orderBy(desc(products.performanceScore))
     .limit(limit);
 }
@@ -316,13 +326,15 @@ export async function getAnalyticsSummary(days = 30) {
   return summary;
 }
 
-export async function getTopProducts(limit = 10) {
+export async function getTopProducts(limit = 10, tab?: "classic" | "bargains") {
   const db = await getDb();
   if (!db) return [];
+  const conditions = [eq(products.isActive, true)];
+  if (tab) conditions.push(eq(products.tab, tab));
   return db
     .select()
     .from(products)
-    .where(eq(products.isActive, true))
+    .where(and(...conditions))
     .orderBy(desc(products.performanceScore))
     .limit(limit);
 }
