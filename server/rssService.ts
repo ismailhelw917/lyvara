@@ -68,11 +68,8 @@ function generateRSSXml(items: RSSItem[], baseUrl: string): string {
       <description><![CDATA[${escapeXml(item.description)}]]></description>
       <category>${escapeXml(item.category)}</category>
       <pubDate>${item.pubDate}</pubDate>
-      ${
-        item.image
-          ? `<enclosure url="${escapeXml(item.image)}" type="image/jpeg" />`
-          : ""
-      }
+      ${item.image ? `<enclosure url="${escapeXml(item.image)}" type="image/jpeg" />
+      <media:content url="${escapeXml(item.image)}" type="image/jpeg" medium="image" />` : ""}
     </item>
   `
     )
