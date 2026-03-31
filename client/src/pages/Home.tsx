@@ -11,7 +11,7 @@ import { usePageView } from "@/hooks/useTracking";
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 function HeroSection() {
-  const { data: heroProducts } = trpc.products.hero.useQuery({ limit: 1 });
+  const { data: heroProducts } = trpc.products.hero.useQuery({ limit: 1, tab: 'classic' });
   const heroProduct = heroProducts?.[0];
 
   return (
@@ -136,7 +136,7 @@ function CategoryStrip() {
 
 // ─── Featured Products ────────────────────────────────────────────────────────
 function FeaturedProducts() {
-  const { data: products, isLoading } = trpc.products.featured.useQuery({ limit: 4 });
+  const { data: products, isLoading } = trpc.products.featured.useQuery({ limit: 4, tab: 'classic' });
 
   return (
     <section className="py-20">
@@ -197,7 +197,7 @@ function FeaturedProducts() {
 
 // ─── Amazon Native Shopping Ads ───────────────────────────────────────────────
 function AmazonNativeAds() {
-  const { data: recommendedProducts } = trpc.products.featured.useQuery({ limit: 8 });
+  const { data: recommendedProducts } = trpc.products.featured.useQuery({ limit: 8, tab: 'classic' });
 
   return (
     <section className="py-16" style={{ background: "var(--champagne)" }}>
