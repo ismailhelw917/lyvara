@@ -2,6 +2,7 @@ import { searchJewelryProducts } from "./rainforestService";
 import { getDb } from "./db";
 import { products } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
+import { sendProductWebhook } from "./productWebhook";
 
 const JEWELRY_QUERIES = [
   "luxury gold necklace women",
@@ -63,22 +64,45 @@ export async function fetchAndPopulateProducts(): Promise<{
         const existing = existingRows[0];
 
         if (!existing) {
+          const metalType = inferMetalType(product.title);
+          const category = inferCategory(product.title);
+          const isFeatured = Math.random() > 0.7;
+          const price = product.price;
+          const originalPrice = product.price * 1.2;
+          const affiliateUrl = `https://www.amazon.com/dp/${product.asin}?tag=91791709-20`;
+          
           await db.insert(products).values([{
             asin: product.asin,
             title: product.title,
             imageUrl: product.image,
-            price: product.price.toString(),
-            originalPrice: (product.price * 1.2).toString(), // Assume 20% discount
+            price: price.toString(),
+            originalPrice: originalPrice.toString(),
             amazonRating: product.rating,
             reviewCount: product.review_count,
             brand: product.brand || "Generic",
-            affiliateUrl: `https://www.amazon.com/dp/${product.asin}?tag=91791709-20`,
-            metalType: inferMetalType(product.title),
-            category: inferCategory(product.title),
-            isFeatured: Math.random() > 0.7, // 30% featured
-            isHero: Math.random() > 0.9, // 10% hero
+            affiliateUrl,
+            metalType,
+            category,
+            isFeatured,
+            isHero: Math.random() > 0.9,
             isActive: true,
           }]);
+          
+          await sendProductWebhook({
+            asin: product.asin,
+            title: product.title,
+            brand: product.brand || "Generic",
+            price,
+            originalPrice,
+            imageUrl: product.image || "",
+            affiliateUrl,
+            amazonRating: product.rating || 0,
+            reviewCount: product.review_count || 0,
+            isFeatured,
+            category,
+            metalType,
+          });
+          
           insertCount++;
         }
       } catch (error) {
@@ -116,13 +140,11 @@ function inferMetalType(
 
 function inferCategory(
   title: string
-): "necklaces" | "bracelets" | "rings" | "earrings" | "pendants" | "sets" | "other" {
+): "necklaces" | "bracelets" | "rings" | "earrings" | "other" {
   const lower = title.toLowerCase();
-  if (lower.includes("necklace")) return "necklaces";
+  if (lower.includes("necklace") || lower.includes("pendant")) return "necklaces";
   if (lower.includes("bracelet")) return "bracelets";
   if (lower.includes("ring")) return "rings";
   if (lower.includes("earring")) return "earrings";
-  if (lower.includes("pendant")) return "pendants";
-  if (lower.includes("set")) return "sets";
   return "other"; // Default
 }

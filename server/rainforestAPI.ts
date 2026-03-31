@@ -21,7 +21,7 @@ interface RainforestProduct {
   link?: string;
 }
 
-interface ProcessedProduct {
+export interface ProcessedProduct {
   asin: string;
   title: string;
   brand: string;

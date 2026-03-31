@@ -187,6 +187,13 @@
 - [x] Build content calendar (30-day posting schedule) — complete calendar in facebook-content-assets.md
 - [x] Create hashtag strategy and competitor analysis — hashtag strategy section
 
+## Product Webhook Integration
+- [x] Create product webhook service for Zapier (productWebhook.ts)
+- [x] Integrate webhook into product insertion flow (rainforestProductFetcher.ts)
+- [ ] Add webhook configuration and environment variables (ZAPIER_PRODUCT_WEBHOOK)
+- [x] Test product webhook with sample data (5 tests passing)
+- [ ] Deploy and verify webhook functionality
+
 ## GA4 Advanced Event Tracking
 - [ ] Create GA4 event tracking service (ga4Service.ts) with custom events
 - [ ] Add product click tracking (view_item, select_item events)
