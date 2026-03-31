@@ -73,7 +73,7 @@ const productsRouter = router({
         orderBy: z.enum(["rank", "price_asc", "price_desc", "rating", "newest", "performance"]).default("rank"),
       })
     )
-    .query(async ({ input }) => getProducts(input)),
+    .query(async ({ input }) => getProducts({ ...input, active: true })),
 
   featured: publicProcedure
     .input(z.object({ limit: z.number().min(1).max(20).default(8) }))

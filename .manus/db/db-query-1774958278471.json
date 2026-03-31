@@ -1,0 +1,138 @@
+{
+  "query": "SELECT id, asin, title, imageUrl, affiliateUrl, isActive FROM products LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, asin, title, imageUrl, affiliateUrl, isActive FROM products LIMIT 20;",
+  "rows": [
+    {
+      "id": "6420001",
+      "asin": "B0BLK7NRLM",
+      "title": "TIANYU GEMS Classic Round Diamond Solitaire Ring - Lab Created Diamond",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B0BLK7NRLM/main-image.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B0BLK7NRLM?tag=91791709-20",
+      "isActive": "0"
+    },
+    {
+      "id": "6420002",
+      "asin": "B08KQNQH2X",
+      "title": "PAVOI 14K Gold Plated Cubic Zirconia Solitaire Ring",
+      "imageUrl": "https://m.media-amazon.com/images/I/71-0nZqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B08KQNQH2X?tag=91791709-20",
+      "isActive": "0"
+    },
+    {
+      "id": "6420003",
+      "asin": "B07VQXVV8F",
+      "title": "Miabella 925 Sterling Silver Italian 3mm Diamond-Cut Link Chain Necklace",
+      "imageUrl": "https://m.media-amazon.com/images/I/71aPqPwXcUL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B07VQXVV8F?tag=91791709-20",
+      "isActive": "1"
+    },
+    {
+      "id": "6420004",
+      "asin": "B08LZQVVNQ",
+      "title": "Mestige Women's Swarovski Crystal Gold Plated Bracelet",
+      "imageUrl": "https://m.media-amazon.com/images/I/71cKLpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B08LZQVVNQ?tag=91791709-20",
+      "isActive": "1"
+    },
+    {
+      "id": "6420005",
+      "asin": "B07YXQPQVV",
+      "title": "Stuller 14K Yellow Gold Diamond Solitaire Stud Earrings",
+      "imageUrl": "https://m.media-amazon.com/images/I/71nKpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B07YXQPQVV?tag=91791709-20",
+      "isActive": "1"
+    },
+    {
+      "id": "6420006",
+      "asin": "B08PQVQVZZ",
+      "title": "Carissima Gold Women's 9 Carat Yellow Gold Curb Chain Necklace",
+      "imageUrl": "https://m.media-amazon.com/images/I/71qKpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B08PQVQVZZ?tag=91791709-20",
+      "isActive": "1"
+    },
+    {
+      "id": "6420007",
+      "asin": "B07ZYQVQVV",
+      "title": "Bling Jewelry Gold Plated Cubic Zirconia Infinity Ring",
+      "imageUrl": "https://m.media-amazon.com/images/I/71sKpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B07ZYQVQVV?tag=91791709-20",
+      "isActive": "1"
+    },
+    {
+      "id": "6420008",
+      "asin": "B08QQVQVZZ",
+      "title": "Miadora 10K Yellow Gold Diamond Accent Bracelet",
+      "imageUrl": "https://m.media-amazon.com/images/I/71tKpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B08QQVQVZZ?tag=91791709-20",
+      "isActive": "1"
+    },
+    {
+      "id": "6420009",
+      "asin": "B07XZQVQVV",
+      "title": "Mestige Women's Swarovski Crystal Gold Plated Necklace",
+      "imageUrl": "https://m.media-amazon.com/images/I/71uKpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B07XZQVQVV?tag=91791709-20",
+      "isActive": "1"
+    },
+    {
+      "id": "6420010",
+      "asin": "B08RQVQVZZ",
+      "title": "Carissima Gold 9 Carat Yellow Gold Diamond Cut Bead Bracelet",
+      "imageUrl": "https://m.media-amazon.com/images/I/71vKpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B08RQVQVZZ?tag=91791709-20",
+      "isActive": "0"
+    },
+    {
+      "id": "6420011",
+      "asin": "B07WYQVQVV",
+      "title": "Stuller 14K Yellow Gold Diamond Drop Earrings",
+      "imageUrl": "https://m.media-amazon.com/images/I/71wKpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B07WYQVQVV?tag=91791709-20",
+      "isActive": "1"
+    },
+    {
+      "id": "6420012",
+      "asin": "B08SQVQVZZ",
+      "title": "Bling Jewelry Gold Plated Cubic Zirconia Stud Earrings",
+      "imageUrl": "https://m.media-amazon.com/images/I/71xKpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B08SQVQVZZ?tag=91791709-20",
+      "isActive": "1"
+    },
+    {
+      "id": "6420013",
+      "asin": "B07VYQVQVV",
+      "title": "Carissima Gold 9 Carat Yellow Gold Figaro Chain",
+      "imageUrl": "https://m.media-amazon.com/images/I/71yKpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B07VYQVQVV?tag=91791709-20",
+      "isActive": "1"
+    },
+    {
+      "id": "6420014",
+      "asin": "B08TQVQVZZ",
+      "title": "Miadora 10K Yellow Gold Diamond Accent Ring",
+      "imageUrl": "https://m.media-amazon.com/images/I/71zKpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B08TQVQVZZ?tag=91791709-20",
+      "isActive": "0"
+    },
+    {
+      "id": "6420015",
+      "asin": "B07UYQVQVV",
+      "title": "Mestige Women's Swarovski Crystal Gold Plated Earrings",
+      "imageUrl": "https://m.media-amazon.com/images/I/71aLpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B07UYQVQVV?tag=91791709-20",
+      "isActive": "0"
+    },
+    {
+      "id": "6420016",
+      "asin": "B08UQVQVZZ",
+      "title": "Bling Jewelry Gold Plated Cubic Zirconia Bracelet",
+      "imageUrl": "https://m.media-amazon.com/images/I/71bLpqVZYL._AC_UY879_.jpg",
+      "affiliateUrl": "https://www.amazon.com/dp/B08UQVQVZZ?tag=91791709-20",
+      "isActive": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tasin\ttitle\timageUrl\taffiliateUrl\tisActive\n6420001\tB0BLK7NRLM\tTIANYU GEMS Classic Round Diamond Solitaire Ring - Lab Created Diamond\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663447100726/Fb7vXnzeJhLwFywj8Ci5L6/products/B0BLK7NRLM/main-image.jpg\thttps://www.amazon.com/dp/B0BLK7NRLM?tag=91791709-20\t0\n6420002\tB08KQNQH2X\tPAVOI 14K Gold Plated Cubic Zirconia Solitaire Ring\thttps://m.media-amazon.com/images/I/71-0nZqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B08KQNQH2X?tag=91791709-20\t0\n6420003\tB07VQXVV8F\tMiabella 925 Sterling Silver Italian 3mm Diamond-Cut Link Chain Necklace\thttps://m.media-amazon.com/images/I/71aPqPwXcUL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B07VQXVV8F?tag=91791709-20\t1\n6420004\tB08LZQVVNQ\tMestige Women's Swarovski Crystal Gold Plated Bracelet\thttps://m.media-amazon.com/images/I/71cKLpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B08LZQVVNQ?tag=91791709-20\t1\n6420005\tB07YXQPQVV\tStuller 14K Yellow Gold Diamond Solitaire Stud Earrings\thttps://m.media-amazon.com/images/I/71nKpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B07YXQPQVV?tag=91791709-20\t1\n6420006\tB08PQVQVZZ\tCarissima Gold Women's 9 Carat Yellow Gold Curb Chain Necklace\thttps://m.media-amazon.com/images/I/71qKpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B08PQVQVZZ?tag=91791709-20\t1\n6420007\tB07ZYQVQVV\tBling Jewelry Gold Plated Cubic Zirconia Infinity Ring\thttps://m.media-amazon.com/images/I/71sKpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B07ZYQVQVV?tag=91791709-20\t1\n6420008\tB08QQVQVZZ\tMiadora 10K Yellow Gold Diamond Accent Bracelet\thttps://m.media-amazon.com/images/I/71tKpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B08QQVQVZZ?tag=91791709-20\t1\n6420009\tB07XZQVQVV\tMestige Women's Swarovski Crystal Gold Plated Necklace\thttps://m.media-amazon.com/images/I/71uKpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B07XZQVQVV?tag=91791709-20\t1\n6420010\tB08RQVQVZZ\tCarissima Gold 9 Carat Yellow Gold Diamond Cut Bead Bracelet\thttps://m.media-amazon.com/images/I/71vKpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B08RQVQVZZ?tag=91791709-20\t0\n6420011\tB07WYQVQVV\tStuller 14K Yellow Gold Diamond Drop Earrings\thttps://m.media-amazon.com/images/I/71wKpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B07WYQVQVV?tag=91791709-20\t1\n6420012\tB08SQVQVZZ\tBling Jewelry Gold Plated Cubic Zirconia Stud Earrings\thttps://m.media-amazon.com/images/I/71xKpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B08SQVQVZZ?tag=91791709-20\t1\n6420013\tB07VYQVQVV\tCarissima Gold 9 Carat Yellow Gold Figaro Chain\thttps://m.media-amazon.com/images/I/71yKpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B07VYQVQVV?tag=91791709-20\t1\n6420014\tB08TQVQVZZ\tMiadora 10K Yellow Gold Diamond Accent Ring\thttps://m.media-amazon.com/images/I/71zKpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B08TQVQVZZ?tag=91791709-20\t0\n6420015\tB07UYQVQVV\tMestige Women's Swarovski Crystal Gold Plated Earrings\thttps://m.media-amazon.com/images/I/71aLpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B07UYQVQVV?tag=91791709-20\t0\n6420016\tB08UQVQVZZ\tBling Jewelry Gold Plated Cubic Zirconia Bracelet\thttps://m.media-amazon.com/images/I/71bLpqVZYL._AC_UY879_.jpg\thttps://www.amazon.com/dp/B08UQVQVZZ?tag=91791709-20\t1\n",
+  "stderr": "",
+  "execution_time_ms": 1506
+}
