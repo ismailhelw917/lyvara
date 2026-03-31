@@ -46,7 +46,9 @@ import { runProductFetch, runBlogGeneration, runLayoutOptimization, runPerforman
 import { trackPageView, trackProductClick, trackContentEvent, trackReviewEvent, counterGetAll } from "./counterService";
 import { postBlogToFacebook, postBlogToInstagram } from "./facebookService";
 import { shopRouter } from "./routers/shop";
+import { zapierRouter } from "./routers/zapier";
 import { generateBlogHeroImage } from "./blogImageGenerator";
+import { handleBlogPostPublished } from "./zapierIntegration";
 
 // ─── Admin Procedure ──────────────────────────────────────────────────────────
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -516,5 +518,6 @@ export const appRouter = router({
   reviews: reviewsRouter,
   newsletter: newsletterRouter,
   shop: shopRouter,
+  zapier: zapierRouter,
 });
 export type AppRouter = typeof appRouter;
