@@ -94,10 +94,8 @@ function HeroSection() {
 
 // ─── Category Strip ───────────────────────────────────────────────────────────
 const CATEGORIES = [
-  { label: "Necklaces", href: "/shop/necklaces", icon: "✦", desc: "Delicate chains & pendants" },
-  { label: "Bracelets", href: "/shop/bracelets", icon: "◈", desc: "Bangles, cuffs & tennis" },
-  { label: "Rings", href: "/shop/rings", icon: "◯", desc: "Stacking, cocktail & bands" },
-  { label: "Earrings", href: "/shop/earrings", icon: "◇", desc: "Studs, hoops & drops" },
+  { label: "Classic", href: "/shop", icon: "✦", desc: "Timeless luxury pieces" },
+  { label: "Bargains", href: "/shop?sort=price_asc", icon: "◈", desc: "Premium jewelry on sale" },
 ];
 
 function CategoryStrip() {
