@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useParams, useLocation } from "wouter";
+import { useParams, useLocation, useSearch } from "wouter";
 import { SlidersHorizontal, X, ChevronDown, Gem } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -48,31 +48,38 @@ const PRICE_RANGES = [
 export default function Products() {
   const params = useParams<{ category?: string }>();
   const [location] = useLocation();
+  const search = useSearch();
   const { trackPageView, trackFilter: trackFilterEvent } = useTracking();
 
+  // Detect if we're on Bargains tab (sort=price_asc in URL)
+  const isBargainsTab = search.includes('sort=price_asc');
+  
   const [category, setCategory] = useState(params.category || "");
   const [metalType, setMetalType] = useState("");
   const [priceRange, setPriceRange] = useState(0);
 
-  const categoryLabel = category
+  const categoryLabel = isBargainsTab ? "Bargains" : (category
     ? CATEGORIES.find((c) => c.value === category)?.label || "Jewelry"
-    : "All Jewelry";
+    : "All Jewelry");
   useSEO({
-    title: `Shop ${categoryLabel} — Gold Jewelry`,
-    description: `Browse our curated collection of luxury ${categoryLabel.toLowerCase()} in gold and rose gold. New arrivals added daily.`,
-    keywords: `${categoryLabel.toLowerCase()} jewelry, gold ${categoryLabel.toLowerCase()}, luxury jewelry women`,
+    title: isBargainsTab ? `Bargain Gold Jewelry — Luxury at Low Prices` : `Shop ${categoryLabel} — Gold Jewelry`,
+    description: isBargainsTab ? `Discover premium gold jewelry at unbeatable prices. Limited-time bargains on luxury pieces.` : `Browse our curated collection of luxury ${categoryLabel.toLowerCase()} in gold and rose gold. New arrivals added daily.`,
+    keywords: isBargainsTab ? `gold jewelry bargains, discount luxury jewelry, affordable gold jewelry` : `${categoryLabel.toLowerCase()} jewelry, gold ${categoryLabel.toLowerCase()}, luxury jewelry women`,
     url: location,
   });
-  const [sortBy, setSortBy] = useState<"rank" | "price_asc" | "price_desc" | "rating" | "newest" | "performance">("rank");
+  const [sortBy, setSortBy] = useState<"rank" | "price_asc" | "price_desc" | "rating" | "newest" | "performance">(isBargainsTab ? "price_asc" : "rank");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [page, setPage] = useState(0);
   const LIMIT = 24;
 
-  // Sync category from URL param
+  // Sync category from URL param and bargains tab
   useEffect(() => {
     setCategory(params.category || "");
+    if (isBargainsTab) {
+      setSortBy("price_asc");
+    }
     setPage(0);
-  }, [params.category]);
+  }, [params.category, isBargainsTab]);
 
   useEffect(() => {
     trackPageView(location);
@@ -126,18 +133,19 @@ export default function Products() {
             </span>
           </div>
           <h1 className="font-serif text-4xl md:text-5xl font-light" style={{ color: "var(--foreground)" }}>
-            {pageTitle}
+            {isBargainsTab ? "Bargains" : pageTitle}
           </h1>
           {totalCount !== undefined && (
             <p className="font-sans text-sm font-light mt-2" style={{ color: "var(--muted-foreground)" }}>
-              {totalCount} curated pieces
+              {isBargainsTab ? "Premium jewelry at unbeatable prices" : `${totalCount} curated pieces`}
             </p>
           )}
         </div>
       </div>
 
       <div className="container pb-20">
-        {/* Filter Bar */}
+        {/* Filter Bar - Hide on Bargains tab */}
+        {!isBargainsTab && (
         <div className="flex flex-wrap items-center gap-3 mb-8 py-4 border-b" style={{ borderColor: "var(--border)" }}>
           {/* Category Tabs */}
           <div className="flex flex-wrap gap-2">
@@ -197,6 +205,7 @@ export default function Products() {
             </div>
           </div>
         </div>
+        )}
 
         {/* Expanded Filters */}
         {filtersOpen && (
