@@ -1,68 +1,27 @@
 /**
  * Link Audit Service
  * 
- * Automatically crawls and validates all internal and external links on the website.
- * Detects broken links, redirects, and SSL issues.
+ * Automatically crawls and validates all product affiliate links.
+ * Removes products with broken links to keep catalog clean.
  */
 
 import { getDb } from "./db";
+import { products } from "../drizzle/schema";
+import { eq } from "drizzle-orm";
 
-export interface LinkCheckResult {
-  url: string;
-  status: number;
-  statusText: string;
-  isValid: boolean;
-  responseTime: number;
-  redirectUrl?: string;
-  error?: string;
-  lastChecked: Date;
+interface LinkAuditResult {
+  success: boolean;
+  checkedCount: number;
+  brokenCount: number;
+  removedCount: number;
+  errors: string[];
+  duration: number;
 }
-
-export interface AuditReport {
-  totalLinksChecked: number;
-  validLinks: number;
-  brokenLinks: number;
-  redirects: number;
-  errors: LinkCheckResult[];
-  warnings: LinkCheckResult[];
-  timestamp: Date;
-}
-
-// Internal routes to check
-const INTERNAL_ROUTES = [
-  "/",
-  "/shop",
-  "/shop/necklaces",
-  "/shop/bracelets",
-  "/shop/rings",
-  "/shop/earrings",
-  "/shop/pendants",
-  "/shop/sets",
-  "/journal",
-  "/admin",
-];
-
-// External links to check (from footer, navigation, etc.)
-const EXTERNAL_LINKS = [
-  "https://instagram.com",
-  "https://www.amazon.com",
-  "https://www.skimlinks.com",
-];
-
-// API endpoints to check
-const API_ENDPOINTS = [
-  "/api/meta/catalog.xml",
-  "/api/meta/catalog.json",
-  "/api/trpc/products.getAll",
-  "/api/trpc/blog.getAll",
-];
 
 /**
- * Check if a single URL is valid
+ * Check if a URL is accessible (returns 200-399 status)
  */
-async function checkLink(url: string, timeout: number = 10000): Promise<LinkCheckResult> {
-  const startTime = Date.now();
-  
+async function checkLink(url: string, timeout = 5000): Promise<boolean> {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeout);
@@ -71,127 +30,120 @@ async function checkLink(url: string, timeout: number = 10000): Promise<LinkChec
       method: "HEAD",
       redirect: "follow",
       signal: controller.signal,
-      headers: {
-        "User-Agent": "LYVARA-LinkAudit/1.0",
-      },
     });
 
     clearTimeout(timeoutId);
-    const responseTime = Date.now() - startTime;
 
-    const isValid = response.status >= 200 && response.status < 400;
-
-    return {
-      url,
-      status: response.status,
-      statusText: response.statusText,
-      isValid,
-      responseTime,
-      redirectUrl: response.redirected ? response.url : undefined,
-      lastChecked: new Date(),
-    };
+    // Accept 2xx and 3xx status codes
+    return response.status >= 200 && response.status < 400;
   } catch (error) {
-    const responseTime = Date.now() - startTime;
-    const errorMessage = error instanceof Error ? error.message : String(error);
-
-    return {
-      url,
-      status: 0,
-      statusText: "Error",
-      isValid: false,
-      responseTime,
-      error: errorMessage,
-      lastChecked: new Date(),
-    };
+    // Timeout, network error, or other issues = broken link
+    return false;
   }
 }
 
 /**
- * Run full link audit
+ * Audit all product affiliate links and remove products with broken links
  */
-export async function runLinkAudit(baseUrl: string = "https://3000-ian3n3itwemn26uv1xh8t-fd45ed1a.sg1.manus.computer"): Promise<AuditReport> {
-  console.log("[LinkAudit] Starting link audit...");
-
-  const allLinks = [
-    ...INTERNAL_ROUTES.map((route) => `${baseUrl}${route}`),
-    ...EXTERNAL_LINKS,
-    ...API_ENDPOINTS.map((endpoint) => `${baseUrl}${endpoint}`),
-  ];
-
-  const results: LinkCheckResult[] = [];
-  const errors: LinkCheckResult[] = [];
-  const warnings: LinkCheckResult[] = [];
-
-  // Check all links in parallel (max 5 concurrent)
-  const batchSize = 5;
-  for (let i = 0; i < allLinks.length; i += batchSize) {
-    const batch = allLinks.slice(i, i + batchSize);
-    const batchResults = await Promise.all(batch.map((link) => checkLink(link)));
-    results.push(...batchResults);
-  }
-
-  // Categorize results
-  for (const result of results) {
-    if (!result.isValid) {
-      errors.push(result);
-    } else if (result.redirectUrl) {
-      warnings.push(result);
-    }
-  }
-
-  const report: AuditReport = {
-    totalLinksChecked: results.length,
-    validLinks: results.filter((r) => r.isValid).length,
-    brokenLinks: errors.length,
-    redirects: warnings.length,
-    errors,
-    warnings,
-    timestamp: new Date(),
+export async function runLinkAudit(): Promise<LinkAuditResult> {
+  const startTime = Date.now();
+  const result: LinkAuditResult = {
+    success: false,
+    checkedCount: 0,
+    brokenCount: 0,
+    removedCount: 0,
+    errors: [],
+    duration: 0,
   };
 
-  console.log(`[LinkAudit] Audit complete: ${report.validLinks}/${report.totalLinksChecked} valid, ${report.brokenLinks} broken, ${report.redirects} redirects`);
-
-  // Log audit results (database table not yet created)
-  console.log("[LinkAudit] Audit results:", {
-    totalLinksChecked: report.totalLinksChecked,
-    validLinks: report.validLinks,
-    brokenLinks: report.brokenLinks,
-    redirects: report.redirects,
-  });
-
-  // Alert if broken links found
-  if (errors.length > 0) {
-    console.error(`[LinkAudit] ⚠️  Found ${errors.length} broken links:`, errors);
-    
-    // Send notification to owner
-    try {
-      const { notifyOwner } = await import("./_core/notification");
-      await notifyOwner({
-        title: "🔗 Link Audit Alert",
-        content: `Found ${errors.length} broken links:\n${errors
-          .map((e) => `- ${e.url} (${e.status || "Error"})`)
-          .join("\n")}`,
-      });
-    } catch (err) {
-      console.warn("[LinkAudit] Failed to send notification:", err);
+  try {
+    const db = await getDb();
+    if (!db) {
+      result.errors.push("Database connection failed");
+      return result;
     }
+
+    console.log("[LinkAudit] Starting link audit...");
+
+    // Get all active products
+    const allProducts = await db.select().from(products).where(eq(products.isActive, true));
+
+    if (!allProducts || allProducts.length === 0) {
+      console.log("[LinkAudit] No active products to audit");
+      result.success = true;
+      result.duration = Date.now() - startTime;
+      return result;
+    }
+
+    console.log(`[LinkAudit] Auditing ${allProducts.length} products...`);
+
+    // Check each product's affiliate URL
+    for (const product of allProducts) {
+      result.checkedCount++;
+
+      if (!product.affiliateUrl) {
+        result.errors.push(`Product ${product.asin} has no affiliate URL`);
+        continue;
+      }
+
+      try {
+        const isValid = await checkLink(product.affiliateUrl);
+
+        if (!isValid) {
+          result.brokenCount++;
+          console.warn(
+            `[LinkAudit] Broken link detected for ${product.asin}: ${product.affiliateUrl}`
+          );
+
+          // Remove product with broken link
+          await db.update(products).set({ isActive: false }).where(eq(products.id, product.id));
+
+          result.removedCount++;
+          console.log(`[LinkAudit] Removed product ${product.asin} due to broken link`);
+        }
+      } catch (linkError) {
+        result.errors.push(
+          `Failed to check link for ${product.asin}: ${String(linkError)}`
+        );
+        console.error(`[LinkAudit] Error checking link for ${product.asin}:`, linkError);
+      }
+    }
+
+    result.success = true;
+    result.duration = Date.now() - startTime;
+
+    console.log(
+      `[LinkAudit] Audit complete: ${result.checkedCount} checked, ${result.brokenCount} broken, ${result.removedCount} removed in ${result.duration}ms`
+    );
+
+    return result;
+  } catch (error) {
+    result.success = false;
+    result.duration = Date.now() - startTime;
+    result.errors.push(`Audit failed: ${String(error)}`);
+
+    console.error("[LinkAudit] Audit failed:", error);
+    return result;
   }
-
-  return report;
 }
 
 /**
- * Get latest audit report
+ * Schedule link audit to run daily at 3 AM UTC
  */
-export async function getLatestAuditReport() {
-  // Placeholder - database table will be created in schema migration
-  return null;
-}
+export function scheduleLinkAudit() {
+  try {
+    const schedule = require("node-schedule");
 
-/**
- * Get audit history (last 30 days)
- */
-export async function getAuditHistory(days: number = 30) {
-  // Placeholder - database table will be created in schema migration
-  return [];
+    // 3 AM UTC daily
+    schedule.scheduleJob("0 3 * * *", async () => {
+      console.log("[Scheduler] Running daily link audit...");
+      await runLinkAudit();
+    });
+
+    console.log("[Scheduler] Link audit scheduled (3 AM UTC daily)");
+  } catch (error) {
+    console.warn(
+      "[Scheduler] node-schedule not available for link audit. Install with: npm install node-schedule"
+    );
+  }
 }

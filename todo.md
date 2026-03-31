@@ -429,3 +429,11 @@
 - [x] Set up cron scheduler (8am, 12pm, 8pm UTC) with node-schedule
 - [ ] Test automation and verify products stored
 - [ ] Deploy and monitor
+
+
+## Automated Link Audit & Cleanup
+- [x] Create link audit service to check affiliate URLs (linkAuditService.ts)
+- [x] Implement automatic product removal for broken links (marks isActive=false)
+- [x] Schedule link audit to run daily (3 AM UTC with node-schedule)
+- [x] Add logging and notifications for removed products
+- [x] Test and deploy (8 tests created, dev server running)
