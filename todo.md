@@ -421,3 +421,11 @@
 - [x] Add real TIANYU GEMS Diamond Ring product (B0BLK7NRLM) with correct image and pricing
 - [x] Add 15 more real gold jewelry products (total 16 products with verified ASINs, images, pricing)
 - [x] Verify webhook sends product data to Zapier
+
+
+## Automated Product Fetching (3x Daily)
+- [x] Create scheduled job service for Rainforest API (automatedProductFetcher.ts)
+- [x] Configure 25 jewelry products per fetch
+- [x] Set up cron scheduler (8am, 12pm, 8pm UTC) with node-schedule
+- [ ] Test automation and verify products stored
+- [ ] Deploy and monitor
