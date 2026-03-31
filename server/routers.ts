@@ -46,6 +46,7 @@ import { runProductFetch, runBlogGeneration, runLayoutOptimization, runPerforman
 import { trackPageView, trackProductClick, trackContentEvent, trackReviewEvent, counterGetAll } from "./counterService";
 import { postBlogToFacebook, postBlogToInstagram } from "./facebookService";
 import { shopRouter } from "./routers/shop";
+import { generateBlogHeroImage } from "./blogImageGenerator";
 
 // ─── Admin Procedure ──────────────────────────────────────────────────────────
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
