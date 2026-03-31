@@ -13,6 +13,7 @@
 
 import { createHmac } from "crypto";
 import { InsertProduct } from "../drizzle/schema";
+import { buildAffiliateUrl } from "./affiliateUrlBuilder";
 
 const AMAZON_HOST = "webservices.amazon.com";
 const AMAZON_REGION = "us-east-1";
@@ -523,11 +524,10 @@ function mapToProduct(item: AmazonSearchResult, associateTag: string): InsertPro
       ? ((item.originalPrice - item.price) / item.originalPrice) * 100
       : 0;
 
-  // Ensure affiliate tag is in URL
-  let affiliateUrl = item.affiliateUrl;
-  if (!affiliateUrl.includes("tag=")) {
-    affiliateUrl += affiliateUrl.includes("?") ? `&tag=${associateTag}` : `?tag=${associateTag}`;
-  }
+  // Use centralized affiliate URL builder to ensure correct tag
+  // This automatically validates and fixes any incorrect tags
+  const affiliateUrl = buildAffiliateUrl(item.asin, item.affiliateUrl);
+  // Note: associateTag parameter is ignored - always uses correct tag from affiliateUrlBuilder
 
   return {
     asin: item.asin,

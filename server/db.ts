@@ -22,6 +22,7 @@ import {
   type InsertUser,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
+import { buildAffiliateUrl } from "./affiliateUrlBuilder";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -79,6 +80,10 @@ export async function getUserByOpenId(openId: string) {
 export async function upsertProduct(product: InsertProduct) {
   const db = await getDb();
   if (!db) return;
+  
+  // Ensure affiliate URL has correct tag
+  const correctedAffiliateUrl = buildAffiliateUrl(product.asin, product.affiliateUrl);
+  
   const updateSet: Record<string, unknown> = {
     title: product.title,
     brand: product.brand,
@@ -87,14 +92,17 @@ export async function upsertProduct(product: InsertProduct) {
     originalPrice: product.originalPrice,
     imageUrl: product.imageUrl,
     additionalImages: product.additionalImages,
-    affiliateUrl: product.affiliateUrl,
+    affiliateUrl: correctedAffiliateUrl,
     amazonRating: product.amazonRating,
     reviewCount: product.reviewCount,
     tags: product.tags,
     priceDropPercent: product.priceDropPercent,
     lastFetchedAt: new Date(),
   };
-  await db.insert(products).values(product).onDuplicateKeyUpdate({ set: updateSet });
+  
+  // Ensure product has corrected affiliate URL
+  const correctedProduct = { ...product, affiliateUrl: correctedAffiliateUrl };
+  await db.insert(products).values(correctedProduct).onDuplicateKeyUpdate({ set: updateSet });
 }
 
 export async function getProducts(opts: {
