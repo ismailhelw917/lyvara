@@ -129,13 +129,14 @@ export async function getProducts(opts: {
   if (opts.minPrice) conditions.push(gte(products.price, String(opts.minPrice)));
   if (opts.maxPrice) conditions.push(lte(products.price, String(opts.maxPrice)));
   if (opts.featured !== undefined) conditions.push(eq(products.isFeatured, opts.featured));
-  if (opts.tab) conditions.push(eq(products.tab, opts.tab));
-  
-  const whereClause = and(...conditions);
-  // Default to 'classic' tab if not specified
-  if (!opts.tab && !opts.category && !opts.metalType && !opts.minPrice && !opts.maxPrice) {
+  // Always filter by tab - default to 'classic' if not specified
+  if (opts.tab) {
+    conditions.push(eq(products.tab, opts.tab));
+  } else {
     conditions.push(eq(products.tab, 'classic'));
   }
+  
+  const whereClause = and(...conditions);
 
   let orderClause;
   switch (opts.orderBy) {
@@ -150,7 +151,7 @@ export async function getProducts(opts: {
   return db
     .select()
     .from(products)
-    .where(and(...conditions))
+    .where(whereClause)
     .orderBy(orderClause)
     .limit(opts.limit ?? 24)
     .offset(opts.offset ?? 0);
