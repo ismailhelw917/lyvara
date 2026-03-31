@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO products (asin, title, brand, category, metalType, price, originalPrice, imageUrl, affiliateUrl, amazonRating, reviewCount, isFeatured, isHero, isActive) VALUES ('B0BLK7NRLM', 'TIANYU GEMS Classic Round Diamond Solitaire Ring - Lab Created Diamond', 'TIANYU GEMS', 'rings', 'gold', '1299.99', '1599.99', 'https://m.media-amazon.com/images/I/71kKvI5pqEL._AC_UY879_.jpg', 'https://www.amazon.com/dp/B0BLK7NRLM?tag=91791709-20', 4.8, 2341, true, false, true);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute INSERT INTO products (asin, title, brand, category, metalType, price, originalPrice, imageUrl, affiliateUrl, amazonRating, reviewCount, isFeatured, isHero, isActive) VALUES ('B0BLK7NRLM', 'TIANYU GEMS Classic Round Diamond Solitaire Ring - Lab Created Diamond', 'TIANYU GEMS', 'rings', 'gold', '1299.99', '1599.99', 'https://m.media-amazon.com/images/I/71kKvI5pqEL._AC_UY879_.jpg', 'https://www.amazon.com/dp/B0BLK7NRLM?tag=91791709-20', 4.8, 2341, true, false, true);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1645
+}
