@@ -358,3 +358,21 @@
 - [ ] Add review submission form with photo upload
 - [ ] Seed database with sample verified reviews
 - [ ] Test reviews on product detail pages
+
+
+## SEO Satellite Site (.shop domain) - NEW
+- [x] Create shop blog posts database table (shop_blog_posts)
+- [x] Create internal links database table (internal_links)
+- [x] Create shop content generator with 65 keywords across 6 pillars
+- [x] Create database helpers for shop operations (shopDb.ts)
+- [x] Create tRPC procedures for shop management (routers/shop.ts)
+- [x] Integrate shop router into app router
+- [ ] Create automated content generation job (cron) - generate 5 posts/week
+- [ ] Set up domain routing for .shop vs .com (detect domain in middleware)
+- [ ] Create shop blog UI pages (ShopBlog.tsx, ShopPost.tsx)
+- [ ] Test content generation pipeline end-to-end
+- [ ] Generate first batch of 20 blog posts targeting top keywords
+- [ ] Configure analytics tracking for .shop domain
+- [ ] Deploy .shop domain and monitor performance
+- [ ] Monitor internal link click-through rates to main domain
+- [ ] Optimize underperforming keywords based on CTR data

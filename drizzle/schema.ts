@@ -214,3 +214,45 @@ export const blogPostsInstagramShares = mysqlTable("blog_posts_instagram_shares"
 
 export type BlogPostInstagramShare = typeof blogPostsInstagramShares.$inferSelect;
 export type InsertBlogPostInstagramShare = typeof blogPostsInstagramShares.$inferInsert;
+
+// ─── Shop Blog Posts (SEO Satellite Content) ──────────────────────────────────
+export const shopBlogPosts = mysqlTable("shop_blog_posts", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 500 }).notNull(),
+  slug: varchar("slug", { length: 500 }).notNull().unique(),
+  content: text("content").notNull(),
+  excerpt: text("excerpt"),
+  heroImageUrl: text("heroImageUrl"),
+  heroImagePrompt: text("heroImagePrompt"),
+  // SEO targeting
+  targetKeyword: varchar("targetKeyword", { length: 255 }).notNull(),
+  keywordSearchVolume: int("keywordSearchVolume"),
+  keywordCompetition: varchar("keywordCompetition", { length: 20 }), // low, medium, high
+  pillar: varchar("pillar", { length: 100 }).notNull(), // buyer_guides, gift_guides, care_tips, trends, education, problem_solution
+  tags: json("tags").$type<string[]>(),
+  status: mysqlEnum("status", ["draft", "published", "archived"]).default("draft").notNull(),
+  isAiGenerated: boolean("isAiGenerated").default(true).notNull(),
+  viewCount: int("viewCount").default(0).notNull(),
+  clicksToMain: int("clicksToMain").default(0).notNull(), // clicks to main domain
+  publishedAt: timestamp("publishedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ShopBlogPost = typeof shopBlogPosts.$inferSelect;
+export type InsertShopBlogPost = typeof shopBlogPosts.$inferInsert;
+
+// ─── Internal Links (Shop to Main Domain) ─────────────────────────────────────
+export const internalLinks = mysqlTable("internal_links", {
+  id: int("id").autoincrement().primaryKey(),
+  shopPostId: int("shopPostId").notNull(),
+  targetUrl: text("targetUrl").notNull(), // URL on main domain
+  targetType: mysqlEnum("targetType", ["product", "category", "blog_post", "home"]).notNull(),
+  anchorText: varchar("anchorText", { length: 255 }).notNull(),
+  position: int("position"), // position in content (1st, 2nd, 3rd link)
+  clickCount: int("clickCount").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type InternalLink = typeof internalLinks.$inferSelect;
+export type InsertInternalLink = typeof internalLinks.$inferInsert;

@@ -45,6 +45,7 @@ import {
 import { runProductFetch, runBlogGeneration, runLayoutOptimization, runPerformanceScoring } from "./automationEngine";
 import { trackPageView, trackProductClick, trackContentEvent, trackReviewEvent, counterGetAll } from "./counterService";
 import { postBlogToFacebook, postBlogToInstagram } from "./facebookService";
+import { shopRouter } from "./routers/shop";
 
 // ─── Admin Procedure ──────────────────────────────────────────────────────────
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -513,5 +514,6 @@ export const appRouter = router({
   automation: automationRouter,
   reviews: reviewsRouter,
   newsletter: newsletterRouter,
+  shop: shopRouter,
 });
 export type AppRouter = typeof appRouter;
