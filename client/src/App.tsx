@@ -40,15 +40,15 @@ function Router() {
 
   return (
     <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/shop" component={Products} />
-      <Route path="/shop/:category" component={Products} />
-      <Route path="/journal" component={BlogList} />
-      <Route path="/journal/:slug" component={BlogPost} />
-      <Route path="/product/:id" component={ProductDetail} />
-      <Route path="/admin" component={AdminDashboard} />
-      <Route path="/404" component={NotFound} />
-      <Route component={NotFound} />
+      <Route key="home" path="/" component={Home} />
+      <Route key="shop" path="/shop" component={Products} />
+      <Route key="shop-category" path="/shop/:category" component={Products} />
+      <Route key="journal" path="/journal" component={BlogList} />
+      <Route key="journal-post" path="/journal/:slug" component={BlogPost} />
+      <Route key="product-detail" path="/product/:id" component={ProductDetail} />
+      <Route key="admin" path="/admin" component={AdminDashboard} />
+      <Route key="404" path="/404" component={NotFound} />
+      <Route key="not-found" component={NotFound} />
     </Switch>
   );
 }
