@@ -1,0 +1,1 @@
+ALTER TABLE `products` MODIFY COLUMN `tab` enum('classic','bargains','anklets','body-jewelry','bracelets','brooches-pins','earrings','jewelry-sets','necklaces','rings') NOT NULL DEFAULT 'classic';

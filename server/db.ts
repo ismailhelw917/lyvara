@@ -112,7 +112,7 @@ export async function getProducts(opts: {
   maxPrice?: number;
   featured?: boolean;
   active?: boolean;
-  tab?: "classic" | "bargains";
+  tab?: "classic" | "bargains" | "anklets" | "body-jewelry" | "bracelets" | "brooches-pins" | "earrings" | "jewelry-sets" | "necklaces" | "rings";
   limit?: number;
   offset?: number;
   orderBy?: "rank" | "price_asc" | "price_desc" | "rating" | "newest" | "performance";
@@ -157,7 +157,7 @@ export async function getProducts(opts: {
     .offset(opts.offset ?? 0);
 }
 
-export async function getFeaturedProducts(limit = 8, tab?: "classic" | "bargains") {
+export async function getFeaturedProducts(limit = 8, tab?: "classic" | "bargains" | "anklets" | "body-jewelry" | "bracelets" | "brooches-pins" | "earrings" | "jewelry-sets" | "necklaces" | "rings") {
   const db = await getDb();
   if (!db) return [];
   const conditions = [eq(products.isActive, true), eq(products.isFeatured, true)];
@@ -170,7 +170,7 @@ export async function getFeaturedProducts(limit = 8, tab?: "classic" | "bargains
     .limit(limit);
 }
 
-export async function getHeroProducts(limit = 3, tab?: "classic" | "bargains") {
+export async function getHeroProducts(limit = 3, tab?: "classic" | "bargains" | "anklets" | "body-jewelry" | "bracelets" | "brooches-pins" | "earrings" | "jewelry-sets" | "necklaces" | "rings") {
   const db = await getDb();
   if (!db) return [];
   const conditions = [eq(products.isActive, true), eq(products.isHero, true)];
@@ -327,7 +327,7 @@ export async function getAnalyticsSummary(days = 30) {
   return summary;
 }
 
-export async function getTopProducts(limit = 10, tab?: "classic" | "bargains") {
+export async function getTopProducts(limit = 10, tab?: "classic" | "bargains" | "anklets" | "body-jewelry" | "bracelets" | "brooches-pins" | "earrings" | "jewelry-sets" | "necklaces" | "rings") {
   const db = await getDb();
   if (!db) return [];
   const conditions = [eq(products.isActive, true)];

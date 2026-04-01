@@ -95,7 +95,7 @@ export default function Products() {
     metalType: metalType || undefined,
     minPrice: selectedPriceRange.min,
     maxPrice: selectedPriceRange.max,
-    tab: isBargainsTab ? 'bargains' : 'classic',
+    tab: (category as any) || (isBargainsTab ? 'bargains' : 'classic'),
     orderBy: sortBy,
     limit: LIMIT,
     offset: page * LIMIT,

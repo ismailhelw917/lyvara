@@ -58,7 +58,7 @@ export const products = mysqlTable("products", {
   imageSize: mysqlEnum("imageSize", ["small", "medium", "large", "hero"]).default("medium").notNull(),
   isActive: boolean("isActive").default(true).notNull(),
   // Tab/Collection assignment
-  tab: mysqlEnum("tab", ["classic", "bargains"]).default("classic").notNull(),
+  tab: mysqlEnum("tab", ["classic", "bargains", "anklets", "body-jewelry", "bracelets", "brooches-pins", "earrings", "jewelry-sets", "necklaces", "rings"]).default("classic").notNull(),
   // Metadata
   tags: json("tags").$type<string[]>(),
   priceDropPercent: float("priceDropPercent").default(0),
