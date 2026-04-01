@@ -41,7 +41,9 @@ import {
   updateProductMetrics,
   upsertProduct,
   voteOnReview,
+  getDb,
 } from "./db";
+import { products } from "../drizzle/schema";
 import { runProductFetch, runBlogGeneration, runLayoutOptimization, runPerformanceScoring } from "./automationEngine";
 import { trackPageView, trackProductClick, trackContentEvent, trackReviewEvent, counterGetAll } from "./counterService";
 import { postBlogToFacebook, postBlogToInstagram } from "./facebookService";
@@ -89,6 +91,18 @@ const productsRouter = router({
   topPerformers: publicProcedure
     .input(z.object({ limit: z.number().min(1).max(20).default(10), tab: z.enum(["classic", "bargains", "anklets", "body-jewelry", "bracelets", "brooches-pins", "earrings", "jewelry-sets", "necklaces", "rings"]).optional() }))
     .query(async ({ input }) => getTopProducts(input.limit, input.tab)),
+
+  deleteAll: adminProcedure
+    .mutation(async () => {
+      try {
+        const dbInstance = await getDb();
+        if (!dbInstance) throw new Error('Database connection failed');
+        const result = await dbInstance.delete(products);
+        return { success: true, message: "All products deleted" };
+      } catch (error: any) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error.message || "Failed to delete products" });
+      }
+    }),
 });
 
 // ─── Blog Router ──────────────────────────────────────────────────────────────

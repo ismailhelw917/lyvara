@@ -14,8 +14,42 @@ router.post("/rainforest/products", async (req, res) => {
     }
 
     const affiliateTag = request_parameters?.associate_id || "91791709-20";
-    const tab = req.query.tab as string || "classic"; // Allow tab to be specified via query param
+    let rawTab = req.query.tab as string || "classic";
     const MAX_PRODUCTS_PER_CATEGORY = 50; // Cap products per category
+
+    // Map Zapier category names to database enum values
+    const mapTabValue = (input: string): string => {
+      const normalized = input.toLowerCase().trim();
+      
+      // Mapping from Zapier names to database enum values
+      const tabMapping: Record<string, string> = {
+        "women's anklets": "anklets",
+        "anklets": "anklets",
+        "women's body jewelry": "body-jewelry",
+        "body jewelry": "body-jewelry",
+        "body-jewelry": "body-jewelry",
+        "women's bracelets": "bracelets",
+        "bracelets": "bracelets",
+        "women's brooches & pins": "brooches-pins",
+        "brooches & pins": "brooches-pins",
+        "brooches-pins": "brooches-pins",
+        "women's earrings": "earrings",
+        "earrings": "earrings",
+        "women's jewelry sets": "jewelry-sets",
+        "jewelry sets": "jewelry-sets",
+        "jewelry-sets": "jewelry-sets",
+        "women's necklaces": "necklaces",
+        "necklaces": "necklaces",
+        "women's rings": "rings",
+        "rings": "rings",
+        "classic": "classic",
+        "bargains": "bargains",
+      };
+      
+      return tabMapping[normalized] || "classic";
+    };
+
+    const tab = mapTabValue(rawTab);
 
     let loadedCount = 0;
     let skippedCount = 0;
@@ -50,22 +84,26 @@ router.post("/rainforest/products", async (req, res) => {
         
         // Skip if missing required fields
         if (!product.asin || !product.title || !price) {
+          console.log(`[Webhook] Skipping - missing fields. ASIN: ${product.asin}, Title: ${product.title}, Price: ${price}`);
           skippedCount++;
           continue;
         }
 
         // Validate image URL - CRITICAL: must have valid image
         if (!isValidImageUrl(imageUrl)) {
+          console.log(`[Webhook] Skipping ${product.asin} - invalid image: ${imageUrl}`);
           skippedCount++;
           continue;
         }
 
         // Skip duplicates
         if (seenASINs.has(product.asin)) {
+          console.log(`[Webhook] Skipping duplicate: ${product.asin}`);
           skippedCount++;
           continue;
         }
         seenASINs.add(product.asin);
+        console.log(`[Webhook] Processing: ${product.asin} - ${product.title}`);
 
         // Detect category
         const title = product.title.toLowerCase();
@@ -95,7 +133,7 @@ router.post("/rainforest/products", async (req, res) => {
         const shouldFeature = (rating && rating >= 4.5 && reviewCount && reviewCount >= 50) || false;
 
         // Insert product
-        const tabValue: any = tab || "classic";
+        const tabValue: any = tab;
         await upsertProduct({
           asin: product.asin,
           title: product.title,
@@ -114,8 +152,9 @@ router.post("/rainforest/products", async (req, res) => {
         });
 
         loadedCount++;
+        console.log(`[Webhook] ✅ Loaded: ${product.asin} into tab '${tab}'`);
       } catch (error) {
-        console.error(`Error processing product ${product.asin}:`, error);
+        console.error(`[Webhook] ❌ Error ${product.asin}:`, error);
         skippedCount++;
       }
     }
@@ -125,8 +164,9 @@ router.post("/rainforest/products", async (req, res) => {
       loaded: loadedCount,
       skipped: skippedCount,
       capped: cappedCount,
-      tab: tab || "classic",
-      message: `Loaded ${loadedCount} products (${cappedCount} capped at 50/category). Skipped ${skippedCount} invalid/duplicates.`,
+      tab: tab,
+      rawTab: rawTab,
+      message: `Loaded ${loadedCount} products into '${tab}' tab (${cappedCount} capped at 50/category). Skipped ${skippedCount} invalid/duplicates.`,
     });
   } catch (error: any) {
     console.error("Webhook error:", error);
