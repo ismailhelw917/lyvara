@@ -11,12 +11,14 @@ import { useTracking } from "@/hooks/useTracking";
 
 const CATEGORIES = [
   { value: "", label: "All Jewelry" },
-  { value: "necklaces", label: "Necklaces" },
+  { value: "anklets", label: "Anklets" },
+  { value: "body-jewelry", label: "Body Jewelry" },
   { value: "bracelets", label: "Bracelets" },
-  { value: "rings", label: "Rings" },
+  { value: "brooches-pins", label: "Brooches & Pins" },
   { value: "earrings", label: "Earrings" },
-  { value: "pendants", label: "Pendants" },
-  { value: "sets", label: "Sets" },
+  { value: "jewelry-sets", label: "Jewelry Sets" },
+  { value: "necklaces", label: "Necklaces" },
+  { value: "rings", label: "Rings" },
 ];
 
 const METALS = [

@@ -3,8 +3,14 @@ import { Link, useLocation } from "wouter";
 import { Menu, X, Search, Gem } from "lucide-react";
 
 const categories = [
-  { label: "Classic", href: "/shop" },
-  { label: "Bargains", href: "/shop?sort=price_asc" },
+  { label: "Anklets", href: "/shop?tab=anklets" },
+  { label: "Body Jewelry", href: "/shop?tab=body-jewelry" },
+  { label: "Bracelets", href: "/shop?tab=bracelets" },
+  { label: "Brooches & Pins", href: "/shop?tab=brooches-pins" },
+  { label: "Earrings", href: "/shop?tab=earrings" },
+  { label: "Jewelry Sets", href: "/shop?tab=jewelry-sets" },
+  { label: "Necklaces", href: "/shop?tab=necklaces" },
+  { label: "Rings", href: "/shop?tab=rings" },
 ];
 
 export default function Navbar() {

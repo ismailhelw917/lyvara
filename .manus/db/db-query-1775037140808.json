@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE products SET tab = CASE \n  WHEN title LIKE '%anklet%' THEN 'anklets'\n  WHEN title LIKE '%body%' OR title LIKE '%belly%' THEN 'body-jewelry'\n  WHEN title LIKE '%bracelet%' AND title NOT LIKE '%ankle%' THEN 'bracelets'\n  WHEN title LIKE '%brooch%' OR title LIKE '%pin%' THEN 'brooches-pins'\n  WHEN title LIKE '%earring%' THEN 'earrings'\n  WHEN title LIKE '%set%' THEN 'jewelry-sets'\n  WHEN title LIKE '%necklace%' THEN 'necklaces'\n  WHEN title LIKE '%ring%' THEN 'rings'\n  ELSE 'anklets'\nEND;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute UPDATE products SET tab = CASE \n  WHEN title LIKE '%anklet%' THEN 'anklets'\n  WHEN title LIKE '%body%' OR title LIKE '%belly%' THEN 'body-jewelry'\n  WHEN title LIKE '%bracelet%' AND title NOT LIKE '%ankle%' THEN 'bracelets'\n  WHEN title LIKE '%brooch%' OR title LIKE '%pin%' THEN 'brooches-pins'\n  WHEN title LIKE '%earring%' THEN 'earrings'\n  WHEN title LIKE '%set%' THEN 'jewelry-sets'\n  WHEN title LIKE '%necklace%' THEN 'necklaces'\n  WHEN title LIKE '%ring%' THEN 'rings'\n  ELSE 'anklets'\nEND;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1588
+}

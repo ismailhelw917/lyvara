@@ -8,6 +8,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { startScheduler } from "../automationEngine";
+import rainforestWebhook from "../webhooks/rainforest";
 import { getDb } from "../db";
 import { blogPosts, products } from "../../drizzle/schema";
 import { eq, and, gt, desc } from "drizzle-orm";
@@ -266,6 +267,9 @@ async function startServer() {
       res.status(500).json({ error: "Error generating Google Shopping feed" });
     }
   });
+
+  // Rainforest webhook for product imports
+  app.use("/api/webhooks", rainforestWebhook);
 
   // tRPC API
   app.use(
