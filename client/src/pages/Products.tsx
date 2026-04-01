@@ -56,6 +56,8 @@ export default function Products() {
   // Detect if we're on Bargains tab (sort=price_asc in URL)
   const isBargainsTab = search.includes('sort=price_asc');
   
+  // NOTE: 'category' state actually holds the collection tab (anklets, necklaces, etc.)
+  // NOT the product category (necklaces, bracelets, rings, earrings)
   const [category, setCategory] = useState(params.category || "");
   const [metalType, setMetalType] = useState("");
   const [priceRange, setPriceRange] = useState(0);
@@ -90,16 +92,20 @@ export default function Products() {
 
   const selectedPriceRange = PRICE_RANGES[priceRange];
 
-  const queryInput = useMemo(() => ({
-    category: category || undefined,
-    metalType: metalType || undefined,
-    minPrice: selectedPriceRange.min,
-    maxPrice: selectedPriceRange.max,
-    tab: (category as any) || (isBargainsTab ? 'bargains' : 'classic'),
-    orderBy: sortBy,
-    limit: LIMIT,
-    offset: page * LIMIT,
-  } as const), [category, metalType, priceRange, sortBy, page, isBargainsTab]);
+  const queryInput = useMemo(() => {
+    const input: any = {
+      tab: (category as any) || (isBargainsTab ? 'bargains' : 'classic'),
+      orderBy: sortBy,
+      limit: LIMIT,
+      offset: page * LIMIT,
+    };
+    // CRITICAL FIX: Do NOT add category when using collection tabs (anklets, necklaces, etc)
+    // The 'category' state holds the collection tab name, not the product category enum
+    if (metalType) input.metalType = metalType;
+    if (selectedPriceRange.min !== undefined) input.minPrice = selectedPriceRange.min;
+    if (selectedPriceRange.max !== undefined) input.maxPrice = selectedPriceRange.max;
+    return input;
+  }, [category, metalType, priceRange, sortBy, page, isBargainsTab, selectedPriceRange]);
 
   const { data: products, isLoading } = trpc.products.list.useQuery(queryInput);
   const { data: totalCount } = trpc.products.count.useQuery();
