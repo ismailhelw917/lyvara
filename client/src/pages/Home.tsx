@@ -30,23 +30,10 @@ function HeroSection() {
           backgroundImage: "repeating-linear-gradient(45deg, var(--gold) 0px, var(--gold) 1px, transparent 1px, transparent 60px)",
         }}
       />
-      {/* Hero product image */}
-      {heroProduct?.imageUrl && (
-        <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:block">
-          <img
-            src={heroProduct.imageUrl}
-            alt={heroProduct.title}
-            className="w-full h-full object-cover opacity-30"
-          />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to right, oklch(0.14 0.015 30) 0%, transparent 40%, transparent 100%)" }} />
-        </div>
-      )}
-      {/* Fallback decorative image */}
-      {!heroProduct?.imageUrl && (
-        <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:flex items-center justify-center opacity-20">
-          <Gem className="w-64 h-64" style={{ color: "var(--gold)" }} />
-        </div>
-      )}
+      {/* Fallback decorative image - always show Gem icon */}
+      <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:flex items-center justify-center opacity-20">
+        <Gem className="w-64 h-64" style={{ color: "var(--gold)" }} />
+      </div>
 
       <div className="container relative z-10 py-32">
         <div className="max-w-2xl">
