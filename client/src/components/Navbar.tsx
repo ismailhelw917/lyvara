@@ -74,12 +74,12 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {[
-              { href: "/shop", label: "All Jewelry", match: location === "/shop" },
-              ...categories.map((c) => ({ href: c.href, label: c.label, match: location === c.href })),
-              { href: "/journal", label: "Journal", match: location.startsWith("/journal") },
+              { href: "/shop", label: "All Jewelry", match: location === "/shop", key: "all-jewelry" },
+              ...categories.map((c, i) => ({ href: c.href, label: c.label, match: location === c.href, key: `category-${i}` })),
+              { href: "/journal", label: "Journal", match: location.startsWith("/journal"), key: "journal" },
             ].map((item) => (
               <Link
-                key={item.href}
+                key={item.key}
                 href={item.href}
                 className={`nav-link ${item.match ? "active" : ""}`}
                 style={{ color: scrolled ? "var(--foreground)" : "rgba(255,255,255,0.85)" }}
