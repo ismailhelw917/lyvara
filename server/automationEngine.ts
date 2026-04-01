@@ -598,19 +598,19 @@ export function startScheduler() {
     }
   }, 6 * 60 * 60 * 1000);
 
-  // Link audit: every 3 hours
-  setTimeout(() => {
-    const runAudit = async () => {
-      try {
-        console.log("[AutomationEngine] Running link audit...");
-        await runLinkAudit();
-      } catch (err) {
-        console.error("[AutomationEngine] Link audit failed:", err);
-      }
-    };
-    runAudit();
-    setInterval(runAudit, 3 * 60 * 60 * 1000);
-  }, 10 * 1000); // Start 10 seconds after server start
+  // Link audit: DISABLED - Amazon links are too aggressive to validate
+  // setTimeout(() => {
+  //   const runAudit = async () => {
+  //     try {
+  //       console.log("[AutomationEngine] Running link audit...");
+  //       await runLinkAudit();
+  //     } catch (err) {
+  //       console.error("[AutomationEngine] Link audit failed:", err);
+  //     }
+  //   };
+  //   runAudit();
+  //   setInterval(runAudit, 3 * 60 * 60 * 1000);
+  // }, 10 * 1000); // Start 10 seconds after server start
 
   // Twice-daily link replacement: every 12 hours
   setTimeout(() => {
