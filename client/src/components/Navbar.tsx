@@ -3,8 +3,8 @@ import { Link, useLocation } from "wouter";
 import { Menu, X, Search, Gem } from "lucide-react";
 
 const categories = [
-  { label: "Classic", href: "/shop" },
-  { label: "Bargains", href: "/shop?sort=price_asc" },
+  { label: "Classic", href: "/shop/classic" },
+  { label: "Bargains", href: "/shop/bargains" },
 ];
 
 export default function Navbar() {
@@ -74,12 +74,12 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {[
-              { href: "/shop", label: "All Jewelry", match: location === "/shop" },
+              { href: "/shop", label: "All Jewelry", match: location === "/shop" || location === "/shop/classic" || location === "/shop/bargains" },
               ...categories.map((c) => ({ href: c.href, label: c.label, match: location === c.href })),
               { href: "/journal", label: "Journal", match: location.startsWith("/journal") },
-            ].map((item) => (
+            ].map((item, idx) => (
               <Link
-                key={item.href}
+                key={`nav-${idx}-${item.href}`}
                 href={item.href}
                 className={`nav-link ${item.match ? "active" : ""}`}
                 style={{ color: scrolled ? "var(--foreground)" : "rgba(255,255,255,0.85)" }}
