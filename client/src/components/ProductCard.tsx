@@ -21,7 +21,14 @@ export default function ProductCard({ product, size, showBadge = true }: Product
   // Use product image - no fallbacks allowed (products without images filtered at DB level)
   const imageSrc = product.imageUrl || '';
 
-  // No error handling needed - products without valid images are filtered at DB level
+  // If image fails to load, don't render the product at all
+  if (imgError) {
+    return null;
+  }
+
+  const handleImageError = () => {
+    setImgError(true);
+  };
 
   const handleAffiliateClick = () => {
     trackAffiliateClick(product.id, product.title);
@@ -61,6 +68,7 @@ export default function ProductCard({ product, size, showBadge = true }: Product
           alt={product.title}
           className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
+          onError={handleImageError}
         />
 
         {/* Subtle gradient overlay for text legibility */}
