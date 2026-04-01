@@ -1,0 +1,70 @@
+{
+  "query": "SELECT id, title, brand, isFeatured FROM products WHERE isFeatured = 1 LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user p1iERkZxRv8XeMu.f21199908ec6 --database Fb7vXnzeJhLwFywj8Ci5L6 --execute SELECT id, title, brand, isFeatured FROM products WHERE isFeatured = 1 LIMIT 10;",
+  "rows": [
+    {
+      "id": "6420981",
+      "title": "GANDC Glitter Easter Bunny Earrings for Women, 3D Rabbit Drop Earrings Lightweight Resin Dangle Earrings 6 Colors (Pink/Green/Purple/Gold/Blue/Red) Easter Jewelry Gifts for Bunny Lovers",
+      "brand": "GANDC",
+      "isFeatured": "1"
+    },
+    {
+      "id": "6420982",
+      "title": "PALABENK Easter Basket Stuffers Sterling Silver Post Frog Stud Earrings Easter Gifts for Girls Women Kids, Teen Girl Gifts Trendy Stuff Cute Frog Earrings Jewelry",
+      "brand": "PALABENK",
+      "isFeatured": "1"
+    },
+    {
+      "id": "6420983",
+      "title": "LENOAPHYS St Patricks Day Earrings St Patricks Day Shirt Women Shamrock Earrings Outfits for Women",
+      "brand": "LENOAPHYS",
+      "isFeatured": "1"
+    },
+    {
+      "id": "6420984",
+      "title": "Tungary Small Gold Hoop Earrings for Women, Hypoallergenic Huggie Earrings for Sensitive Ears, Non Tarnish 14K Gold Plated Hoops for Sleeping/Daily, Cartilage Earring Stacks Set for Multiple Piercing",
+      "brand": "Tungary",
+      "isFeatured": "1"
+    },
+    {
+      "id": "6420985",
+      "title": "17KM 21PCS Gold Ankle Bracelets for Women, Boho Shell Bead Cuban Link Chain Waterproof Gold Anklets Set, Adjustable Layered Anklets for Women Beach Jewelry Gift",
+      "brand": "17KM",
+      "isFeatured": "1"
+    },
+    {
+      "id": "6420986",
+      "title": "HERIER 14K Gold Plated Body Chains for Women, Sexy Layered Belly Waist Chain Crossover Bikini Bra Body Jewelry, Summer Beach Rhinestone Crystal Beads Jewelry Accessories for Women",
+      "brand": "HERIER",
+      "isFeatured": "1"
+    },
+    {
+      "id": "6420987",
+      "title": "WOWORAMA Colorful Chunky Necklaces for Women Trendy Multicolor Large Square Resin Beads Necklace Boho Chunky Statement Choker Necklaces Y2K Summer Jewelry",
+      "brand": "WOWORAMA",
+      "isFeatured": "1"
+    },
+    {
+      "id": "6420988",
+      "title": "Turandoss Gold Hoop Earrings for Women Trendy - Dainty 14K Gold Plated Hypoallergenic Huggie Hoop Stud Flat Back Earrings Set for Multiple Piercing Earrings for Women",
+      "brand": "Turandoss",
+      "isFeatured": "1"
+    },
+    {
+      "id": "6420989",
+      "title": "sailimue Gold Toe Rings for Women Non Tarnish- Adjustable 14K Gold Filled Toe Ring Silver Dainty Open Toe Rings Set Waterproof Summer Beach Foot Jewelry 9Pcs",
+      "brand": "sailimue",
+      "isFeatured": "1"
+    },
+    {
+      "id": "6420990",
+      "title": "LOTSOF Cute Bunny Earrings for Women - Funny Statement Acrylic Colorful Glitter Rabbit Egg Bunny Sparkle Spring Earrings Fashion Holiday Happy Easter Jewelry Gift",
+      "brand": "LOTSOF",
+      "isFeatured": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tbrand\tisFeatured\n6420981\tGANDC Glitter Easter Bunny Earrings for Women, 3D Rabbit Drop Earrings Lightweight Resin Dangle Earrings 6 Colors (Pink/Green/Purple/Gold/Blue/Red) Easter Jewelry Gifts for Bunny Lovers\tGANDC\t1\n6420982\tPALABENK Easter Basket Stuffers Sterling Silver Post Frog Stud Earrings Easter Gifts for Girls Women Kids, Teen Girl Gifts Trendy Stuff Cute Frog Earrings Jewelry\tPALABENK\t1\n6420983\tLENOAPHYS St Patricks Day Earrings St Patricks Day Shirt Women Shamrock Earrings Outfits for Women\tLENOAPHYS\t1\n6420984\tTungary Small Gold Hoop Earrings for Women, Hypoallergenic Huggie Earrings for Sensitive Ears, Non Tarnish 14K Gold Plated Hoops for Sleeping/Daily, Cartilage Earring Stacks Set for Multiple Piercing\tTungary\t1\n6420985\t17KM 21PCS Gold Ankle Bracelets for Women, Boho Shell Bead Cuban Link Chain Waterproof Gold Anklets Set, Adjustable Layered Anklets for Women Beach Jewelry Gift\t17KM\t1\n6420986\tHERIER 14K Gold Plated Body Chains for Women, Sexy Layered Belly Waist Chain Crossover Bikini Bra Body Jewelry, Summer Beach Rhinestone Crystal Beads Jewelry Accessories for Women\tHERIER\t1\n6420987\tWOWORAMA Colorful Chunky Necklaces for Women Trendy Multicolor Large Square Resin Beads Necklace Boho Chunky Statement Choker Necklaces Y2K Summer Jewelry\tWOWORAMA\t1\n6420988\tTurandoss Gold Hoop Earrings for Women Trendy - Dainty 14K Gold Plated Hypoallergenic Huggie Hoop Stud Flat Back Earrings Set for Multiple Piercing Earrings for Women\tTurandoss\t1\n6420989\tsailimue Gold Toe Rings for Women Non Tarnish- Adjustable 14K Gold Filled Toe Ring Silver Dainty Open Toe Rings Set Waterproof Summer Beach Foot Jewelry 9Pcs\tsailimue\t1\n6420990\tLOTSOF Cute Bunny Earrings for Women - Funny Statement Acrylic Colorful Glitter Rabbit Egg Bunny Sparkle Spring Earrings Fashion Holiday Happy Easter Jewelry Gift\tLOTSOF\t1\n",
+  "stderr": "",
+  "execution_time_ms": 1569
+}
