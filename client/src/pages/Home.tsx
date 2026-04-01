@@ -1,118 +1,80 @@
-import { useState, useEffect } from "react";
+import { ArrowRight, Gem, Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "wouter";
-import { ArrowRight, Gem, Sparkles, Star, ChevronRight } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import ProductCard from "@/components/ProductCard";
 import { trpc } from "@/lib/trpc";
-import { useSEO } from "@/hooks/useSEO";
-import { usePageView } from "@/hooks/useTracking";
+import ProductCard from "@/components/ProductCard";
 
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 function HeroSection() {
-  const { data: heroProducts } = trpc.products.hero.useQuery({ limit: 1, tab: 'classic' });
-  const heroProduct = heroProducts?.[0];
-
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(135deg, oklch(0.14 0.015 30) 0%, oklch(0.20 0.02 35) 40%, oklch(0.16 0.018 25) 100%)",
-        }}
-      />
-      {/* Decorative gold lines */}
-      <div
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage: "repeating-linear-gradient(45deg, var(--gold) 0px, var(--gold) 1px, transparent 1px, transparent 60px)",
-        }}
-      />
-      {/* Fallback decorative image - always show Gem icon */}
-      <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:flex items-center justify-center opacity-20">
-        <Gem className="w-64 h-64" style={{ color: "var(--gold)" }} />
-      </div>
-
-      <div className="container relative z-10 py-32">
-        <div className="max-w-2xl">
-          <div className="flex items-center gap-3 mb-6 animate-fade-in-up">
-            <div className="divider-gold w-12" />
-            <span className="font-sans text-xs tracking-widest uppercase" style={{ color: "var(--gold-light)" }}>
-              Curated Luxury
-            </span>
+    <section className="relative py-20 md:py-32 overflow-hidden" style={{ background: "var(--background)" }}>
+      <div className="container">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="divider-gold w-8" />
+              <span className="font-sans text-xs tracking-widest uppercase" style={{ color: "var(--gold-dark)" }}>
+                Curated Luxury
+              </span>
+            </div>
+            <h1 className="font-serif text-5xl md:text-6xl font-light leading-tight" style={{ color: "var(--foreground)" }}>
+              Wear Your <span style={{ color: "var(--gold)" }}>Story in Gold</span>
+            </h1>
+            <p className="font-sans text-lg leading-relaxed font-light" style={{ color: "oklch(0.75 0.01 60)" }}>
+              Discover the world's most exquisite gold jewelry, curated daily for the woman who knows her worth.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <Link
+                href="/shop"
+                className="btn-luxury-filled px-8 py-3 text-center font-semibold transition-all duration-200 hover:shadow-lg"
+              >
+                Explore Collection
+                <ArrowRight className="w-4 h-4 ml-2 inline" />
+              </Link>
+              <Link
+                href="/journal"
+                className="btn-luxury-outline px-8 py-3 text-center font-semibold transition-all duration-200"
+              >
+                Style Journal
+              </Link>
+            </div>
           </div>
-          <h1
-            className="font-serif text-5xl md:text-7xl font-light leading-none mb-6 animate-fade-in-up"
-            style={{ color: "white", animationDelay: "0.1s" }}
-          >
-            Wear Your
-            <br />
-            <span className="shimmer-text">Story in Gold</span>
-          </h1>
-          <p
-            className="font-sans font-light text-lg leading-relaxed mb-10 animate-fade-in-up"
-            style={{ color: "oklch(0.75 0.01 60)", maxWidth: "480px", animationDelay: "0.2s" }}
-          >
-            Discover the world's most exquisite gold jewelry, 
-            curated daily for the woman who knows her worth.
-          </p>
-          <div className="flex flex-wrap items-center gap-4 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-            <Link href="/shop" className="btn-luxury-filled flex items-center gap-2">
-              Explore Collection
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link href="/journal" className="btn-luxury flex items-center gap-2" style={{ borderColor: "rgba(255,255,255,0.3)", color: "white" }}>
-              Style Journal
-            </Link>
+          <div className="hidden md:flex items-center justify-center">
+            <div
+              className="w-64 h-64 rounded-full flex items-center justify-center"
+              style={{
+                background: "linear-gradient(135deg, var(--gold) 0%, var(--rose-gold) 100%)",
+                opacity: 0.15,
+              }}
+            >
+              <Gem className="w-32 h-32" style={{ color: "var(--gold)" }} />
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-        <div className="w-px h-8" style={{ background: "var(--gold)" }} />
-        <span className="font-sans text-xs tracking-widest" style={{ color: "var(--gold)", fontSize: "0.55rem" }}>SCROLL</span>
       </div>
     </section>
   );
 }
 
-// ─── Category Strip ───────────────────────────────────────────────────────────
-const CATEGORIES = [
-  { label: "Classic", href: "/shop", icon: "✦", desc: "Timeless luxury pieces" },
-  { label: "Bargains", href: "/shop?sort=price_asc", icon: "◈", desc: "Premium jewelry on sale" },
-];
-
+// ─── Category Navigation ──────────────────────────────────────────────────────
 function CategoryStrip() {
   return (
-    <section className="py-16 bg-champagne" style={{ background: "var(--champagne)" }}>
+    <section className="py-8 border-y" style={{ borderColor: "var(--border)", background: "var(--ivory)" }}>
       <div className="container">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {CATEGORIES.map((cat) => (
+        <div className="flex flex-wrap justify-center gap-8">
+          {[
+            { label: "Necklaces", href: "/shop?category=necklaces" },
+            { label: "Bracelets", href: "/shop?category=bracelets" },
+            { label: "Rings", href: "/shop?category=rings" },
+            { label: "Earrings", href: "/shop?category=earrings" },
+          ].map((item) => (
             <Link
-              key={cat.href}
-              href={cat.href}
-              className="group flex flex-col items-center text-center p-6 rounded transition-all duration-300 hover:shadow-luxury"
-              style={{ background: "white" }}
+              key={item.label}
+              href={item.href}
+              className="font-sans text-sm tracking-widest uppercase transition-colors duration-200 hover:text-foreground"
+              style={{ color: "var(--muted-foreground)" }}
             >
-              <span
-                className="text-3xl mb-3 transition-transform duration-300 group-hover:scale-125"
-                style={{ color: "var(--gold)" }}
-              >
-                {cat.icon}
-              </span>
-              <h3 className="font-serif text-base mb-1" style={{ color: "var(--foreground)" }}>
-                {cat.label}
-              </h3>
-              <p className="font-sans text-xs font-light" style={{ color: "var(--muted-foreground)", fontSize: "0.65rem" }}>
-                {cat.desc}
-              </p>
-              <div className="mt-3 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="font-sans text-xs" style={{ color: "var(--gold-dark)", fontSize: "0.6rem", letterSpacing: "0.1em" }}>SHOP NOW</span>
-                <ChevronRight className="w-3 h-3" style={{ color: "var(--gold-dark)" }} />
-              </div>
+              {item.label}
             </Link>
           ))}
         </div>
@@ -123,10 +85,10 @@ function CategoryStrip() {
 
 // ─── Featured Products ────────────────────────────────────────────────────────
 function FeaturedProducts() {
-  const { data: products, isLoading } = trpc.products.featured.useQuery({ limit: 4, tab: 'classic' });
+  const { data: products, isLoading } = trpc.products.list.useQuery({ limit: 4, tab: 'classic' });
 
   return (
-    <section className="py-20">
+    <section className="py-20" style={{ background: "var(--background)", minHeight: '400px' }}>
       <div className="container">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 gap-4">
@@ -152,13 +114,15 @@ function FeaturedProducts() {
         </div>
 
         {/* Products Grid */}
-        {isLoading ? (
+        {isLoading && (
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="skeleton h-80 rounded" />
             ))}
           </div>
-        ) : products && products.length > 0 ? (
+        )}
+        
+        {!isLoading && products && products.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {products.map((product, i) => (
               <div key={product.id} className="animate-scale-in" style={{ animationDelay: `${i * 0.05}s` }}>
@@ -166,7 +130,9 @@ function FeaturedProducts() {
               </div>
             ))}
           </div>
-        ) : (
+        )}
+        
+        {!isLoading && (!products || products.length === 0) && (
           <div className="text-center py-16">
             <Gem className="w-12 h-12 mx-auto mb-4" style={{ color: "var(--gold-light)" }} />
             <p className="font-serif text-xl mb-2" style={{ color: "var(--muted-foreground)" }}>
@@ -193,57 +159,34 @@ function AmazonNativeAds() {
           <p className="font-sans text-xs tracking-widest uppercase" style={{ color: "var(--gold-dark)" }}>
             Recommended for You
           </p>
-          <h2 className="font-serif text-3xl font-light mt-2" style={{ color: "var(--foreground)" }}>
-            Bestsellers & Favorites
-          </h2>
+          <h2 className="font-serif text-3xl font-light mt-2" style={{ color: "var(--foreground)" }}></h2>
         </div>
-        {recommendedProducts && recommendedProducts.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {recommendedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} size="medium" />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12">
-            <p style={{ color: "var(--muted-foreground)" }}>Loading recommendations...</p>
-          </div>
-        )}
       </div>
     </section>
   );
 }
 
-// ─── Brand Story Banner ───────────────────────────────────────────────────────
+// ─── Brand Banner ─────────────────────────────────────────────────────────────
 function BrandBanner() {
   return (
-    <section
-      className="py-24 relative overflow-hidden"
-      style={{ background: "linear-gradient(135deg, oklch(0.14 0.015 30) 0%, oklch(0.22 0.025 35) 100%)" }}
-    >
-      <div className="absolute inset-0 opacity-5" style={{
-        backgroundImage: "radial-gradient(circle at 50% 50%, var(--gold) 1px, transparent 1px)",
-        backgroundSize: "40px 40px",
-      }} />
-      <div className="container relative z-10 text-center">
-        <Sparkles className="w-8 h-8 mx-auto mb-6" style={{ color: "var(--gold)" }} />
-        <h2 className="font-serif text-4xl md:text-5xl font-light mb-6" style={{ color: "white" }}>
-          Every Piece Tells a Story
-        </h2>
-        <p className="font-sans font-light text-base leading-relaxed mx-auto mb-10" style={{ color: "oklch(0.75 0.01 60)", maxWidth: "560px" }}>
-          We curate only the finest gold and silver jewelry from trusted artisans and brands, 
-          updated daily so you always discover something extraordinary.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto">
-          {[
-            { number: "500+", label: "Curated Pieces" },
-            { number: "Daily", label: "New Arrivals" },
-            { number: "100%", label: "Authenticated" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="font-serif text-3xl mb-1" style={{ color: "var(--gold)" }}>{stat.number}</div>
-              <div className="font-sans text-xs tracking-widest uppercase" style={{ color: "oklch(0.65 0.01 60)" }}>{stat.label}</div>
-            </div>
-          ))}
+    <section className="py-20">
+      <div className="container">
+        <div className="text-center mb-8">
+          <p className="font-sans text-xs tracking-widest uppercase" style={{ color: "var(--gold-dark)" }}>
+            Trusted by Thousands
+          </p>
+          <h2 className="font-serif text-4xl font-light" style={{ color: "var(--foreground)" }}>
+            Best Sellers
+          </h2>
+        </div>
+        <div className="text-center py-16">
+          <Gem className="w-12 h-12 mx-auto mb-4" style={{ color: "var(--gold-light)" }} />
+          <p className="font-serif text-xl mb-2" style={{ color: "var(--muted-foreground)" }}>
+            Curating your collection...
+          </p>
+          <p className="font-sans text-sm font-light" style={{ color: "var(--muted-foreground)" }}>
+            Our automated system is fetching the finest jewelry for you.
+          </p>
         </div>
       </div>
     </section>
@@ -279,18 +222,19 @@ function MetalShowcase() {
             <Link
               key={metal.type}
               href={metal.href}
-              className="group flex flex-col items-center text-center p-8 rounded transition-all duration-300 hover:shadow-luxury"
-              style={{ background: "white" }}
+              className="group block p-6 rounded text-center transition-all duration-300 hover:shadow-luxury"
+              style={{ background: "white", boxShadow: "var(--shadow-card)" }}
             >
               <div
-                className="w-16 h-16 rounded-full mb-4 transition-transform duration-300 group-hover:scale-110"
-                style={{
-                  background: `radial-gradient(circle at 35% 35%, white 0%, ${metal.color} 60%)`,
-                  boxShadow: `0 4px 16px ${metal.color}40`,
-                }}
+                className="w-16 h-16 rounded-full mx-auto mb-4 group-hover:scale-110 transition-transform duration-300"
+                style={{ background: metal.color, opacity: 0.2 }}
               />
-              <h3 className="font-serif text-base mb-1" style={{ color: "var(--foreground)" }}>{metal.label}</h3>
-              <p className="font-sans text-xs font-light" style={{ color: "var(--muted-foreground)", fontSize: "0.65rem" }}>{metal.desc}</p>
+              <h3 className="font-serif text-lg font-light mb-1" style={{ color: "var(--foreground)" }}>
+                {metal.label}
+              </h3>
+              <p className="font-sans text-sm" style={{ color: "var(--muted-foreground)" }}>
+                {metal.desc}
+              </p>
             </Link>
           ))}
         </div>
@@ -348,42 +292,29 @@ function BlogPreview() {
                     <img
                       src={post.heroImageUrl}
                       alt={post.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
-                    <div className="w-full h-full gradient-luxury flex items-center justify-center">
-                      <span className="font-serif text-4xl" style={{ color: "var(--gold-light)" }}>✦</span>
+                    <div className="w-full h-full flex items-center justify-center" style={{ background: "var(--champagne)" }}>
+                      <Gem className="w-12 h-12" style={{ color: "var(--gold-light)" }} />
                     </div>
                   )}
-                  <div className="absolute top-3 left-3">
-                    <span className="badge-gold capitalize">{post.category?.replace("_", " ")}</span>
-                  </div>
                 </div>
-                <div className="p-5">
-                  <h3
-                    className="font-serif text-lg font-light leading-snug mb-2 line-clamp-2 transition-colors duration-200 group-hover:text-gold"
-                    style={{ color: "var(--foreground)" }}
-                  >
+                <div className="p-6">
+                  <p className="font-sans text-xs tracking-widest uppercase mb-2" style={{ color: "var(--gold-dark)" }}>
+                    {post.category}
+                  </p>
+                  <h3 className="font-serif text-lg font-light mb-2 line-clamp-2" style={{ color: "var(--foreground)" }}>
                     {post.title}
                   </h3>
-                  <p className="font-sans text-xs font-light line-clamp-2 mb-3" style={{ color: "var(--muted-foreground)" }}>
+                  <p className="font-sans text-sm font-light line-clamp-2" style={{ color: "var(--muted-foreground)" }}>
                     {post.excerpt}
                   </p>
-                  <div className="flex items-center gap-1" style={{ color: "var(--gold-dark)" }}>
-                    <span className="font-sans text-xs tracking-widest uppercase" style={{ fontSize: "0.6rem" }}>Read More</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </div>
                 </div>
               </Link>
             ))}
           </div>
-        ) : (
-          <div className="text-center py-12">
-            <p className="font-serif text-xl" style={{ color: "var(--muted-foreground)" }}>
-              Our editors are crafting your first articles...
-            </p>
-          </div>
-        )}
+        ) : null}
       </div>
     </section>
   );
@@ -391,78 +322,95 @@ function BlogPreview() {
 
 // ─── Newsletter Section ───────────────────────────────────────────────────────
 function NewsletterSection() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) setSubmitted(true);
-  };
-
   return (
-    <section className="py-20" style={{ background: "var(--blush)" }}>
-      <div className="container max-w-2xl text-center">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="divider-gold w-8" />
-          <span className="font-sans text-xs tracking-widest uppercase" style={{ color: "var(--gold-dark)" }}>
-            Stay Inspired
-          </span>
-          <div className="divider-gold w-8" />
+    <section className="py-20" style={{ background: "var(--ivory)" }}>
+      <div className="container max-w-2xl">
+        <div className="text-center mb-8">
+          <h2 className="font-serif text-4xl font-light mb-4" style={{ color: "var(--foreground)" }}>
+            Stay Updated
+          </h2>
+          <p className="font-sans text-lg font-light" style={{ color: "oklch(0.75 0.01 60)" }}>
+            Get exclusive access to new arrivals, styling tips, and special offers delivered to your inbox.
+          </p>
         </div>
-        <h2 className="font-serif text-4xl font-light mb-4" style={{ color: "var(--foreground)" }}>
-          Jewelry Discoveries, Daily
-        </h2>
-        <p className="font-sans font-light text-sm leading-relaxed mb-8" style={{ color: "var(--muted-foreground)" }}>
-          Be the first to discover new arrivals, exclusive deals, and style inspiration 
-          curated for the discerning woman.
-        </p>
-        {submitted ? (
-          <div className="flex items-center justify-center gap-2 py-4">
-            <Star className="w-5 h-5" style={{ color: "var(--gold)" }} />
-            <p className="font-serif text-lg" style={{ color: "var(--foreground)" }}>
-              Thank you for joining our circle.
-            </p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Your email address"
-              required
-              className="flex-1 px-4 py-3 font-sans text-sm font-light border outline-none focus:border-gold transition-colors duration-200"
-              style={{
-                borderColor: "var(--border)",
-                background: "white",
-                color: "var(--foreground)",
-              }}
-            />
-            <button type="submit" className="btn-luxury-filled whitespace-nowrap">
-              Join Now
-            </button>
-          </form>
-        )}
+        <form className="flex flex-col sm:flex-row gap-3">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="flex-1 px-4 py-3 rounded border"
+            style={{ borderColor: "var(--border)", background: "white" }}
+          />
+          <button
+            type="submit"
+            className="btn-luxury-filled px-6 py-3 font-semibold transition-all duration-200 hover:shadow-lg"
+          >
+            Subscribe
+          </button>
+        </form>
       </div>
     </section>
   );
 }
 
-// ─── Main Home Page ───────────────────────────────────────────────────────────
+// ─── Footer ───────────────────────────────────────────────────────────────────
+function Footer() {
+  return (
+    <footer style={{ background: "var(--foreground)", color: "white" }}>
+      <div className="container py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          <div>
+            <h3 className="font-serif text-lg font-light mb-4">About</h3>
+            <p className="font-sans text-sm font-light opacity-75">
+              Lyvarajewels curates the world's finest gold and silver jewelry for the discerning woman.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-serif text-lg font-light mb-4">Shop</h3>
+            <ul className="space-y-2 font-sans text-sm font-light">
+              <li><Link href="/shop">All Jewelry</Link></li>
+              <li><Link href="/shop?metal=gold">Gold</Link></li>
+              <li><Link href="/shop?metal=silver">Silver</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-serif text-lg font-light mb-4">Company</h3>
+            <ul className="space-y-2 font-sans text-sm font-light">
+              <li><Link href="/journal">Journal</Link></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-serif text-lg font-light mb-4">Contact</h3>
+            <ul className="space-y-3 font-sans text-sm font-light">
+              <li className="flex items-center gap-2">
+                <Mail className="w-4 h-4" />
+                hello@lyvarajewels.com
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="w-4 h-4" />
+                +1 (555) 123-4567
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                New York, NY
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="border-t pt-8" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
+          <p className="text-center font-sans text-sm font-light opacity-75">
+            © 2026 Lyvarajewels. All rights reserved. | Affiliate links may earn us a commission.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ─── Main Home Component ──────────────────────────────────────────────────────
 export default function Home() {
-  useSEO({
-    title: "Luxury Gold & Silver Jewelry for Women",
-    description: "Discover exquisite gold and silver jewelry curated daily for the discerning woman. Shop necklaces, bracelets, rings, and earrings from top luxury brands.",
-    keywords: "luxury gold jewelry, silver jewelry women, gold necklaces, diamond bracelets, fine jewelry, jewelry gifts for women",
-    url: "/",
-  });
-  usePageView("/");
-
-
-
   return (
     <div className="min-h-screen" style={{ background: "var(--background)" }}>
-      <Navbar />
       <HeroSection />
       <CategoryStrip />
       <FeaturedProducts />
