@@ -7,14 +7,17 @@ const router = Router();
 // Rainforest API webhook for product data
 router.post("/rainforest/products", async (req, res) => {
   try {
-    const { category_results, request_parameters } = req.body;
-
-    if (!category_results || !Array.isArray(category_results)) {
-      return res.status(400).json({ error: "Invalid payload: missing category_results" });
+    // Support both formats:
+    // Option 1: { category_results: [...], request_parameters: { associate_id: "..." } }
+    // Option 2: { products: [...], associate_id: "...", category: "..." }
+    let products = req.body.category_results || req.body.products || [];
+    
+    if (!products || !Array.isArray(products)) {
+      return res.status(400).json({ error: "Invalid payload: missing products or category_results" });
     }
 
-    const affiliateTag = request_parameters?.associate_id || "91791709-20";
-    let rawTab = req.query.tab as string || "classic";
+    const affiliateTag = req.body.request_parameters?.associate_id || req.body.associate_id || "91791709-20";
+    let rawTab = req.query.tab as string || req.body.category || "classic";
     const MAX_PRODUCTS_PER_CATEGORY = 50; // Cap products per category
 
     // Map Zapier category names to database enum values
@@ -67,7 +70,7 @@ router.post("/rainforest/products", async (req, res) => {
       }
     };
 
-    for (const product of category_results) {
+    for (const product of products) {
       try {
         // Enforce 50-product cap per category
         if (loadedCount >= MAX_PRODUCTS_PER_CATEGORY) {
